@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "node node_modules/webgme/src/bin/import.js model/cnn_creator_master.json -p cnn_creator",
-    "setup-local": "node node_modules/webgme/src/bin/import.js model/cnn_creator_master.json -p cnn_creator -m mongodb://127.0.0.1:27017/cnn-creator"
+    "setup": "node node_modules/webgme/src/bin/import.js models/cnn_creator_master.json -p cnn_creator",
+    "setup-local": "node node_modules/webgme/src/bin/import.js models/cnn_creator_master.json -p cnn_creator -m mongodb://127.0.0.1:27017/cnn-creator"
   },
   "keywords": [
     "webgme",
