@@ -1,0 +1,23 @@
+{
+  "name": "cnn-creator",
+  "version": "0.0.1",
+  "description": "A graphical interface for rapid prototyping of neural networks",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "node node_modules/webgme/src/bin/import.js model/cnn_creator_master.json -p cnn_creator",
+    "setup-local": "node node_modules/webgme/src/bin/import.js model/cnn_creator_master.json -p cnn_creator -m mongodb://127.0.0.1:27017/cnn-creator"
+  },
+  "keywords": [
+    "webgme",
+    "cnn",
+    "machine",
+    "learning"
+  ],
+  "author": "Brian Broll",
+  "license": "ISC",
+  "dependencies": {
+    "webgme": "^0.8.2"
+  }
+}

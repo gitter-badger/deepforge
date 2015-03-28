@@ -1,0 +1,4 @@
+*log
+node_modules/
+*.swp
+blob-local-storage/
