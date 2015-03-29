@@ -6,11 +6,11 @@
 define(['plugin/PluginConfig',
         'plugin/PluginBase',
         'util/assert',
-        './templates/caffe',
+        './templates',
         'util/guid'],function(PluginConfig,
                               PluginBase,
                               assert,
-                              CaffeTemplates,
+                              Templates,
                               genGuid){
 
     'use strict';
@@ -18,6 +18,7 @@ define(['plugin/PluginConfig',
     var NEXT = '_next_',
         PREV = '_previous_',
         DEFAULT = '_default_',
+        NODE_PATH = '_nodePath_',
         BASE = '_base_';
 
     var CNNCreator = function () {
@@ -85,18 +86,33 @@ define(['plugin/PluginConfig',
         return this._nodeCache[nodePath];
     };
 
+    CNNCreator.prototype.getConfigStructure = function(){
+        // Set the values..
+        // TODO
+        return [{
+            'name': 'template',
+            'displayName': 'Output',
+            'description': '',
+            'value': 'Caffe',
+            'valueType': 'string',
+            'valueItems': Object.keys(Templates)
+        }];
+    };
+
     // the main entry point of plugin execution
     CNNCreator.prototype.main = function (callback) {
-        var self = this;
-        self.config = self.getCurrentConfig();
+        var self = this,
+            config = self.getCurrentConfig();
+
+        // Set the template
+        this.template = Templates[config.template];
 
         //If activeNode is null, we won't be able to run 
-        if(!self._isTypeOf(self.activeNode, self.META.network)) {
+        if(!self._isTypeOf(self.activeNode, self.META.Learner)) {
             self._errorMessages(self.activeNode, "Current project is an invalid type. Please run the plugin on a network.");
         }
 
-        //console.log(config.preview,config.configuration);
-        self.logger.info("Running Network Exporter");
+        self.logger.info("Running CNN Creator");
 
         //setting up cache
         self._loadStartingNodes(function(err){
@@ -173,7 +189,7 @@ define(['plugin/PluginConfig',
         return this.nodes;
     };
 
-    CNNCreator.prototype.createVirtualNode = function(node, stop) {
+    CNNCreator.prototype.createVirtualNode = function(node) {
         var id = this.core.getPath(node),
             attrNames = this.core.getAttributeNames(node),
             virtualNode = {};
@@ -185,16 +201,7 @@ define(['plugin/PluginConfig',
         // Initialize source and destination stuff
         virtualNode[NEXT] = [];
         virtualNode[PREV] = [];
-
-        // Add base node
-        //if (!stop) {  // Hacking :(
-            //var base = this.core.getBase(this.getNode(id));
-            //if (base) {
-                // Add base node to this.nodes
-                //var virtualBase = this.createVirtualNode(base, true);
-                //virtualNode[BASE] = virtualBase;
-            //}
-        //}
+        virtualNode[NODE_PATH] = this.core.getPath(node);
 
         // Record the given node
         this.nodes[id] = virtualNode;
@@ -228,12 +235,43 @@ define(['plugin/PluginConfig',
      * @param {Dictionary} nodeMap
      * @return {Array<Node>} sortedNodes
      */
-    CNNCreator.prototype.getTopologicalOrdering = function(nodeMap) {
-        var sortedNodes = [];
+    CNNCreator.prototype.getTopologicalOrdering = function() {
+        var sortedNodes = [],
+            edgeCounts = {},
+            ids = Object.keys(this.nodes),
+            len = ids.length,
+            nodeId,
+            id,
+            i;
 
-        // This should be updated to find the topological ordering
-        // TODO
-        return Object.keys(nodeMap);
+        // Populate edgeCounts
+        for (i = ids.length; i--;) {
+            edgeCounts[ids[i]] = this.nodes[ids[i]][PREV].length;
+        }
+
+        while (sortedNodes.length < len) {
+            // Find a node with zero edges...
+            i = ids.length;
+            nodeId = null;
+            while (i-- && !nodeId) {
+                if (edgeCounts[ids[i]] === 0) {
+                    nodeId = ids.splice(i,1)[0];
+                }
+            }
+
+            // Add the node 
+            sortedNodes.push(nodeId);
+
+            // Update edge lists
+            i = this.nodes[nodeId][NEXT].length;
+            while (i--) {
+                id = this.nodes[nodeId][NEXT][i][NODE_PATH];
+                edgeCounts[id]--;
+            }
+
+        }
+
+        return sortedNodes;
     };
 
     /**
@@ -243,13 +281,18 @@ define(['plugin/PluginConfig',
      * @return {String} output
      */
     CNNCreator.prototype.createTemplateFromNodes = function(nodeIds) {
-        var output = CaffeTemplates[DEFAULT],
-            len = nodeIds.length,
+        var len = nodeIds.length,
             template,
             snippet,
             baseName,
+            output,
             node,
             base;
+
+        // Use the active node info to populate DEFAULT template (boilerplate template)
+        node = this.createVirtualNode(this.activeNode);
+        template = _.template(this.template[DEFAULT]);
+        output = template(node);
 
         // For each node, get the snippet from the base name, populate
         // it and add it to the template
@@ -259,7 +302,7 @@ define(['plugin/PluginConfig',
             node[BASE] = this.createVirtualNode(base);
 
             baseName = this.core.getAttribute(base, 'name');
-            template = _.template(CaffeTemplates[baseName]);
+            template = _.template(this.template[baseName]);
             snippet = template(node);
 
             output += snippet;
