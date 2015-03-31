@@ -5,20 +5,21 @@
 "use strict";
 
 var fs = require('fs'),
-LANG_DIR = 'templates/',
-_outFileName = 'templates.js',
-FILECONTENT = "/*globals define*/\n/*\n" +
-    "* GENERATED LANGUAGE FILES *      \n" +
-    "* DO NOT EDIT MANUALLY *    \n" +
-    "* TO GENERATE PLEASE RUN node generate_lang.js    \n" +
-    "*/  \n" +
-"\n" +
-    "define([ __PATHLIST__ ], function ( __NAMELIST__ ) {    \n" +
-    "\t'use strict';           \n" +
-    "                            \n" +
-    "\tvar templates = {};\n__CODE__\n"+
-    "    return templates;\n" +
-    "});";
+    LANG_DIR = 'outputs/',
+    _outFileName = 'outputs.js',
+    FILECONTENT = "/*globals define*/\n/*\n" +
+        "* GENERATED LANGUAGE FILES *      \n" +
+        "* DO NOT EDIT MANUALLY *    \n" +
+        "* TO GENERATE PLEASE RUN node generate_lang.js    \n" +
+        "*/  \n" +
+    "\n" +
+        "define([ __PATHLIST__ ], function ( __NAMELIST__ ) {    \n" +
+        "\t'use strict';           \n" +
+        "                            \n" +
+        "\tvar outputs = {};\n__CODE__\n"+
+        "    return outputs;\n" +
+        "});",
+    skipFiles = ['TemplateCreator.js'];
 
 //Recursively search through directories
 var walk = function(dir, done) {
@@ -55,14 +56,24 @@ var walk = function(dir, done) {
 
 walk(LANG_DIR.replace('/',''), function(err, list){
     if (!err){
-        var fileList = JSON.stringify(list).split(LANG_DIR).join(''),
-        fileContent,
-        base = '\t\ttemplates.__PATH__ = __PATH__;\n',
-        paths = '',
-        names = '',
-        name,
-        index,
-        code = '';
+
+        var fileList,
+            fileContent,
+            base = '\t\toutputs.__PATH__ = __PATH__;\n',
+            paths = '',
+            names = '',
+            name,
+            index,
+            code = '';
+
+        fileList = JSON.stringify(list).split(LANG_DIR).join('');
+        // Remove hidden files
+        list = list.filter(function(filePath) {
+            var j = filePath.lastIndexOf('/'),
+                f = filePath.substring(j+1);
+
+            return f[0] !== '.' && skipFiles.indexOf(f) === -1;
+        });
 
         for (var i = 0; i < list.length; i++){
             name = list[i].replace(/\.js/g, "");

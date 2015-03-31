@@ -13,7 +13,7 @@ define([], function() {
     // Basic block templates
     var blockMap = {
         _base_: '',
-        _default_: 'name: "{{= name }}"\n'  // active node
+        _arch_: 'name: "{{= name }}"\n'  // active node
     };
 
     var layers = [

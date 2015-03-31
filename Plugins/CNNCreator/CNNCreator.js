@@ -6,20 +6,16 @@
 define(['plugin/PluginConfig',
         'plugin/PluginBase',
         'util/assert',
-        './templates',
+        './outputs',
+        './templates/Constants',
         'util/guid'],function(PluginConfig,
                               PluginBase,
                               assert,
-                              Templates,
+                              Generators,
+                              Constants,
                               genGuid){
 
     'use strict';
-
-    var NEXT = '_next_',
-        PREV = '_previous_',
-        DEFAULT = '_default_',
-        NODE_PATH = '_nodePath_',
-        BASE = '_base_';
 
     var CNNCreator = function () {
         // Call base class's constructor
@@ -33,37 +29,22 @@ define(['plugin/PluginConfig',
         return "CNN Creator";
     };
 
-    //helper functions created by Tamas ;)
     CNNCreator.prototype._loadStartingNodes = function(callback){
-        //we load the children of the active node
         var self = this;
         this._nodeCache = {};
-        var load = function(node, fn){
-            self.core.loadChildren(node,function(err,children){
-                if (err){
-                    fn(err);
-                } else {
-                    var j = children.length,
-                        e = null; //error
 
-                    if (j === 0){
-                        fn(null);
-                    }
+        this._nodeCache[this.core.getPath(this.activeNode)] = this.activeNode;
+        this.core.loadSubTree(this.activeNode, function(err, nodes) {
+            if (err) {
+                return callback(err);
+            }
 
-                    for (var i=0;i<children.length;i++){
-                        self._nodeCache[self.core.getPath(children[i])] = children[i];
-                        load(children[i], function(err){
-                            e = e || err;
-                            if (--j === 0){ //callback only on last child
-                                fn(e);
-                            }
-                        });
-                    }
-                }
-            });
-        };
+            nodes.forEach(function(n) {
+                this._nodeCache[this.core.getPath(n)] = n;
+            }, self);
 
-        load(self.activeNode, callback);
+            callback(null);
+        });
     };
 
     CNNCreator.prototype._isTypeOf = function(node,type){
@@ -95,7 +76,7 @@ define(['plugin/PluginConfig',
             'description': '',
             'value': 'Caffe',
             'valueType': 'string',
-            'valueItems': Object.keys(Templates)
+            'valueItems': Object.keys(Generators)
         }];
     };
 
@@ -105,7 +86,7 @@ define(['plugin/PluginConfig',
             config = self.getCurrentConfig();
 
         // Set the template
-        this.template = Templates[config.template];
+        this.generator = new Generators[config.template]();
 
         //If activeNode is null, we won't be able to run 
         if(!self._isTypeOf(self.activeNode, self.META.Learner)) {
@@ -115,7 +96,7 @@ define(['plugin/PluginConfig',
         self.logger.info("Running CNN Creator");
 
         //setting up cache
-        self._loadStartingNodes(function(err){
+        this._loadStartingNodes(function(err){
             if(err){
                 //finishing
                 self.result.success = false;
@@ -146,14 +127,12 @@ define(['plugin/PluginConfig',
         // Verify that the given template supports all the given layers
         // TODO
 
-        // Create node objects from attribute names
-        this.createVirtualNodes();
-
-        // Topological sort of the layers
-        var sortedNodes = this.getTopologicalOrdering(this.nodes);
+        // Load virtual tree
+        var tree = this.loadVirtualTree(this.activeNode);
 
         // Retrieve & populate templates in topological order
-        var output = this.createTemplateFromNodes(sortedNodes);
+        var output = this.generator.createOutputFiles(tree);
+        //var output = this.createTemplateFromNodes(tree);
 
         // Save file
         var name = this.core.getAttribute(this.activeNode, 'name');
@@ -162,20 +141,57 @@ define(['plugin/PluginConfig',
     };
 
     /**
+     * Load the virtual nodes into a tree rooted at 'root'.
+     *
+     * @param {WebGME Node} rootNode
+     * @return {VirtualNode} root
+     */
+    CNNCreator.prototype.loadVirtualTree = function(rootNode) {
+        var root = this.createVirtualNode(rootNode),
+            current = [root],
+            next,
+            virtualNodes,
+            node;
+
+        while (current.length) {
+            next = [];
+            for (var i = current.length; i--;) {
+                node = current[i];
+                // Create node objects from attribute names
+                virtualNodes = this.createChildVirtualNodes(node[Constants.NODE_PATH]);
+
+                // Topological sort of the layers
+                node[Constants.CHILDREN] = this.getTopologicalOrdering(virtualNodes);
+                next = next.concat(node[Constants.CHILDREN]);
+            }
+            current = next;
+        }
+
+        return root;
+    };
+
+    /**
      * Create virtual nodes from WebGME nodes for use with the templates.
      *
      * @return {Dictionary<Node>}
      */
-    CNNCreator.prototype.createVirtualNodes = function() {
-        var nodeIds = this.core.getChildrenPaths(this.activeNode),
+    CNNCreator.prototype.createChildVirtualNodes = function(nodeId) {
+        var parentNode = this.getNode(nodeId),
+            nodeIds = this.core.getChildrenPaths(parentNode),
             conns = [],
             node,
+            vnode,
+            base,
+            virtualNodes = {},
             i;
 
         for (i = nodeIds.length; i--;) {
             node = this.getNode(nodeIds[i]);
             if (!this._isTypeOf(node, this.META.LayerConnector)) {
-                this.createVirtualNode(node);
+                vnode = this.createVirtualNode(node);
+                base = this.core.getBase(node);
+                vnode[Constants.BASE] = this.createVirtualNode(base);
+                virtualNodes[nodeIds[i]] = vnode;
             } else {
                 conns.push(node);
             }
@@ -183,10 +199,13 @@ define(['plugin/PluginConfig',
 
         // Merge connection info with src/dst nodes
         for (i = conns.length; i--;) {
-            this.mergeConnectionNode(conns[i]);
+            this.mergeConnectionNode(conns[i], virtualNodes);
         }
 
-        return this.nodes;
+        // Copy virtual nodes into this.nodes
+        _.extend(this.nodes, virtualNodes);
+
+        return virtualNodes;
     };
 
     CNNCreator.prototype.createVirtualNode = function(node) {
@@ -199,22 +218,20 @@ define(['plugin/PluginConfig',
         }
 
         // Initialize source and destination stuff
-        virtualNode[NEXT] = [];
-        virtualNode[PREV] = [];
-        virtualNode[NODE_PATH] = this.core.getPath(node);
+        virtualNode[Constants.NEXT] = [];
+        virtualNode[Constants.PREV] = [];
+        virtualNode[Constants.NODE_PATH] = id;
 
-        // Record the given node
-        this.nodes[id] = virtualNode;
         return virtualNode;
     };
 
-    CNNCreator.prototype.mergeConnectionNode = function(conn) {
-        var src = this._getPointerVirtualNode(conn, 'src'),  // Get the virtual nodes
-            dst = this._getPointerVirtualNode(conn, 'dst');
+    CNNCreator.prototype.mergeConnectionNode = function(conn, nodes) {
+        var src = this._getPointerVirtualNode(conn, 'src', nodes),  // Get the virtual nodes
+            dst = this._getPointerVirtualNode(conn, 'dst', nodes);
 
         // Set pointers to each other
-        src[NEXT].push(dst);
-        dst[PREV].push(src);
+        src[Constants.NEXT].push(dst);
+        dst[Constants.PREV].push(src);
     };
 
     CNNCreator.prototype._verifyExists = function(object, key, defaultValue) {
@@ -223,10 +240,10 @@ define(['plugin/PluginConfig',
         }
     };
 
-    CNNCreator.prototype._getPointerVirtualNode = function(node, ptr) {
+    CNNCreator.prototype._getPointerVirtualNode = function(node, ptr,nodes) {
         var targetId = this.core.getPointerPath(node, ptr);
 
-        return this.nodes[targetId];
+        return nodes[targetId];
     };
 
     /**
@@ -235,10 +252,10 @@ define(['plugin/PluginConfig',
      * @param {Dictionary} nodeMap
      * @return {Array<Node>} sortedNodes
      */
-    CNNCreator.prototype.getTopologicalOrdering = function() {
+    CNNCreator.prototype.getTopologicalOrdering = function(virtualNodes) {
         var sortedNodes = [],
             edgeCounts = {},
-            ids = Object.keys(this.nodes),
+            ids = Object.keys(virtualNodes),
             len = ids.length,
             nodeId,
             id,
@@ -246,7 +263,7 @@ define(['plugin/PluginConfig',
 
         // Populate edgeCounts
         for (i = ids.length; i--;) {
-            edgeCounts[ids[i]] = this.nodes[ids[i]][PREV].length;
+            edgeCounts[ids[i]] = virtualNodes[ids[i]][Constants.PREV].length;
         }
 
         while (sortedNodes.length < len) {
@@ -263,81 +280,51 @@ define(['plugin/PluginConfig',
             sortedNodes.push(nodeId);
 
             // Update edge lists
-            i = this.nodes[nodeId][NEXT].length;
+            i = virtualNodes[nodeId][Constants.NEXT].length;
             while (i--) {
-                id = this.nodes[nodeId][NEXT][i][NODE_PATH];
+                id = virtualNodes[nodeId][Constants.NEXT][i][Constants.NODE_PATH];
                 edgeCounts[id]--;
             }
 
         }
 
-        return sortedNodes;
-    };
-
-    /**
-     * Create the template from the sorted nodes
-     *
-     * @param {Array} nodeIds
-     * @return {String} output
-     */
-    CNNCreator.prototype.createTemplateFromNodes = function(nodeIds) {
-        var len = nodeIds.length,
-            template,
-            snippet,
-            baseName,
-            output,
-            node,
-            base;
-
-        // Use the active node info to populate DEFAULT template (boilerplate template)
-        node = this.createVirtualNode(this.activeNode);
-        template = _.template(this.template[DEFAULT]);
-        output = template(node);
-
-        // For each node, get the snippet from the base name, populate
-        // it and add it to the template
-        for (var i = 0; i < len; i++) {
-            base = this.core.getBase(this.getNode(nodeIds[i]));
-            node = this.nodes[nodeIds[i]];
-            node[BASE] = this.createVirtualNode(base);
-
-            baseName = this.core.getAttribute(base, 'name');
-            template = _.template(this.template[baseName]);
-            snippet = template(node);
-
-            output += snippet;
-        }
-
-        return output;
+        return sortedNodes.map(function(e) { return virtualNodes[e]; });
     };
 
     // Thanks to Tamas for the next two functions
-    CNNCreator.prototype._saveOutput = function(filename,stringFileContent,callback){
+    CNNCreator.prototype._saveOutput = function(filename,filesBlob,callback){
         var self = this,
-            artifact = self.blobClient.createArtifact(filename);
+            artifact = self.blobClient.createArtifact(filename),
+            files = Object.keys(filesBlob),
+            fileCount = files.length,
+            onFileSave = function(err) {
+                if(err){
+                    callback(err);
+                } else {
+                    if (--fileCount === 0) {
+                        self.blobClient.saveAllArtifacts(function(err, hashes) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                self.logger.info('Artifacts are saved here:');
+                                self.logger.info(hashes);
 
-        artifact.addFile(filename,stringFileContent,function(err){
-            if(err){
-                callback(err);
-            } else {
-                self.blobClient.saveAllArtifacts(function(err, hashes) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        self.logger.info('Artifacts are saved here:');
-                        self.logger.info(hashes);
+                                // result add hashes
+                                for (var j = 0; j < hashes.length; j += 1) {
+                                    self.result.addArtifact(hashes[j]);
+                                }
 
-                        // result add hashes
-                        for (var j = 0; j < hashes.length; j += 1) {
-                            self.result.addArtifact(hashes[j]);
-                        }
-
-                        self.result.setSuccess(true);
-                        callback(null, self.result);
+                                self.result.setSuccess(true);
+                                callback(null, self.result);
+                            }
+                        });
                     }
-                });
-            }
-        });
+                }
+            };
+
+        for (var i = files.length; i--;) {
+            artifact.addFile(files[i],filesBlob[files[i]],onFileSave);
+        }
     };
 
     CNNCreator.prototype._errorMessages = function(message){
