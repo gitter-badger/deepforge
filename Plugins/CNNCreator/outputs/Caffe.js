@@ -37,8 +37,9 @@ define(['./TemplateCreator',
         outputFiles[arch_name] += this.createTemplateFromNodes(tree[Constants.CHILDREN]);
 
         // Create the training file
-        //template = _.template(this.template[TRAINING]);
-        // TODO
+        template = _.template(this.template[TRAINING]);
+        tree.arch_name = arch_name;
+        outputFiles[train_name] = template(tree);
 
         // Create the testing file
         //template = _.template(this.template[TESTING]);

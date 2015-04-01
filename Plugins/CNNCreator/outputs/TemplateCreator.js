@@ -5,6 +5,7 @@ define(['../templates/Constants'], function(Constants) {
 
     var TemplateCreator = function() {
     };
+
     /**
      * Create the template from the sorted nodes. It assumes that 
      * the template to be used is stored as this.template
