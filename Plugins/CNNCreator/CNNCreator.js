@@ -8,11 +8,13 @@ define(['plugin/PluginConfig',
         'util/assert',
         './outputs',
         './templates/Constants',
+        //'zmq',
         'util/guid'],function(PluginConfig,
                               PluginBase,
                               assert,
                               Generators,
                               Constants,
+                              //zmq,
                               genGuid){
 
     'use strict';
@@ -20,6 +22,7 @@ define(['plugin/PluginConfig',
     var CNNCreator = function () {
         // Call base class's constructor
         PluginBase.call(this);
+
     };
 
     //basic functions and setting for plugin inheritance
@@ -132,12 +135,13 @@ define(['plugin/PluginConfig',
 
         // Retrieve & populate templates in topological order
         var output = this.generator.createOutputFiles(tree);
-        //var output = this.createTemplateFromNodes(tree);
 
         // Save file
-        var name = this.core.getAttribute(this.activeNode, 'name');
+        var name = this.core.getAttribute(this.activeNode, 'name')+
+              '_'+this.getCurrentConfig().template;
 
         this._saveOutput(name, output, callback);
+
     };
 
     /**

@@ -14,6 +14,7 @@ config.visualization.visualizerDescriptors = ['./Visualizers.json'];
 
 // Plugin paths
 config.plugin.basePaths.push('Plugins');
+config.plugin.allowServerExecution = true;
 
 validateConfig(config);
 module.exports = config;

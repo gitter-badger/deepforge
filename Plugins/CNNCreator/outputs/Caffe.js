@@ -2,8 +2,10 @@
 
 define(['./TemplateCreator',
         '../templates/Constants',
+        'underscore',
         '../templates/Caffe'], function(TemplateCreator,
                                         Constants,
+                                        _,
                                         Caffe) {
     'use strict';
 
@@ -44,6 +46,12 @@ define(['./TemplateCreator',
         // Create the testing file
         //template = _.template(this.template[TESTING]);
         // TODO
+
+        // Create the metadata file
+        var metadata = {type: 'Caffe',
+                        trainCommand: 'caffe --train '+train_name,
+                        testCommand: ''};  // Add test cmd FIXME 
+        outputFiles.metadata = JSON.stringify(metadata);
 
         return outputFiles;
     };
