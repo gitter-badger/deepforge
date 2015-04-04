@@ -39,7 +39,8 @@ define([], function() {
         Data: 'layers.InputLayer',
         Convolution: 'Conv2DLayer',
         ReLU: 'FIXME',  // TODO ?
-        Pooling: '{{=pool}}Pool2DLayer',
+        Pooling: '{{pool = _.capitalize(pool)}}'+
+            '{{=pool}}Pool2DLayer',
         Flatten: 'layers.FlattenLayer',
         InnerProduct: 'layers.DenseLayer', // Fully connected
         Dropout: 'layers.DropoutLayer',

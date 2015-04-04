@@ -15,12 +15,19 @@ define(['./TemplateCreator',
         ARCH_SEP = '_arch_sep_',
         ARCH_END = '_arch_end_';
 
-    var CaffeGenerator = function() {
+    // Create helpful function for use in the templates. It 
+    // is attached to _ to make it accessible from within the
+    // template
+    _.capitalize = function(string) {
+        return string.charAt(0).toUpperCase()+string.substring(1).toLowerCase();
+    };
+
+    var TheanoGenerator = function() {
         this.template = Theano;
     };
 
     // Inherit the 'createTemplateFromNodes' method
-    _.extend(CaffeGenerator.prototype, TemplateCreator.prototype);
+    _.extend(TheanoGenerator.prototype, TemplateCreator.prototype);
 
     /**
      * Create the output files stored in a JS Object where the 
@@ -29,10 +36,11 @@ define(['./TemplateCreator',
      * @param {Virtual Node} tree
      * @return {Object}
      */
-    CaffeGenerator.prototype.createOutputFiles = function(tree) {
+    TheanoGenerator.prototype.createOutputFiles = function(tree) {
         var outputFiles = {},
             name = tree.name.replace(/ /g, '_'),
             arch_name = name+'_arch.py',
+            train_name = 'neural_net.py',
             template;
 
         // Create the architecture file
@@ -57,5 +65,5 @@ define(['./TemplateCreator',
         return outputFiles;
     };
 
-    return CaffeGenerator;
+    return TheanoGenerator;
 });
