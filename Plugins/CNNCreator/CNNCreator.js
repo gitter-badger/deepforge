@@ -303,26 +303,26 @@ define(['plugin/PluginConfig',
             fileCount = files.length,
             onFileSave = function(err) {
                 if(err){
-                    callback(err);
-                } else {
-                    if (--fileCount === 0) {
-                        self.blobClient.saveAllArtifacts(function(err, hashes) {
-                            if (err) {
-                                callback(err);
-                            } else {
-                                self.logger.info('Artifacts are saved here:');
-                                self.logger.info(hashes);
+                    return callback(err);
+                } 
 
-                                // result add hashes
-                                for (var j = 0; j < hashes.length; j += 1) {
-                                    self.result.addArtifact(hashes[j]);
-                                }
+                if (--fileCount === 0) {
+                    self.blobClient.saveAllArtifacts(function(err, hashes) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            self.logger.info('Artifacts are saved here:');
+                            self.logger.info(hashes);
 
-                                self.result.setSuccess(true);
-                                callback(null, self.result);
+                            // result add hashes
+                            for (var j = 0; j < hashes.length; j += 1) {
+                                self.result.addArtifact(hashes[j]);
                             }
-                        });
-                    }
+
+                            self.result.setSuccess(true);
+                            callback(null, self.result);
+                        }
+                    });
                 }
             };
 
