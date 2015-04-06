@@ -180,6 +180,39 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "learning_rate": {
+            "type": "float",
+            "default": null
+          },
+          "momentum": {
+            "type": "float",
+            "default": null
+          },
+          "weight_decay": {
+            "type": "float",
+            "default": null
+          },
+          "learning_rate_policy": {
+            "type": "string",
+            "default": "inv",
+            "enum": [
+              "fixed",
+              "step",
+              "inv"
+            ]
+          },
+          "gamma": {
+            "type": "float",
+            "default": null
+          },
+          "power": {
+            "type": "float",
+            "default": null
+          },
+          "max_iter": {
+            "type": "integer",
+            "default": null
           }
         }
       },
@@ -1315,13 +1348,53 @@
     },
     "8546f13d-7845-f868-18f0-483387470708": {
       "attributes": {
-        "name": "CNN"
+        "gamma": null,
+        "learning_rate": null,
+        "learning_rate_policy": "inv",
+        "max_iter": null,
+        "momentum": null,
+        "name": "CNN",
+        "power": null,
+        "weight_decay": null
       },
       "base": "0b7d2f24-dbd8-41fc-21c8-572ed3d98c87",
       "meta": {
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "learning_rate": {
+            "type": "float",
+            "default": null
+          },
+          "momentum": {
+            "type": "float",
+            "default": null
+          },
+          "weight_decay": {
+            "type": "float",
+            "default": null
+          },
+          "learning_rate_policy": {
+            "type": "string",
+            "default": "inv",
+            "enum": [
+              "fixed",
+              "step",
+              "inv"
+            ]
+          },
+          "gamma": {
+            "type": "float",
+            "default": null
+          },
+          "power": {
+            "type": "float",
+            "default": null
+          },
+          "max_iter": {
+            "type": "integer",
+            "default": null
           }
         },
         "children": {
@@ -1433,6 +1506,39 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "learning_rate": {
+            "type": "float",
+            "default": null
+          },
+          "momentum": {
+            "type": "float",
+            "default": null
+          },
+          "weight_decay": {
+            "type": "float",
+            "default": null
+          },
+          "learning_rate_policy": {
+            "type": "string",
+            "default": "inv",
+            "enum": [
+              "fixed",
+              "step",
+              "inv"
+            ]
+          },
+          "gamma": {
+            "type": "float",
+            "default": null
+          },
+          "power": {
+            "type": "float",
+            "default": null
+          },
+          "max_iter": {
+            "type": "integer",
+            "default": null
           }
         }
       },
