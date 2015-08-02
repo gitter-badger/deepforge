@@ -5,16 +5,16 @@
 
 define(['plugin/PluginConfig',
         'plugin/PluginBase',
-        'util/assert',
+        'common/util/assert',
         './outputs',
         './templates/Constants',
-        //'zmq',
-        'util/guid'],function(PluginConfig,
+        '../common/utils',
+        'common/util/guid'],function(PluginConfig,
                               PluginBase,
                               assert,
                               Generators,
                               Constants,
-                              //zmq,
+                              Utils,
                               genGuid){
 
     'use strict';
@@ -257,39 +257,24 @@ define(['plugin/PluginConfig',
      * @return {Array<Node>} sortedNodes
      */
     CNNCreator.prototype.getTopologicalOrdering = function(virtualNodes) {
-        var sortedNodes = [],
-            edgeCounts = {},
-            ids = Object.keys(virtualNodes),
-            len = ids.length,
-            nodeId,
-            id,
-            i;
+        var nodeIds,
+            adjacencyList = {},
+            sortedNodes;
 
-        // Populate edgeCounts
-        for (i = ids.length; i--;) {
-            edgeCounts[ids[i]] = virtualNodes[ids[i]][Constants.PREV].length;
-        }
+        nodeIds = Object.keys(virtualNodes);
 
-        while (sortedNodes.length < len) {
-            // Find a node with zero edges...
-            i = ids.length;
-            nodeId = null;
-            while (i-- && !nodeId) {
-                if (edgeCounts[ids[i]] === 0) {
-                    nodeId = ids.splice(i,1)[0];
-                }
-            }
+        // Create the adjacency list
+        nodeIds.forEach(function(id) {
+            adjacencyList[id] = virtualNodes[id][Constants.NEXT]
+                .map(function(node) {
+                    return node[Constants.NODE_PATH];
+                });
+        });
 
-            // Add the node 
-            sortedNodes.push(nodeId);
+        sortedNodes = Utils.topologicalSort(nodeIds, adjacencyList);
 
-            // Update edge lists
-            i = virtualNodes[nodeId][Constants.NEXT].length;
-            while (i--) {
-                id = virtualNodes[nodeId][Constants.NEXT][i][Constants.NODE_PATH];
-                edgeCounts[id]--;
-            }
-
+        if (sortedNodes === null) {
+            // TODO: Cyclic graph - invalid!
         }
 
         return sortedNodes.map(function(e) { return virtualNodes[e]; });

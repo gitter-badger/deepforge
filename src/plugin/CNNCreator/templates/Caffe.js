@@ -89,6 +89,10 @@ define([], function() {
         '\t\tstride: {{= stride }}\n'+
         '\t\tpad: {{= pad }}\n'+
         '\t\tnum_output: {{= num_output }}\n'+
+        '\t\tbias_filler {\n'+
+        '\t\t\ttype: {{= bias_filler_type }}\n'+
+        '\t\t\tvalue: {{= bias_filler_value }}\n'+
+        '\t\t}\n'+
         '\t}\n';
 
         // Extra ones from the layer catalog
@@ -96,7 +100,7 @@ define([], function() {
         //'\tblobs_lr: {{= blobs_lr }}\n'+
         //'\tweight_decay: {{= weight_decay }}\n'+
         //'\tweight_decay: {{= weight_decay }}\n'+
-
+ 
     blockMap.Pooling += 
         '\tpooling_param {\n'+
         '\t\tpool: {{= pool }}\n'+

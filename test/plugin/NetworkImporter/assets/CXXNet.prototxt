@@ -1,0 +1,144 @@
+name: "CXXNet"
+layer {
+	name: "plankton_data"
+	type: "Data"
+	data_param {
+		source: "./lmdb/AllData_lmdb"
+		backend: "LMDB"
+		batch_size: "256"
+		scale: "1"
+	}
+}
+layer {
+	name: "conv1"
+	type: "Convolution"
+	bottom: "plankton_data"
+	top: "plankton_data"
+	convolution_param {
+		kernel_size: 5
+		stride: 4
+		pad: 2
+		num_output: 96
+		bias_filler {
+			type: constant
+			value: 0
+		}
+	}
+}
+layer {
+	name: "ReLU1"
+	type: "ReLU"
+	bottom: "conv1"
+	top: "conv1"
+}
+layer {
+	name: "Pool1"
+	type: "Pooling"
+	bottom: "ReLU1"
+	top: "ReLU1"
+	pooling_param {
+		pool: MAX
+		kernel_size: 3
+		stride: 2
+	}
+}
+layer {
+	name: "Conv2"
+	type: "Convolution"
+	bottom: "Pool1"
+	top: "Pool1"
+	convolution_param {
+		kernel_size: 3
+		stride: 1
+		pad: 2
+		num_output: 128
+		bias_filler {
+			type: constant
+			value: 0
+		}
+	}
+}
+layer {
+	name: "ReLU2"
+	type: "ReLU"
+	bottom: "Conv2"
+	top: "Conv2"
+}
+layer {
+	name: "Conv3"
+	type: "Convolution"
+	bottom: "ReLU2"
+	top: "ReLU2"
+	convolution_param {
+		kernel_size: 3
+		stride: 1
+		pad: 1
+		num_output: 128
+		bias_filler {
+			type: constant
+			value: 0
+		}
+	}
+}
+layer {
+	name: "ReLU3"
+	type: "ReLU"
+	bottom: "Conv3"
+	top: "Conv3"
+}
+layer {
+	name: "Pool2"
+	type: "Pooling"
+	bottom: "ReLU3"
+	top: "ReLU3"
+	pooling_param {
+		pool: MAX
+		kernel_size: 3
+		stride: 2
+	}
+}
+layer {
+	name: "Flatten"
+	type: "Flatten"
+	bottom: "Pool2"
+	top: "Pool2"
+}
+layer {
+	name: "fullc1"
+	type: "InnerProduct"
+	bottom: "Flatten"
+	top: "Flatten"
+	inner_product_param {
+		num_output: 512
+	}
+}
+layer {
+	name: "ReLU4"
+	type: "ReLU"
+	bottom: "fullc1"
+	top: "fullc1"
+}
+layer {
+	name: "Dropout1"
+	type: "Dropout"
+	bottom: "ReLU4"
+	top: "ReLU4"
+	dropout_param {
+		dropout_ratio: 0.5
+	}
+}
+layer {
+	name: "fullc2"
+	type: "InnerProduct"
+	bottom: "Dropout1"
+	top: "Dropout1"
+	inner_product_param {
+		num_output: 121
+	}
+}
+layer {
+	name: "Softmax"
+	type: "Softmax"
+	bottom: "fullc2"
+	top: "fullc2"
+}
