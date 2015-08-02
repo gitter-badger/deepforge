@@ -5,16 +5,14 @@
 
 define(['plugin/PluginConfig',
         'plugin/PluginBase',
-        'util/assert',
+        'common/util/assert',
         './outputs',
         './templates/Constants',
-        //'zmq',
-        'util/guid'],function(PluginConfig,
+        'common/util/guid'],function(PluginConfig,
                               PluginBase,
                               assert,
                               Generators,
                               Constants,
-                              //zmq,
                               genGuid){
 
     'use strict';

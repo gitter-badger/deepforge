@@ -30,4 +30,4 @@ Next, run
 npm start
 ```
 
-Finally, navigate to `localhost:8082` in a browser to use CNN Creator!
+Finally, navigate to `localhost:8080` in a browser to use CNN Creator!

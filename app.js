@@ -1,3 +1,4 @@
+// jshint node: true
 'use strict';
 
 var gmeConfig = require('./config'),
@@ -8,5 +9,5 @@ webgme.addToRequireJsPaths(gmeConfig);
 
 myServer = new webgme.standaloneServer(gmeConfig);
 myServer.start(function () {
-    console.log('Server running on port '+gmeConfig.server.port);
+    //console.log('server up');
 });
