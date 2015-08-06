@@ -153,12 +153,40 @@ define([
             // Remove extra commas
             .replace(/,\s*}/g, '}');
 
+        // TODO: Convert duplicates to an array
         // Remove the last comma
         var i = cleanedText.lastIndexOf(',');
-        var layer = JSON.parse(cleanedText.substring(0, i));
+        var layerJson = NetworkImporter.handleDuplicates(cleanedText.substring(0, i));
+        var layer = JSON.parse(layerJson);
 
         // Flatten the layer
         return NetworkImporter.flattenWithPrefix('', layer);
+    };
+
+    /**
+     * Condense duplicate keys to an array of values.
+     *
+     * @param {String} layer
+     * @return {undefined}
+     */
+    NetworkImporter.handleDuplicates = function(layer) {
+        // For each key, check for duplicates and create an array
+        var keyRegex = /("[\w\d]+")\s*:\s*/g,
+            valueRegex = /:\s*(["\w\d]+)/g,
+            keys = layer.match(keyRegex),
+            values = layer.match(valueRegex),
+            visited = {};
+        
+        for (var i = keys.length; i--;) {
+            if (!visited[keys[i]]) {
+                visited[keys[i]] = [];
+            }
+            visited[keys[i]].push(values[i]);
+        }
+
+        // Get the keys with multiple values
+        // add them 
+        // TODO: Finish this
     };
 
     NetworkImporter.flattenWithPrefix = function(prefix, object) {
@@ -178,9 +206,56 @@ define([
     };
 
     NetworkImporter.prototype.createCnnModel = function(name, layers) {
-        //this.core.createNode({parent: , base: });
-        //this.core.setRegistry(node, 'position', {x: x, y: y});
+        var lowerToMetaName = {},
+            self = this,
+            cnn,
+            nodeMap = {},
+            nodeList = [];
+
+        // Get a map of lowercase names to proper case
+        Object.keys(this.META).forEach(function(name) {
+            lowerToMetaName[name.toLowerCase()] = name;
+        });
+
+        // Create the CNN parent in the root
+        cnn = this.core.createNode({parent: this.rootNode, base: this.META.CNN});
+        this.core.setAttribute(cnn, 'name', name);
+
+        // Create the nodes
+        layers.forEach(function(layer) {
+            var type = layer.type.toLowerCase(),
+                name = layer.name,
+                base = self.META[lowerToMetaName[type]],
+                node = self.core.createNode({parent: cnn, base: base});
+
+            // Add attributes
+            // TODO
+            self.core.setAttribute(node, 'name', name);
+            nodeMap[name] = node;
+            nodeList.push(node);
+        });
+
+        var // FIXME: finish this for positioning
+            // edges = {},  // The "bottom" names for each
+            edge;
+
+        // Connect the nodes to each "top" node
+        layers.forEach(function(layer) {
+            layer.top.forEach(function(neighbor) {
+                // Create an edge between layer and neighbor
+                edge = self.core.createNode({parent: cnn, 
+                    base: self.META.LayerConnector});
+
+                self.core.setPointer(edge, 'src', nodeMap[layer.name]);
+                self.core.setPointer(edge, 'dst', nodeMap[neighbor]);
+            });
+        });
+
+        // Position the nodes in an intelligent way
         // TODO
+    };
+
+    NetworkImporter.prototype.positionNodes = function(nodes) {
     };
 
     return NetworkImporter;
