@@ -7,10 +7,34 @@
 
 define([
     'plugin/PluginConfig',
-    'plugin/PluginBase',
-    'plugin/NetworkImporter/NetworkImporter/meta'
-], function (PluginConfig, PluginBase, MetaTypes) {
+    'plugin/PluginBase'
+], function (PluginConfig, PluginBase) {
     'use strict';
+
+    // Utilities
+    var equals = function(a, b) {
+        return a === b;
+    };
+
+    var not = function(fn) {
+        return function() {
+            return !fn.apply(null, arguments);
+        };
+    };
+
+    var extend = function(base) {
+        var src;
+        for (var i = 1; i < arguments.length; i++) {
+            src = arguments[i];
+            for (var key in src) {
+                base[key] = src[key];
+            }
+        }
+    };
+
+    var isPrimitive = function(obj) {
+        return typeof obj !== 'object' || obj instanceof Array;
+    };
 
     /**
     * Initializes a new instance of NetworkImporter.
@@ -22,7 +46,6 @@ define([
     var NetworkImporter = function () {
         // Call base class' constructor.
         PluginBase.call(this);
-        this.metaTypes = MetaTypes;
     };
 
     // Prototypal inheritance from PluginBase.
@@ -73,8 +96,7 @@ define([
         // Use self to access core, project, result, logger etc from PluginBase.
         // These are all instantiated at this point.
         var self = this;
-        self.updateMETA(self.metaTypes);
-        // TODO: Get the text from the config
+        // Get the text from the config
         var currentConfig = self.getCurrentConfig(),
             prototxtHash = currentConfig.prototxt;
 
@@ -95,8 +117,6 @@ define([
             layers = NetworkImporter.parseLayersFromPrototxt(prototxt);
 
             // TODO: Create a model from the layers
-            // TODO: How do you create nodes again?
-            // FIXME: Do this in one transaction
             self.createCnnModel(name, layers);
 
             // Save
@@ -106,103 +126,6 @@ define([
             });
         });
 
-    };
-
-    /**
-     * Parse Caffe's prototxt and create the CNN layers
-     *
-     * @param {String} prototxt
-     * @return {Layers[]}
-     */
-    NetworkImporter.parseLayersFromPrototxt = function(prototxt) {
-        var layers;
-
-        // Convert to nodes
-        layers = prototxt.split("layer");
-        layers.shift();  // Remove any content before the first layer (ie, name)
-        return layers.map(NetworkImporter.parseLayer);
-    };
-
-    NetworkImporter.parseLayer = function(text) {
-        var cleanedText = text
-
-            // Remove sub params
-            .replace(/(\w+)\s*{/g, function(a,b) {
-                return '"'+b+'": {';
-            })
-
-            // Put quotes around the keys and maybe the values
-            .replace(/(\w+)\s*:/g, function(a,b) {
-                return '"'+b+'":';
-            })
-            // ... and maybe the values
-            .replace(/:\s*(\w+)/g, function(a,b) {
-                try {
-                    JSON.parse(b); // Check if it is valid JS
-                    return a;
-                } catch (e) {
-                    return ': "'+b+'"';
-                }
-            })
-
-            // Add commas to the end of the attributes
-            .replace(/("\w+"\s*:\s*["\w\d\.]+)/g, function(a,b) {
-                return b+',';
-            })
-            .replace(/}/g, '},')
-            // Remove extra commas
-            .replace(/,\s*}/g, '}');
-
-        // TODO: Convert duplicates to an array
-        // Remove the last comma
-        var i = cleanedText.lastIndexOf(',');
-        var layerJson = NetworkImporter.handleDuplicates(cleanedText.substring(0, i));
-        var layer = JSON.parse(layerJson);
-
-        // Flatten the layer
-        return NetworkImporter.flattenWithPrefix('', layer);
-    };
-
-    /**
-     * Condense duplicate keys to an array of values.
-     *
-     * @param {String} layer
-     * @return {undefined}
-     */
-    NetworkImporter.handleDuplicates = function(layer) {
-        // For each key, check for duplicates and create an array
-        var keyRegex = /("[\w\d]+")\s*:\s*/g,
-            valueRegex = /:\s*(["\w\d]+)/g,
-            keys = layer.match(keyRegex),
-            values = layer.match(valueRegex),
-            visited = {};
-        
-        for (var i = keys.length; i--;) {
-            if (!visited[keys[i]]) {
-                visited[keys[i]] = [];
-            }
-            visited[keys[i]].push(values[i]);
-        }
-
-        // Get the keys with multiple values
-        // add them 
-        // TODO: Finish this
-    };
-
-    NetworkImporter.flattenWithPrefix = function(prefix, object) {
-        var ids = Object.keys(object),
-            flatObject = {};
-
-        for (var i = ids.length; i--;) {
-            if (typeof object[ids[i]] !== 'object') {
-                flatObject[prefix+ids[i]] = object[ids[i]];
-            } else {
-                _.extend(flatObject, 
-                    NetworkImporter.flattenWithPrefix(prefix+ids[i]+'_' ,object[ids[i]]));
-            }
-        }
-
-        return flatObject;
     };
 
     NetworkImporter.prototype.createCnnModel = function(name, layers) {
@@ -241,7 +164,14 @@ define([
 
         // Connect the nodes to each "top" node
         layers.forEach(function(layer) {
-            layer.top.forEach(function(neighbor) {
+            var nextLayers = layer.top || [],
+                prevLayers = layer.bottom || [];
+
+            prevLayers
+            // Ignore self connections as they represent inplace transformations
+            // and are Caffe-specific
+            .filter(not(equals.bind(null, layer.name)))
+            .forEach(function(neighbor) {
                 // Create an edge between layer and neighbor
                 edge = self.core.createNode({parent: cnn, 
                     base: self.META.LayerConnector});
@@ -253,6 +183,125 @@ define([
 
         // Position the nodes in an intelligent way
         // TODO
+    };
+
+    /**
+     * Parse Caffe's prototxt and create the CNN layers
+     *
+     * @param {String} prototxt
+     * @return {Layers[]}
+     */
+    NetworkImporter.parseLayersFromPrototxt = function(prototxt) {
+        var layers;
+
+        // Convert to nodes
+        layers = prototxt.split("layer");
+        layers.shift();  // Remove any content before the first layer (ie, name)
+        return layers.map(NetworkImporter.parseLayer);
+    };
+
+    NetworkImporter.parseLayer = function(text) {
+        // Convert the caffe prototxt to a JSON
+        var cleanedText = text
+
+            // Remove sub params
+            .replace(/(\w+)\s*{/g, function(a,b) {
+                return '"'+b+'": {';
+            })
+
+            // Put quotes around the keys and maybe the values
+            .replace(/(\w+)\s*:/g, function(a,b) {
+                return '"'+b+'":';
+            })
+            // ... and maybe the values
+            .replace(/:\s*(\w+)/g, function(a,b) {
+                try {
+                    JSON.parse(b); // Check if it is valid JS
+                    return a;
+                } catch (e) {
+                    return ': "'+b+'"';
+                }
+            })
+
+            // Add commas to the end of the attributes
+            .replace(/("\w+"\s*:\s*["\w\d\\\/\.]+)/g, function(a,b) {
+                return b+',';
+            })
+            .replace(/}/g, '},')
+            // Remove extra commas
+            .replace(/,\s*}/g, '}');
+
+        // Remove the last comma
+        var i = cleanedText.lastIndexOf(',');
+        // Convert duplicates to an array
+        var layerJson = NetworkImporter.handleRouteDuplicates(cleanedText.substring(0, i));
+        var layer = JSON.parse(layerJson);
+
+        // Flatten the layer
+        return NetworkImporter.flattenWithPrefix('', layer);
+    };
+
+    /**
+     * Condense duplicate top/bottom path keys to an array of values.
+     *
+     * @param {String} layer
+     * @return {undefined}
+     */
+    NetworkImporter.handleRouteDuplicates = function(layer) {
+        // For each key, check for duplicates and create an array
+        var keys = {
+                '"top":': /"top"\s*:\s*(["\w\d]+)/g,
+                '"bottom":': /"bottom"\s*:\s*(["\w\d]+)/g
+            },
+            pairs;
+
+        // toPairs
+        pairs = Object.keys(keys).map(function(key) {
+            return [key, keys[key]];
+        });
+
+        return pairs.reduce(function(prevLayer, pair) {
+            pair.unshift(prevLayer);
+            return NetworkImporter.handleDuplicates.apply(null, pair);
+        }, layer);
+
+        // Get the keys with multiple values
+        // add them 
+        // TODO: Finish this
+    };
+
+    NetworkImporter.handleDuplicates = function(layer, key, regex) {
+        // Get all matches from the regex (first parentheses)
+        var matches = [],
+            match = regex.exec(layer),
+            matchesList;
+
+        while (match !== null) {
+            matches.push(match[1]);
+            match = regex.exec(layer);
+        }
+
+        // Combine the matches into an array
+        matchesList = ' ['+matches.join(', ')+']';
+
+        // Replace all matches in layer to the array
+        return layer.replace(regex, key+matchesList);
+    };
+
+    NetworkImporter.flattenWithPrefix = function(prefix, object) {
+        var ids = Object.keys(object),
+            flatObject = {};
+
+        for (var i = ids.length; i--;) {
+            if (isPrimitive(object[ids[i]])) {
+                flatObject[prefix+ids[i]] = object[ids[i]];
+            } else {
+                extend(flatObject, 
+                    NetworkImporter.flattenWithPrefix(prefix+ids[i]+'_' ,object[ids[i]]));
+            }
+        }
+
+        return flatObject;
     };
 
     NetworkImporter.prototype.positionNodes = function(nodes) {
