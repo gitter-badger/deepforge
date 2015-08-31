@@ -176,8 +176,8 @@ define([
                 edge = self.core.createNode({parent: cnn, 
                     base: self.META.LayerConnector});
 
-                self.core.setPointer(edge, 'src', nodeMap[layer.name]);
-                self.core.setPointer(edge, 'dst', nodeMap[neighbor]);
+                self.core.setPointer(edge, 'src', nodeMap[neighbor]);
+                self.core.setPointer(edge, 'dst', nodeMap[layer.name]);
             });
         });
 
@@ -304,7 +304,10 @@ define([
         return flatObject;
     };
 
-    NetworkImporter.prototype.positionNodes = function(nodes) {
+    // Positioning utilities
+    NetworkImporter.prototype.positionNodes = function(nodes, al) {
+        // Position the nodes in "nodes" given the edges in the adjacency list
+        // TODO
     };
 
     return NetworkImporter;
