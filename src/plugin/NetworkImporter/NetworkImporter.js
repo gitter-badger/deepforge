@@ -7,15 +7,12 @@
 
 define([
     'plugin/PluginConfig',
-    'plugin/PluginBase'
-], function (PluginConfig, PluginBase) {
+    'plugin/PluginBase',
+    './../common/utils'
+], function (PluginConfig, PluginBase, Utils) {
     'use strict';
 
     // Utilities
-    var equals = function(a, b) {
-        return a === b;
-    };
-
     var not = function(fn) {
         return function() {
             return !fn.apply(null, arguments);
@@ -116,7 +113,7 @@ define([
 
             layers = NetworkImporter.parseLayersFromPrototxt(prototxt);
 
-            // TODO: Create a model from the layers
+            // Create a model from the layers
             self.createCnnModel(name, layers);
 
             // Save
@@ -160,9 +157,14 @@ define([
 
         var // FIXME: finish this for positioning
             // edges = {},  // The "bottom" names for each
+            adjacencyList = {},
             edge;
 
-        // Connect the nodes to each "top" node
+        // Connect the nodes to each "top" node and create adjacency list
+        nodeList.forEach(function(node) {
+            adjacencyList[self.core.getGuid(node)] = [];
+        });
+
         layers.forEach(function(layer) {
             var nextLayers = layer.top || [],
                 prevLayers = layer.bottom || [];
@@ -170,7 +172,7 @@ define([
             prevLayers
             // Ignore self connections as they represent inplace transformations
             // and are Caffe-specific
-            .filter(not(equals.bind(null, layer.name)))
+            .filter(not(Utils.equals.bind(null, layer.name)))
             .forEach(function(neighbor) {
                 // Create an edge between layer and neighbor
                 edge = self.core.createNode({parent: cnn, 
@@ -178,11 +180,18 @@ define([
 
                 self.core.setPointer(edge, 'src', nodeMap[neighbor]);
                 self.core.setPointer(edge, 'dst', nodeMap[layer.name]);
-            });
-        });
+                // Add to adjacency list
+                var srcGuid = self.core.getGuid(nodeMap[neighbor]),
+                    dstGuid = self.core.getGuid(nodeMap[layer.name]);
+                adjacencyList[srcGuid].push(dstGuid);
+            }); });
 
         // Position the nodes in an intelligent way
-        // TODO
+        var nodeDict = {};
+        for (var i = nodeList.length; i--;) {
+            nodeDict[self.core.getGuid(nodeList[i])] = nodeList[i];
+        }
+        self.positionNodes(nodeDict, adjacencyList);
     };
 
     /**
@@ -306,8 +315,75 @@ define([
 
     // Positioning utilities
     NetworkImporter.prototype.positionNodes = function(nodes, al) {
-        // Position the nodes in "nodes" given the edges in the adjacency list
-        // TODO
+        var positions = this.getNodePositions(nodes, al);
+        // position the nodes!
+        var startX = 50, 
+            startY = 50,
+            dx = 180,dy = 80,
+            node,
+            x,y;
+
+        for (var row = 0; row < positions.length; row++) {
+            y = startY+row*dy;
+            for (var col = 0; col < positions[row].length; col++) {
+                x = startX+col*dx;
+                node = positions[row][col];
+                if (node) {  // set position
+                    this.core.setRegistry(node, 'position', {x:x,y:y});
+                }
+            }
+        }
+    };
+
+    NetworkImporter.prototype.getNodePositions = function(nodes, al) {
+        // Position the nodes given the edges in the adjacency list
+        var sortedNodes,
+            nodesToPosition = {},  // node -> (row, col)
+            nodeId,
+            maxNode,
+            positions = [],
+            nodeIds,
+            getMaxPosition = function(position, ancestor) {
+                if (nodesToPosition[ancestor] && nodesToPosition[ancestor][0] > position[0]) {
+                    return nodesToPosition[ancestor];
+                }
+                return position;
+            },
+            incomingEdges;
+
+        nodeIds = Object.keys(nodes);
+        sortedNodes = Utils.topologicalSort(nodeIds, al);
+        incomingEdges = Utils.reverseAdjacencyList(al);
+
+        // Iterate through the sorted nodes
+        var col, row,
+            position;
+        while (sortedNodes.length) {
+            // For each node, get the nodes with outgoing connections to the node
+            nodeId = sortedNodes.shift();
+            // Get the node with the highest layer
+            position = incomingEdges[nodeId].reduce(getMaxPosition, [-1,-1]);
+            row = position[0]+1;
+            col = position[1];
+            // Add the node to the position matrix
+            if (positions.length === row) {
+                positions.push([]);
+            }
+            // Add columns as needed
+            while (positions[row].length <= col) {
+                positions[row].push(null);
+            }
+            // Find the first open column
+            while (positions[row][col] !== null) {
+                col++;
+                if (positions[row].length === col) {
+                    positions[row].push(null);
+                }
+            }
+            positions[row][col] = nodes[nodeId];
+            nodesToPosition[nodeId] = [row, col];
+        }
+        return positions;
     };
 
     return NetworkImporter;
