@@ -6,13 +6,16 @@
 */  
 
 define([ "./outputs/Caffe",
-"./outputs/Theano" ], function ( Caffe,
-Theano ) {    
+"./outputs/Theano",
+"./outputs/Torch" ], function ( Caffe,
+Theano,
+Torch ) {    
 	'use strict';           
                             
 	var outputs = {};
 		outputs.Caffe = Caffe;
 		outputs.Theano = Theano;
+		outputs.Torch = Torch;
 
     return outputs;
 });
