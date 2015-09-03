@@ -1,0 +1,1 @@
+{"components":{"plugin":{"CNNCreator":{"srcPath":"src/plugin/CNNCreator","testPath":"test/plugin/CNNCreator"},"NetworkImporter":{"srcPath":"src/plugin/NetworkImporter","testPath":"test/plugin/NetworkImporter"}},"addOn":{}},"dependencies":{"plugin":{},"addOn":{}}}

@@ -16,10 +16,8 @@ var config = require('webgme/config/config.default'),
 
 
 config.plugin.basePaths.push("src/plugin");
-config.plugin.basePaths.push("src/plugin");
 
 config.addOn.enable = true
-
 
 validateConfig(config);
 module.exports = config;
