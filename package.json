@@ -19,9 +19,13 @@
   "license": "ISC",
   "dependencies": {
     "underscore": "^1.8.3",
+<<<<<<< HEAD
     "webgme": "latest"
   },
   "devDependencies": {
     "mocha": "^2.2.5"
+=======
+    "webgme": "^0.11.1"
+>>>>>>> master
   }
 }

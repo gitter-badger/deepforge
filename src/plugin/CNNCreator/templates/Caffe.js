@@ -52,6 +52,7 @@ define([], function() {
         'Flatten',
         'InnerProduct', // Fully connected
         'Dropout',
+        'LRN',
         'Softmax'
     ];
 
@@ -88,7 +89,12 @@ define([], function() {
         '\t\tkernel_size: {{= kernel_size }}\n'+
         '\t\tstride: {{= stride }}\n'+
         '\t\tpad: {{= pad }}\n'+
+        '\t\tgroup: {{= group }}\n'+
         '\t\tnum_output: {{= num_output }}\n'+
+        '\t\tweight_filler {\n'+
+        '\t\t\ttype: {{= weight_filler_type }}\n'+
+        '\t\t\tvalue: {{= weight_filler_value }}\n'+
+        '\t\t}\n'+
         '\t\tbias_filler {\n'+
         '\t\t\ttype: {{= bias_filler_type }}\n'+
         '\t\t\tvalue: {{= bias_filler_value }}\n'+
@@ -106,16 +112,38 @@ define([], function() {
         '\t\tpool: {{= pool }}\n'+
         '\t\tkernel_size: {{= kernel_size }}\n'+
         '\t\tstride: {{= stride }}\n'+
+        '\t\tpad: {{= pad }}\n'+
         '\t}\n';
 
     blockMap.InnerProduct += 
         '\tinner_product_param {\n'+
         '\t\tnum_output: {{= num_output }}\n'+
+        '\t\tweight_filler {\n'+
+        '\t\t\ttype: {{= weight_filler_type }}\n'+
+        '\t\t\tvalue: {{= weight_filler_value }}\n'+
+        '\t\t}\n'+
+        '\t\tbias_filler {\n'+
+        '\t\t\ttype: {{= bias_filler_type }}\n'+
+        '\t\t\tvalue: {{= bias_filler_value }}\n'+
+        '\t\t}\n'+
         '\t}\n';
 
     blockMap.Dropout += 
         '\tdropout_param {\n'+
         '\t\tdropout_ratio: {{= dropout_ratio }}\n'+
+        '\t}\n';
+    
+    blockMap.LRN +=
+        '\tlrn_param {\n'+
+        '\t\talpha: "{{= alpha }}"\n'+
+        '\t\tbeta: "{{= beta }}"\n'+
+        '\t\tlocal_size: "{{= local_size }}"\n'+
+        '\t\tnorm_region: "{{= norm_region }}"\n'+
+        '\t}\n';
+    
+    blockMap.ReLU +=
+        '\trelu_param {\n'+
+        '\t\tnegative_slope: "{{= negative_slope }}"\n'+
         '\t}\n';
 
     // Close the layer text

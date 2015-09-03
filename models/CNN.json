@@ -360,6 +360,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -399,6 +403,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -424,6 +432,22 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "local_size": {
+            "type": "integer",
+            "default": 5
+          },
+          "alpha": {
+            "type": "float",
+            "default": 1
+          },
+          "beta": {
+            "type": "float",
+            "default": 5
+          },
+          "norm_region": {
+            "type": "string",
+            "default": "ACROSS_CHANNELS"
           }
         }
       },
@@ -567,6 +591,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -617,6 +657,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -635,13 +679,33 @@
     },
     "177b17f9-2ae5-ca74-ede9-fcbbe2304aa7": {
       "attributes": {
-        "name": "LRN"
+        "alpha": 1,
+        "beta": 5,
+        "local_size": 5,
+        "name": "LRN",
+        "norm_region": "ACROSS_CHANNELS"
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "local_size": {
+            "type": "integer",
+            "default": 5
+          },
+          "alpha": {
+            "type": "float",
+            "default": 1
+          },
+          "beta": {
+            "type": "float",
+            "default": 5
+          },
+          "norm_region": {
+            "type": "string",
+            "default": "ACROSS_CHANNELS"
           }
         }
       },
@@ -693,6 +757,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -711,8 +787,12 @@
     },
     "19d2230e-3181-92a7-f014-ac779d07a0bd": {
       "attributes": {
+        "bias_filler_type": "\"constant\"",
+        "bias_filler_value": 0,
         "name": "InnerProduct",
-        "num_output": "1"
+        "num_output": "1",
+        "weight_filler_type": "\"constant\"",
+        "weight_filler_value": 0
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -723,6 +803,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -748,6 +844,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -797,6 +897,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -874,6 +986,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -904,6 +1028,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -947,6 +1087,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -972,6 +1116,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -981,8 +1129,8 @@
       },
       "registry": {
         "position": {
-          "x": 156,
-          "y": 780
+          "x": 165,
+          "y": 781
         }
       },
       "sets": {},
@@ -1050,6 +1198,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -1512,7 +1676,7 @@
             "guid": "fa0ed121-aa39-88e8-675e-62ca915cb367",
             "registry": {
               "position": {
-                "x": 329,
+                "x": 341,
                 "y": 250
               }
             }
@@ -1658,6 +1822,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -1758,6 +1926,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -1867,6 +2039,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -1942,6 +2126,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -2022,6 +2210,22 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "local_size": {
+            "type": "integer",
+            "default": 5
+          },
+          "alpha": {
+            "type": "float",
+            "default": 1
+          },
+          "beta": {
+            "type": "float",
+            "default": 5
+          },
+          "norm_region": {
+            "type": "string",
+            "default": "ACROSS_CHANNELS"
           }
         }
       },
@@ -2065,13 +2269,18 @@
     },
     "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb": {
       "attributes": {
-        "name": "ReLU"
+        "name": "ReLU",
+        "negative_slope": 0
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -2196,6 +2405,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -2221,6 +2442,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -2305,6 +2530,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -2503,6 +2732,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -2818,6 +3059,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -2861,6 +3114,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -2891,6 +3148,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3016,6 +3289,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3129,6 +3406,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3181,6 +3462,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -3257,6 +3550,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3287,6 +3584,22 @@
           "num_output": {
             "type": "integer",
             "default": null
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "bias_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "bias_filler_value": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3505,6 +3818,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -3555,6 +3872,10 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "negative_slope": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -3602,6 +3923,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -3695,6 +4028,10 @@
           "stride": {
             "type": "integer",
             "default": null
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -3823,6 +4160,18 @@
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -3871,6 +4220,22 @@
         "attributes": {
           "name": {
             "type": "string"
+          },
+          "local_size": {
+            "type": "integer",
+            "default": 5
+          },
+          "alpha": {
+            "type": "float",
+            "default": 1
+          },
+          "beta": {
+            "type": "float",
+            "default": 5
+          },
+          "norm_region": {
+            "type": "string",
+            "default": "ACROSS_CHANNELS"
           }
         }
       },
@@ -3914,13 +4279,16 @@
     },
     "f5fbea99-978e-1037-9019-8cfe066b42db": {
       "attributes": {
-        "bias_filler_type": "constant",
+        "bias_filler_type": "\"constant\"",
         "bias_filler_value": 0,
+        "group": 1,
         "kernel_size": "5",
         "name": "Convolution",
         "num_output": "96",
         "pad": "0",
-        "stride": 1
+        "stride": 1,
+        "weight_filler_type": "\"constant\"",
+        "weight_filler_value": 0
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -3946,11 +4314,23 @@
           },
           "bias_filler_type": {
             "type": "string",
-            "default": "constant"
+            "default": "\"constant\""
           },
           "bias_filler_value": {
             "type": "float",
             "default": 0
+          },
+          "weight_filler_type": {
+            "type": "string",
+            "default": "\"constant\""
+          },
+          "weight_filler_value": {
+            "type": "float",
+            "default": 0
+          },
+          "group": {
+            "type": "float",
+            "default": 1
           }
         }
       },
@@ -4021,8 +4401,9 @@
       "attributes": {
         "kernel_size": "5",
         "name": "Pooling",
+        "pad": 0,
         "pool": "MAX",
-        "stride": "1"
+        "stride": 1
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -4044,7 +4425,11 @@
           },
           "stride": {
             "type": "integer",
-            "default": null
+            "default": 1
+          },
+          "pad": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
