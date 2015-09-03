@@ -19,7 +19,7 @@ var fs = require('fs'),
         "\tvar outputs = {};\n__CODE__\n"+
         "    return outputs;\n" +
         "});",
-    skipFiles = ['TemplateCreator.js'];
+    skipFiles = ['Theano.js', 'TemplateCreator.js'];
 
 //Recursively search through directories
 var walk = function(dir, done) {
