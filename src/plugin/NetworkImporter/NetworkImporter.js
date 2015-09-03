@@ -8,8 +8,9 @@
 define([
     'plugin/PluginConfig',
     'plugin/PluginBase',
+    './AttributeMap',
     './../common/utils'
-], function (PluginConfig, PluginBase, Utils) {
+], function (PluginConfig, PluginBase, AttributeMap, Utils) {
     'use strict';
 
     // Utilities
@@ -149,8 +150,7 @@ define([
                 node = self.core.createNode({parent: cnn, base: base});
 
             // Add attributes
-            // TODO
-            self.core.setAttribute(node, 'name', name);
+            self.addNodeAttributes(layer, node);
             nodeMap[name] = node;
             nodeList.push(node);
         });
@@ -192,6 +192,18 @@ define([
             nodeDict[self.core.getGuid(nodeList[i])] = nodeList[i];
         }
         self.positionNodes(nodeDict, adjacencyList);
+    };
+
+    NetworkImporter.prototype.addNodeAttributes = function(layer, node) {
+        var self = this,
+            layerToAttribute = AttributeMap[layer.type],
+            layerKeys = Object.keys(layerToAttribute);
+
+        self.core.setAttribute(node, 'name', name);
+        // Add the rest of the attributes
+        layerKeys.forEach(function(key) {
+            self.core.setAttribute(node, layerToAttribute[key], layer[key]);
+        });
     };
 
     /**
