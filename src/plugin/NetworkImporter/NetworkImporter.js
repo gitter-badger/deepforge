@@ -20,20 +20,6 @@ define([
         };
     };
 
-    var extend = function(base) {
-        var src;
-        for (var i = 1; i < arguments.length; i++) {
-            src = arguments[i];
-            for (var key in src) {
-                base[key] = src[key];
-            }
-        }
-    };
-
-    var isPrimitive = function(obj) {
-        return typeof obj !== 'object' || obj instanceof Array;
-    };
-
     /**
     * Initializes a new instance of NetworkImporter.
     * @class
@@ -271,7 +257,7 @@ define([
         var layer = JSON.parse(layerJson);
 
         // Flatten the layer
-        return NetworkImporter.flattenWithPrefix('', layer);
+        return Utils.flattenWithPrefix('', layer);
     };
 
     /**
@@ -315,22 +301,6 @@ define([
 
         // Replace all matches in layer to the array
         return layer.replace(regex, key+matchesList);
-    };
-
-    NetworkImporter.flattenWithPrefix = function(prefix, object) {
-        var ids = Object.keys(object),
-            flatObject = {};
-
-        for (var i = ids.length; i--;) {
-            if (isPrimitive(object[ids[i]])) {
-                flatObject[prefix+ids[i]] = object[ids[i]];
-            } else {
-                extend(flatObject, 
-                    NetworkImporter.flattenWithPrefix(prefix+ids[i]+'_' ,object[ids[i]]));
-            }
-        }
-
-        return flatObject;
     };
 
     // Positioning utilities
