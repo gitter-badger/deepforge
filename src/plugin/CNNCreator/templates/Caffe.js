@@ -1,6 +1,6 @@
 /*globals define*/
-'use strict';
-define([], function() {
+define(['../../common/CaffeToWebGME'], function(Layers) {
+    'use strict';
     // Every layer has the following:
     //
     // layer {
@@ -9,6 +9,57 @@ define([], function() {
     //     top: "base_name"
     //     bottom: "base_name"
     // }
+
+    // Helper functions
+    var attributeOrder = ['name', 'type', 'top', 'bottom'];
+    var attributeSorter = function(key1, key2) {
+        // Sort the attributes by the 'attributeOrder' and sort any fields
+        // like data_param, pooling_param, etc, to the end
+        var i1 = attributeOrder.indexOf(key1),
+            i2 = attributeOrder.indexOf(key2);
+
+        if (i1 === -1) {
+            i1 = Infinity;
+        }
+
+        if (i2 === -1) {
+            i2 = Infinity;
+        }
+
+        if (i2 < i1 || key2.indexOf('_param') > -1) {
+            return -1;
+        }
+        return 1;
+    };
+
+    var quotedKeys = ['type'];  // Keys that should have quoted values
+    var createAttributeText = function(key, value) {
+        // Add handlebars to value
+        value = '{{= '+value+' }}';
+        // Add quotes to the value if needed
+        if (quotedKeys.indexOf(key) > -1) {
+            value = '"'+value+'"';
+        }
+        return '\t'+key+': '+value+'\n';
+    };
+    var createLayerTemplate = function(prefix, layer) {
+        // convert each non-object value to text. Recurse on object values
+        var keys = Object.keys(layer),
+            template = '',
+            snippet;
+
+        // Sort the keys for aesthetics in the output files
+        keys.sort(attributeSorter);
+        for (var i = keys.length; i--;) {
+            if (typeof layer[keys[i]] !== 'object') {
+                template += prefix+createAttributeText(keys[i], layer[keys[i]]);
+            } else {
+                snippet = createLayerTemplate(prefix+'\t', layer[keys[i]]);
+                template += prefix+'\t'+keys[i]+' {\n'+ snippet +prefix+'\t}\n';
+            }
+        }
+        return template;
+    };
 
     // Basic block templates
     var blockMap = {
@@ -44,112 +95,34 @@ define([], function() {
 
     };
 
-    var layers = [
-        'Data',
-        'Convolution',
-        'ReLU',
-        'Pooling',
-        'Flatten',
-        'InnerProduct', // Fully connected
-        'Dropout',
-        'LRN',
-        'Softmax'
-    ];
-
     // Populate the layers with the basic templates
-    var i;
-    for (i = layers.length; i--;) {
-        blockMap[layers[i]] = 
-            'layer {\n'+
-            '\tname: "{{= name }}"\n'+
-            '\ttype: "{{= _base_.name }}"\n'+
+    var layerHeader = 
+        'layer {\n'+
+        '\ttype: "{{= _base_.name }}"\n'+
 
-            // Incoming connections
-            '{{ _.each(_previous_, function(layer) {}}'+
-            '\tbottom: "{{= layer.name }}"\n'+
-            '{{ });}}'+
-            
-            // Outgoing connections
-            '{{ _.each(_previous_, function(layer) {}}'+
-            '\ttop: "{{= layer.name }}"\n'+
-            '{{ });}}';
-    }
+        // Incoming connections
+        '{{ _.each(_previous_, function(layer) {}}'+
+        '\tbottom: "{{= layer.name }}"\n'+
+        '{{ });}}'+
+        
+        // Outgoing connections
+        '{{ _.each(_previous_, function(layer) {}}'+
+        '\ttop: "{{= layer.name }}"\n'+
+        '{{ });}}';
 
-    // Add Layer Specific Parameters
-    blockMap.Data += 
-        '\tdata_param {\n'+
-        '\t\tsource: "{{= location }}"\n'+
-        '\t\tbackend: "{{= backend }}"\n'+
-        '\t\tbatch_size: "{{= batch_size }}"\n'+
-        '\t\tscale: "{{= scale }}"\n'+
-        '\t}\n';
+    // Add Layer Specific Parameters from the CaffeToWebGME file
+    var layerTypes = Object.keys(Layers);
 
-    blockMap.Convolution += 
-        '\tconvolution_param {\n'+
-        '\t\tkernel_size: {{= kernel_size }}\n'+
-        '\t\tstride: {{= stride }}\n'+
-        '\t\tpad: {{= pad }}\n'+
-        '\t\tgroup: {{= group }}\n'+
-        '\t\tnum_output: {{= num_output }}\n'+
-        '\t\tweight_filler {\n'+
-        '\t\t\ttype: {{= weight_filler_type }}\n'+
-        '\t\t\tvalue: {{= weight_filler_value }}\n'+
-        '\t\t}\n'+
-        '\t\tbias_filler {\n'+
-        '\t\t\ttype: {{= bias_filler_type }}\n'+
-        '\t\t\tvalue: {{= bias_filler_value }}\n'+
-        '\t\t}\n'+
-        '\t}\n';
+    // Helper functions
 
-        // Extra ones from the layer catalog
-        //'\tblobs_lr: {{= blobs_lr }}\n'+
-        //'\tblobs_lr: {{= blobs_lr }}\n'+
-        //'\tweight_decay: {{= weight_decay }}\n'+
-        //'\tweight_decay: {{= weight_decay }}\n'+
- 
-    blockMap.Pooling += 
-        '\tpooling_param {\n'+
-        '\t\tpool: {{= pool }}\n'+
-        '\t\tkernel_size: {{= kernel_size }}\n'+
-        '\t\tstride: {{= stride }}\n'+
-        '\t\tpad: {{= pad }}\n'+
-        '\t}\n';
+    layerTypes.forEach(function(layerType) {
+        // top, bottom, type are handled manually
+        var contents = _.omit(Layers[layerType], ['top', 'bottom', 'type']),
+            body = createLayerTemplate('', contents),
+            template = layerHeader+body+'\n}\n';
 
-    blockMap.InnerProduct += 
-        '\tinner_product_param {\n'+
-        '\t\tnum_output: {{= num_output }}\n'+
-        '\t\tweight_filler {\n'+
-        '\t\t\ttype: {{= weight_filler_type }}\n'+
-        '\t\t\tvalue: {{= weight_filler_value }}\n'+
-        '\t\t}\n'+
-        '\t\tbias_filler {\n'+
-        '\t\t\ttype: {{= bias_filler_type }}\n'+
-        '\t\t\tvalue: {{= bias_filler_value }}\n'+
-        '\t\t}\n'+
-        '\t}\n';
-
-    blockMap.Dropout += 
-        '\tdropout_param {\n'+
-        '\t\tdropout_ratio: {{= dropout_ratio }}\n'+
-        '\t}\n';
-    
-    blockMap.LRN +=
-        '\tlrn_param {\n'+
-        '\t\talpha: "{{= alpha }}"\n'+
-        '\t\tbeta: "{{= beta }}"\n'+
-        '\t\tlocal_size: "{{= local_size }}"\n'+
-        '\t\tnorm_region: "{{= norm_region }}"\n'+
-        '\t}\n';
-    
-    blockMap.ReLU +=
-        '\trelu_param {\n'+
-        '\t\tnegative_slope: "{{= negative_slope }}"\n'+
-        '\t}\n';
-
-    // Close the layer text
-    for (i = layers.length; i--;) {
-        blockMap[layers[i]] += '}\n';
-    }
+        blockMap[layerType] = template;
+    });
 
     return blockMap;
 });

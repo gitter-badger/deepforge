@@ -82,9 +82,42 @@ define([], function() {
         return result;
     };
 
+    var nestedSeparator = '_';
+    var isPrimitive = function(obj) {
+        return typeof obj !== 'object' || obj instanceof Array;
+    };
+
+    var extend = function(base) {
+        var src;
+        for (var i = 1; i < arguments.length; i++) {
+            src = arguments[i];
+            for (var key in src) {
+                base[key] = src[key];
+            }
+        }
+    };
+
+    var flattenWithPrefix = function(prefix, object) {
+        var ids = Object.keys(object),
+            flatObject = {};
+
+        for (var i = ids.length; i--;) {
+            if (isPrimitive(object[ids[i]])) {
+                flatObject[prefix+ids[i]] = object[ids[i]];
+            } else {
+                extend(flatObject, 
+                    flattenWithPrefix(prefix+ids[i]+nestedSeparator ,object[ids[i]]));
+            }
+        }
+
+        return flatObject;
+    };
+
     return {
         equals: equals,
         reverseAdjacencyList: reverseAdjacencyList,
-        topologicalSort: topologicalSort
+        topologicalSort: topologicalSort,
+        nestedSeparator: nestedSeparator,
+        flattenWithPrefix: flattenWithPrefix
     };
 });
