@@ -1,5 +1,5 @@
 # CNN Creator
-CNN Creator allows you to build graphical models for CNN's and then generate the code/template for the network!
+CNN Creator provides a graphical interface to prototype/develop CNN's. It is currently in early stages but has decent support for creation of custom CNN architecture as well as importing and exporting Caffe models (using the network prototxt).
 
 ## Quick Setup
 After cloning the repo, run
@@ -8,26 +8,9 @@ After cloning the repo, run
 npm install
 ```
 
-If you are running your mongo database locally, run
+Now, navigate to `localhost:8888` in a browser and create a new project. Select `CNN` as the seed and start creating your neural nets!
 
-```
-npm run setup-local
-```
-Otherwise, run
+There are examples in the `Examples` directory.
 
-```
-npm run setup -- -m MONGO_URI
-```
-where `MONGO_URI` is the uri of your given mongo instance. For example:
-
-```
-npm run setup -- -m mongodb://127.0.0.1:27017/netsim
-```
-
-Next, run
-
-```
-npm start
-```
-
-Finally, navigate to `localhost:8080` in a browser to use CNN Creator!
+## Interested in contributing?
+Contributions are welcome! Either fork the project and submit some PR's or shoot me an email about getting more involved!
