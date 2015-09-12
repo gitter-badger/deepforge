@@ -113,11 +113,22 @@ define([], function() {
         return flatObject;
     };
 
+    var omit = function(object, keys) {
+        var result = {};
+        for (var key in object) {
+            if (keys.indexOf(key) === -1) {
+                result[key] = object[key];
+            }
+        }
+        return result;
+    };
+
     return {
         equals: equals,
         reverseAdjacencyList: reverseAdjacencyList,
         topologicalSort: topologicalSort,
         nestedSeparator: nestedSeparator,
-        flattenWithPrefix: flattenWithPrefix
+        flattenWithPrefix: flattenWithPrefix,
+        omit: omit
     };
 });
