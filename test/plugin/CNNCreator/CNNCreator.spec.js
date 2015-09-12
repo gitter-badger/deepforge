@@ -54,7 +54,7 @@ describe('CNNCreator', function () {
             .nodeify(done);
     });
 
-    it('should run plugin without error', function (done) {
+    it('should run plugin on CXXNet without error', function (done) {
         var manager = new PluginCliManager(null, logger, gmeConfig),
             pluginConfig = {
             },
@@ -63,6 +63,31 @@ describe('CNNCreator', function () {
                 commitHash: commitHash,
                 branchName: 'test',
                 activeNode: '/1723890/2002951467'  // CXXNet
+            };
+
+        manager.executePlugin(pluginName, pluginConfig, context, function (err, pluginResult) {
+            expect(err).to.equal(null);
+            expect(typeof pluginResult).to.equal('object');
+            expect(pluginResult.success).to.equal(true);
+
+            project.getBranchHash('test')
+                .then(function (branchHash) {
+                    // This one doesn't commit
+                    //expect(branchHash).to.not.equal(commitHash);
+                })
+                .nodeify(done);
+        });
+    });
+
+    it('should run plugin on Alexnet without error', function (done) {
+        var manager = new PluginCliManager(null, logger, gmeConfig),
+            pluginConfig = {
+            },
+            context = {
+                project: project,
+                commitHash: commitHash,
+                branchName: 'test',
+                activeNode: '/1723890/445912655'  // AlexNet
             };
 
         manager.executePlugin(pluginName, pluginConfig, context, function (err, pluginResult) {
