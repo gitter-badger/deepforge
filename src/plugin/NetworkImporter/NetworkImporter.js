@@ -148,9 +148,7 @@ define([
             nodeList.push(node);
         });
 
-        var // FIXME: finish this for positioning
-            // edges = {},  // The "bottom" names for each
-            adjacencyList = {},
+        var adjacencyList = {},
             edge;
 
         // Connect the nodes to each "top" node and create adjacency list
@@ -166,6 +164,8 @@ define([
             // Ignore self connections as they represent inplace transformations
             // and are Caffe-specific
             .filter(not(Utils.equals.bind(null, layer.name)))
+            // For now, we will skip label layers FIXME
+            .filter(not(Utils.equals.bind(null, 'label')))
             .forEach(function(neighbor) {
                 // Create an edge between layer and neighbor
                 edge = self.core.createNode({parent: cnn, 
@@ -220,8 +220,13 @@ define([
     };
 
     NetworkImporter.parseLayer = function(text) {
+        var cleanedText,
+            layerJson,
+            layer,
+            i;
+
         // Convert the caffe prototxt to a JSON
-        var cleanedText = text
+        cleanedText = text
 
             // Remove sub params
             .replace(/(\w+)\s*{/g, function(a,b) {
@@ -243,7 +248,7 @@ define([
             })
 
             // Add commas to the end of the attributes
-            .replace(/("\w+"\s*:\s*["\w\d\\\/\.]+)/g, function(a,b) {
+            .replace(/("\w+"\s*:\s*["\w\d\\\/\-\.]+)/g, function(a,b) {
                 return b+',';
             })
             .replace(/}/g, '},')
@@ -251,10 +256,15 @@ define([
             .replace(/,\s*}/g, '}');
 
         // Remove the last comma
-        var i = cleanedText.lastIndexOf(',');
+        i = cleanedText.lastIndexOf(',');
         // Convert duplicates to an array
-        var layerJson = NetworkImporter.handleRouteDuplicates(cleanedText.substring(0, i));
-        var layer = JSON.parse(layerJson);
+        layerJson = NetworkImporter.handleRouteDuplicates(cleanedText.substring(0, i));
+        try {
+            layer = JSON.parse(layerJson);
+        } catch(e) {
+            // TODO: Report the error
+            console.error('Cannot parse layer:', e);
+        }
 
         // Flatten the layer
         return Utils.flattenWithPrefix('', layer);
@@ -269,8 +279,8 @@ define([
     NetworkImporter.handleRouteDuplicates = function(layer) {
         // For each key, check for duplicates and create an array
         var keys = {
-                '"top":': /"top"\s*:\s*(["\w\d]+)/g,
-                '"bottom":': /"bottom"\s*:\s*(["\w\d]+)/g
+                '"top":': /"top"\s*:\s*(["\w\d\/\-]+)/g,
+                '"bottom":': /"bottom"\s*:\s*(["\w\d\/\-]+)/g
             },
             pairs;
 

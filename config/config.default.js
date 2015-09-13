@@ -8,7 +8,7 @@ config.server.port = 8080;
 config.mongo.uri = 'mongodb://127.0.0.1:27017/cnn-creator';
 
 // Default Project
-config.client.defaultProject.name = 'cnn_creator';
+config.client.defaultConnectionRouter = 'basic';
 
 // Customize Visualizers
 config.visualization.visualizerDescriptors = ['./Visualizers.json'];
