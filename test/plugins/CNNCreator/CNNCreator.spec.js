@@ -6,7 +6,7 @@
 'use strict';
 var testFixture = require('../../globals');
 
-describe('CNNCreator', function () {
+describe.only('CNNCreator', function () {
     var gmeConfig = testFixture.getGmeConfig(),
         expect = testFixture.expect,
         logger = testFixture.logger.fork('NewPlugin'),
@@ -103,4 +103,6 @@ describe('CNNCreator', function () {
                 .nodeify(done);
         });
     });
+
+    // TODO: Add tests to validate the output of these
 });
