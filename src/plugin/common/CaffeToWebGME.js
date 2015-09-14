@@ -222,8 +222,8 @@ define([], function() {
         DummyData: {
             dummy_data_param: {
                 shape: {
-                    dim: 'dim1',
-                    dim: 'dim2',
+                    //dim: 'dim1',
+                    //dim: 'dim2',
                     dim: 'dim3'
                 },
                 data_filler: {
@@ -259,9 +259,9 @@ define([], function() {
         Reshape: {
             reshape_param: {
                 shape: {
-                    dim: 'dim1',
-                    dim: 'dim2',
-                    dim: 'dim3',
+                    //dim: 'dim1',
+                    //dim: 'dim2',
+                    //dim: 'dim3',
                     dim: 'dim4'
                 },
             }
@@ -276,7 +276,7 @@ define([], function() {
         Slice: {
             slice_param: {
                 axis: 'axis',
-                slice_point: 'slice_point1',
+                //slice_point: 'slice_point1',
                 slice_point: 'slice_point2'
             }
         },

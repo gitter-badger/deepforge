@@ -1,15 +1,8 @@
 // I call this "micro" as it tests individual functions within the plugin
 var fs = require('fs'),
-    requirejs = require('requirejs'),
+    requirejs = require('webgme').requirejs,
     assert = require('assert'),
     NetworkImporter;
-
-requirejs.config({
-    paths: {
-        plugin: '../../../node_modules/webgme/src/plugin',
-        common: '../../../node_modules/webgme/src/common'
-    }
-});
 
 describe('parseLayersFromPrototxt', function() {
     before(function(done) {
