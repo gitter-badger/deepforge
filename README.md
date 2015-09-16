@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/brollb/cnn-creator.svg?branch=master)](https://travis-ci.org/brollb/cnn-creator)
 # CNN Creator
 CNN Creator provides a graphical interface to prototype/develop CNN's. It is currently in early stages but has decent support for creation of custom CNN architecture as well as importing and exporting Caffe models (using the network prototxt).
 
