@@ -1,28 +1,28 @@
 {
   "components": {
-    "plugin": {
+    "plugins": {
       "CNNCreator": {
-        "src": "src/plugin/CNNCreator",
-        "test": "test/plugin/CNNCreator"
+        "src": "src/plugins/CNNCreator",
+        "test": "test/plugins/CNNCreator"
       },
       "NetworkImporter": {
-        "src": "src/plugin/NetworkImporter",
-        "test": "test/plugin/NetworkImporter"
+        "src": "src/plugins/NetworkImporter",
+        "test": "test/plugins/NetworkImporter"
       }
     },
-    "addOn": {},
-    "seed": {
+    "addOns": {},
+    "seeds": {
       "CNN": {
-        "src": "src/seed/CNN"
+        "src": "src/seeds/CNN"
       },
       "CNN-dev": {
-        "src": "src/seed/CNN-dev"
+        "src": "src/seeds/CNN-dev"
       }
     }
   },
   "dependencies": {
-    "plugin": {},
-    "addOn": {},
-    "seed": {}
+    "plugins": {},
+    "addOns": {},
+    "seeds": {}
   }
 }

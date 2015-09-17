@@ -15,10 +15,10 @@ var config = require('webgme/config/config.default'),
 
 
 // The paths can be loaded from the webgme-setup.json
-config.plugin.basePaths.push("src/plugin");
+config.plugin.basePaths.push("src/plugins");
 
-config.seedProjects.basePaths.push("src/seed/CNN");
-config.seedProjects.basePaths.push("src/seed/CNN-dev");
+config.seedProjects.basePaths.push("src/seeds/CNN");
+config.seedProjects.basePaths.push("src/seeds/CNN-dev");
 
 
 
