@@ -1,5 +1,5 @@
 /*globals define*/
-define(['../../common/CaffeToWebGME'], function(Layers) {
+define(['../common/CaffeToWebGME'], function(Layers) {
     'use strict';
     // Every layer has the following:
     //

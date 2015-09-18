@@ -17,7 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "underscore": "^1.8.3",
-    "webgme": "latest"
+    "webgme": "latest",
+    "webgme-simple-nodes": "brollb/webgme-simple-nodes"
   },
   "devDependencies": {
     "chai": "=3.0.0",
