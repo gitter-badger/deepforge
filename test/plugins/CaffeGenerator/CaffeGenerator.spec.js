@@ -6,13 +6,13 @@
 'use strict';
 var testFixture = require('../../globals');
 
-describe.only('CNNCreator', function () {
+describe.only('CaffeGenerator', function () {
     var gmeConfig = testFixture.getGmeConfig(),
         expect = testFixture.expect,
-        logger = testFixture.logger.fork('NewPlugin'),
+        logger = testFixture.logger.fork('CaffeGenerator'),
         PluginCliManager = testFixture.WebGME.PluginCliManager,
         projectName = 'testProject',
-        pluginName = 'CNNCreator',
+        pluginName = 'CaffeGenerator',
         project,
         gmeAuth,
         storage,
