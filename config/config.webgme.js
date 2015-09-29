@@ -14,6 +14,8 @@ config.seedProjects.basePaths.push('src/seeds/CNN');
 config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 
 
+// Visualizer descriptors
+
 // Add requirejs paths
 config.requirejsPaths = {
   'TemplateCreator': 'node_modules/webgme-simple-nodes/src/plugins/TemplateCreator'
