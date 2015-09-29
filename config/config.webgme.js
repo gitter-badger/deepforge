@@ -3,24 +3,21 @@
 'use strict';
 
 
-
-
-
-
-
-
-
 var config = require('webgme/config/config.default'),
     validateConfig = require('webgme/config/validator');
 
 
 // The paths can be loaded from the webgme-setup.json
-config.plugin.basePaths.push("src/plugins");
+config.plugin.basePaths.push('src/plugins');
+config.plugin.basePaths.push('node_modules/webgme-simple-nodes/src/plugins');
+config.seedProjects.basePaths.push('src/seeds/CNN');
+config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 
-config.seedProjects.basePaths.push("src/seeds/CNN");
-config.seedProjects.basePaths.push("src/seeds/CNN-dev");
 
-
+// Add requirejs paths
+config.requirejsPaths = {
+  'TemplateCreator': 'node_modules/webgme-simple-nodes/src/plugins/TemplateCreator'
+};
 
 validateConfig(config);
 module.exports = config;

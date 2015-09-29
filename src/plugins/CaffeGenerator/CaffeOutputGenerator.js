@@ -1,23 +1,23 @@
 /*globals _,define*/
 
-define(['./TemplateCreator',
-        '../templates/Constants',
+define(['TemplateCreator/outputs/OutputGenerator',
+        'TemplateCreator/templates/Constants',
         'underscore',
-        '../templates/Caffe'], function(TemplateCreator,
-                                        Constants,
-                                        _,
-                                        Caffe) {
+        './CaffeTemplate'], function(OutputGenerator,
+                                     Constants,
+                                     _,
+                                     CaffeTemplate) {
     'use strict';
 
     // Caffe Constants
     var TRAINING = '_training_',
         TESTING = '_testing_';
     var CaffeGenerator = function() {
-        this.template = Caffe;
+        this.template = CaffeTemplate;
     };
 
     // Inherit the 'createTemplateFromNodes' method
-    _.extend(CaffeGenerator.prototype, TemplateCreator.prototype);
+    _.extend(CaffeGenerator.prototype, OutputGenerator.prototype);
 
     /**
      * Create the output files stored in a JS Object where the 
@@ -27,6 +27,7 @@ define(['./TemplateCreator',
      * @return {Object}
      */
     CaffeGenerator.prototype.createOutputFiles = function(tree) {
+        //console.log('tree is', tree);
         var outputFiles = {},
             name = tree.name.replace(/ /g, '_'),
             arch_name = name+'_network.prototxt',
