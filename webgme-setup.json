@@ -18,11 +18,13 @@
       "CNN-dev": {
         "src": "src/seeds/CNN-dev"
       }
-    }
+    },
+    "visualizers": {}
   },
   "dependencies": {
     "plugins": {},
     "addOns": {},
-    "seeds": {}
+    "seeds": {},
+    "visualizers": {}
   }
 }
