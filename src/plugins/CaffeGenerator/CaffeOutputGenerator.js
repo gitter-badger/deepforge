@@ -34,6 +34,9 @@ define(['TemplateCreator/outputs/OutputGenerator',
             train_name = name+'_trainer.prototxt',
             template;
 
+        // Remove the label layer
+        this._removeLabelLayer(tree);
+
         // Create the architecture file
         template = _.template(this.template[Constants.ARCH]);
         outputFiles[arch_name] = template(tree);
@@ -55,6 +58,20 @@ define(['TemplateCreator/outputs/OutputGenerator',
         outputFiles.metadata = JSON.stringify(metadata);
 
         return outputFiles;
+    };
+
+    CaffeGenerator.prototype._removeLabelLayer = function(tree) {
+        // Remove the label layer (don't splice any connections)
+        // Also set the name to 'label'
+        // Check children for the layer with base type(.toLowerCase()) of 'label'
+        var children = tree[Constants.CHILDREN];
+        for (var i = children.length; i--;) {
+            if (children[i][Constants.BASE].name.toLowerCase() === 'label') {
+                children[i].name = 'label';
+                children.splice(i, 1);
+                return tree;
+            }
+        }
     };
 
     return CaffeGenerator;

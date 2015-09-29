@@ -124,7 +124,14 @@ define([
             self = this,
             cnn,
             nodeMap = {},
-            nodeList = [];
+            nodeList = [],
+            labelLayer = {
+                type: 'label',
+                name: 'label',
+                top: [],
+                bottom: []
+            },
+            createLayer;
 
         // Get a map of lowercase names to proper case
         Object.keys(this.META).forEach(function(name) {
@@ -136,7 +143,7 @@ define([
         this.core.setAttribute(cnn, 'name', name);
 
         // Create the nodes
-        layers.forEach(function(layer) {
+        createLayer = function(layer) {
             var type = layer.type.toLowerCase(),
                 name = layer.name,
                 base = self.META[lowerToMetaName[type]],
@@ -146,7 +153,24 @@ define([
             self.addNodeAttributes(layer, node);
             nodeMap[name] = node;
             nodeList.push(node);
-        });
+
+            // Check for edges to "label"
+            if (layer.top && layer.top.indexOf('label') !== -1) {
+                labelLayer.bottom.push(name);
+            }
+
+            if (layer.bottom && layer.bottom.indexOf('label') !== -1) {
+                labelLayer.top.push(name);
+            }
+        };
+
+        layers.forEach(createLayer);
+
+        // If 'label' layer exists in the prototxt, create it
+        if (labelLayer.top.length + labelLayer.bottom.length) {
+            createLayer(labelLayer);
+            layers.push(labelLayer);
+        }
 
         var adjacencyList = {},
             edge;
@@ -164,8 +188,6 @@ define([
             // Ignore self connections as they represent inplace transformations
             // and are Caffe-specific
             .filter(not(Utils.equals.bind(null, layer.name)))
-            // For now, we will skip label layers FIXME
-            .filter(not(Utils.equals.bind(null, 'label')))
             .forEach(function(neighbor) {
                 // Create an edge between layer and neighbor
                 edge = self.core.createNode({parent: cnn, 
@@ -177,7 +199,8 @@ define([
                 var srcGuid = self.core.getGuid(nodeMap[neighbor]),
                     dstGuid = self.core.getGuid(nodeMap[layer.name]);
                 adjacencyList[srcGuid].push(dstGuid);
-            }); });
+            }); 
+        });
 
         // Position the nodes in an intelligent way
         var nodeDict = {};
@@ -189,7 +212,7 @@ define([
 
     NetworkImporter.prototype.addNodeAttributes = function(layer, node) {
         var self = this,
-            layerToAttribute = AttributeMap[layer.type],
+            layerToAttribute = AttributeMap[layer.type.toLowerCase()],
             layerKeys = Object.keys(layerToAttribute);
 
         self.core.setAttribute(node, 'name', layer.name);
@@ -389,7 +412,7 @@ define([
     NetworkImporter.findCriticalErrors = function(layers) {
         // Check for layers in AttributeMap
         for (var i = layers.length; i--;) {
-            if (!AttributeMap[layers[i].type]) {
+            if (!AttributeMap[layers[i].type.toLowerCase()]) {
                 return 'Unsupported layer type: "'+layers[i].type+'". Please check the project META and AttributeMap';
             }
         }

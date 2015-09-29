@@ -7,7 +7,7 @@ define(['../common/CaffeToWebGME', '../common/utils'], function(Layers, Utils) {
         mappings = {};
     Object.keys(Layers).forEach(function(layer) {
         var completeLayer = Utils.flattenWithPrefix('',Layers[layer]);
-        mappings[layer] = Utils.omit(completeLayer, omitAttributes);
+        mappings[layer.toLowerCase()] = Utils.omit(completeLayer, omitAttributes);
     });
     return mappings;
 });

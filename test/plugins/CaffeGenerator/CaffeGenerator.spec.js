@@ -103,6 +103,7 @@ describe.only('CaffeGenerator', function () {
                 .nodeify(done);
         });
     });
-
+    // TODO: Add a test to check for a layer of type "Label" in the output
+    // /237895531 (GoogleNet)
     // TODO: Add tests to validate the output of these
 });

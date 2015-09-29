@@ -281,7 +281,7 @@ define([], function() {
             }
         },
 
-        /*** Other Opperations ***/
+        /*** Other Operations ***/
         Eltwise: {
             // Just the basics
         },
@@ -305,6 +305,11 @@ define([], function() {
                 coeff: 'coeff',
                 axis: 'axis'
             }
+        },
+
+        /*** Implicit "label" layer ***/
+        Label: {
+            // Just the basics
         }
     };
 
