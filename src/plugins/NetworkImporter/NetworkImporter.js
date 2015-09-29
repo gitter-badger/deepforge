@@ -9,8 +9,15 @@ define([
     'plugin/PluginConfig',
     'plugin/PluginBase',
     './AttributeMap',
-    './../common/utils'
-], function (PluginConfig, PluginBase, AttributeMap, Utils) {
+    './../common/utils',
+    '../common/CaffeInPlaceLayers'
+], function (
+    PluginConfig,
+    PluginBase,
+    AttributeMap,
+    Utils,
+    InPlaceLayers
+) {
     'use strict';
 
     // Utilities
@@ -112,7 +119,7 @@ define([
 
             // Save
             self.result.setSuccess(true);
-            self.save('added obj', function (err) {
+            self.save('Imported network: '+name, function (err) {
                 callback(null, self.result);
             });
         });
@@ -180,6 +187,9 @@ define([
             adjacencyList[self.core.getGuid(node)] = [];
         });
 
+        // Handle the in-place transformations
+        this.resolveInPlaceComputation(layers);
+
         layers.forEach(function(layer) {
             var nextLayers = layer.top || [],
                 prevLayers = layer.bottom || [];
@@ -208,6 +218,68 @@ define([
             nodeDict[self.core.getGuid(nodeList[i])] = nodeList[i];
         }
         self.positionNodes(nodeDict, adjacencyList);
+    };
+
+    NetworkImporter.prototype.resolveInPlaceComputation = function (layers) {
+        // For each layer, if it is an InPlaceLayer, check if it is actually
+        // using in place computation (top is the same as bottom). If so, then
+        // get the previous layer's out edges (minus the current) and set them
+        // to the current layer's out edges (removing them from the prev layer)
+
+        // First, create a dictionary
+        var layerMap = {},
+            hasPreviousEdgeTo = {},
+            prev,
+            j,
+            i;
+
+        for (i = layers.length; i--;) {
+            layerMap[layers[i].name] = layers[i];
+
+            // Store this node by it's in edges
+            if (layers[i].bottom) {
+                for (j = layers[i].bottom.length; j--;) {
+                    prev = layers[i].bottom[j];
+                    if (!hasPreviousEdgeTo[prev]) {
+                        hasPreviousEdgeTo[prev] = [];
+                    }
+                    hasPreviousEdgeTo[prev].push(layers[i]);
+                }
+            }
+        }
+
+        // Now, for each of the layers, find out if it is performing in-place
+        // computation. If so, modify the layers info so it is better represented
+        // in the WebGME (Don't worry - it will get converted back on export).
+        var isInPlace,
+            nextLayers,
+            current,
+            index,
+            next;
+
+        for (i = layers.length; i--;) {
+            current = layers[i];
+            if (InPlaceLayers[current.type.toLowerCase()]) {  // Supports in-place
+                isInPlace = current.bottom.length === 1 &&
+                    current.top.length === 1 &&
+                    current.bottom[0] === current.top[0];
+
+                if (isInPlace) {  // Is actually using in-place comp
+                    // Get next layer's in-edges and change the previous layer's
+                    // entry to the current edge
+                    prev = current.bottom[0];
+                    nextLayers = hasPreviousEdgeTo[prev].filter(function(layer) {
+                        return layer.name !== current.name;
+                    });
+
+                    // Replace "prev" with "current" in the in-edges of "next"
+                    for (var j = nextLayers.length; j--;) {
+                        index = nextLayers[j].bottom.indexOf(prev);
+                        nextLayers[j].bottom.splice(index, 1, current.name);
+                    }
+                }
+            }
+        }
     };
 
     NetworkImporter.prototype.addNodeAttributes = function(layer, node) {

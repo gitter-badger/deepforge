@@ -32,7 +32,7 @@ define(['../common/CaffeToWebGME'], function(Layers) {
         return 1;
     };
 
-    var quotedKeys = ['type'];  // Keys that should have quoted values
+    var quotedKeys = ['type', 'name'];  // Keys that should have quoted values
     var createAttributeText = function(key, value) {
         // Add handlebars to value
         value = '{{= '+value+' }}';
@@ -106,7 +106,7 @@ define(['../common/CaffeToWebGME'], function(Layers) {
         '{{ });}}'+
         
         // Outgoing connections
-        '{{ _.each(_previous_, function(layer) {}}'+
+        '{{ _.each(_next_, function(layer) {}}'+
         '\ttop: "{{= layer.name }}"\n'+
         '{{ });}}';
 
