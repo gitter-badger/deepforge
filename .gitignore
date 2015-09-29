@@ -4,3 +4,4 @@ test-tmp/
 *.swp
 blob-local-storage/
 .DS_Store
+.sass-cache

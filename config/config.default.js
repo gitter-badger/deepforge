@@ -5,9 +5,14 @@ var config = require('./config.base.js'),
 
 // Customize Visualizers
 config.visualization.visualizerDescriptors = ['./src/visualizers/Visualizers.json'];
+config.visualization.panelPaths.push('./src/visualizers/panels');
+config.visualization.layout.basePaths.push('./src/layouts');
 
 // Plugins
 config.plugin.allowServerExecution = true;
+
+// UI
+config.visualization.layout.default = 'MinimalLayout';
 
 validateConfig(config);
 module.exports = config;
