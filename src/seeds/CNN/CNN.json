@@ -630,12 +630,16 @@
         "bias_term": "true",
         "name": "InnerProduct",
         "num_output": "1",
-        "weight_filler_type": "\"constant\"",
-        "weight_filler_value": 0
+        "weight_filler_std": 0,
+        "weight_filler_type": "\"constant\""
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
         "attributes": {
+          "weight_filler_std": {
+            "type": "float",
+            "default": 0
+          },
           "num_output": {
             "type": "integer",
             "default": null
@@ -643,10 +647,6 @@
           "weight_filler_type": {
             "type": "string",
             "default": "\"constant\""
-          },
-          "weight_filler_value": {
-            "type": "float",
-            "default": 0
           },
           "bias_filler_type": {
             "type": "string",

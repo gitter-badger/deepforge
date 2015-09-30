@@ -17,7 +17,7 @@ define([], function() {
                 num_output: 'num_output',
                 weight_filler: {
                     type: 'weight_filler_type',
-                    value: 'weight_filler_value'
+                    std: 'weight_filler_std'
                 },
                 bias_filler: {
                     type: 'bias_filler_type',
@@ -238,7 +238,7 @@ define([], function() {
                 num_output: 'num_output',
                 weight_filler: {
                     type: 'weight_filler_type',
-                    value: 'weight_filler_value'
+                    std: 'weight_filler_std'
                 },
                 bias_filler: {
                     type: 'bias_filler_type',
