@@ -636,10 +636,6 @@
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
         "attributes": {
-          "weight_filler_std": {
-            "type": "float",
-            "default": 0
-          },
           "num_output": {
             "type": "integer",
             "default": null
@@ -663,6 +659,10 @@
               "true",
               "false"
             ]
+          },
+          "weight_filler_std": {
+            "type": "float",
+            "default": 0
           }
         }
       },
@@ -880,7 +880,7 @@
         "batch_size": 256,
         "crop_size": 0,
         "location": "",
-        "mean_file_size": "",
+        "mean_file_size": "mean.binaryproto",
         "mirror": "false",
         "name": "Data",
         "rand_skip": 0,
@@ -911,7 +911,7 @@
           },
           "mean_file_size": {
             "type": "string",
-            "default": ""
+            "default": "mean.binaryproto"
           },
           "mirror": {
             "type": "string",
