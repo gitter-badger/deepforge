@@ -66,34 +66,22 @@ define(['../common/CaffeToWebGME'], function(Layers) {
         _base_: '',
         _arch_: 'name: "{{= name }}"\n',  // active node
 
-        _training_: 'net: "{{= arch_name }}"\n'+
+        _training_: 'net: "{{= archName }}"\n'+
             'base_lr: {{= learning_rate }}\n'+
             'momentum: {{= momentum }}\n'+
             'weight_decay: {{= weight_decay }}\n'+
-            'lr_policy: {{= learning_rate_policy }}\n'+
+            'lr_policy: "{{= learning_rate_policy }}"\n'+
             'gamma: {{= gamma }}\n'+
             'power: {{= power }}\n'+
-            'max_iter: {{= max_iter }}\n'+
-            '# ADD THE SNAPSHOT DIRECTORY TODO\n'+
-            'snapshot: 1000\n'+
-            'snapshot_prefix: <%= SNAPSHOT_DIR %>\n'+
-            'solver_mode: GPU\n',
-
-        _testing_: 'net: "{{= arch_name }}"\n'+
-            'test_iter: {{= test_iter }}\n'+
-            'test_interval: {{= test_interval }}\n'+
-
-            'weight_decay: {{= weight_decay }}\n'+
-            'lr_policy: {{= learning_rate_policy }}\n'+
-            'gamma: {{= gamma }}\n'+
-            'power: {{= power }}\n'+
-            'max_iter: {{= max_iter }}\n'+
-            '# ADD THE SNAPSHOT DIRECTORY TODO\n'+
+            'max_iter: {{= maxIter }}\n'+
             'snapshot: {{= snapshot }}\n'+
-            'snapshot_prefix: {{= SNAPSHOT_DIR }}\n'+
-            'solver_mode: GPU\n'
+            'snapshot_prefix: "{{= snapshotPrefix }}"\n'+
+            'solver_mode: {{= solverMode }}\n',
 
     };
+
+    blockMap._testing_ =  blockMap._training_ + 'test_iter: {{= testIter }}\n'+
+        'test_interval: {{= testInterval }}';
 
     // Populate the layers with the basic templates
     var layerHeader = 

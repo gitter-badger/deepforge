@@ -625,13 +625,13 @@
     },
     "19d2230e-3181-92a7-f014-ac779d07a0bd": {
       "attributes": {
-        "bias_filler_type": "\"constant\"",
+        "bias_filler_type": "constant",
         "bias_filler_value": 0,
         "bias_term": "true",
         "name": "InnerProduct",
         "num_output": "1",
         "weight_filler_std": 0,
-        "weight_filler_type": "\"constant\""
+        "weight_filler_type": "constant"
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -642,11 +642,21 @@
           },
           "weight_filler_type": {
             "type": "string",
-            "default": "\"constant\""
+            "default": "constant",
+            "enum": [
+              "constant",
+              "gaussian",
+              "xavier"
+            ]
           },
           "bias_filler_type": {
             "type": "string",
-            "default": "\"constant\""
+            "default": "constant",
+            "enum": [
+              "constant",
+              "xavier",
+              "gaussian"
+            ]
           },
           "bias_filler_value": {
             "type": "float",
@@ -876,10 +886,8 @@
     },
     "379f6898-d91a-9603-e8ab-bf9eadbd750a": {
       "attributes": {
-        "backend": "LEVELDB",
         "batch_size": 256,
         "crop_size": 0,
-        "location": "",
         "mean_file_size": "mean.binaryproto",
         "mirror": "false",
         "name": "Data",
@@ -889,14 +897,6 @@
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
         "attributes": {
-          "location": {
-            "type": "string",
-            "default": ""
-          },
-          "backend": {
-            "type": "string",
-            "default": "LEVELDB"
-          },
           "batch_size": {
             "type": "integer",
             "default": 256
@@ -2909,33 +2909,28 @@
     },
     "8546f13d-7845-f868-18f0-483387470708": {
       "attributes": {
-        "gamma": null,
-        "learning_rate": null,
+        "gamma": 0.0001,
+        "learning_rate": 0.01,
         "learning_rate_policy": "inv",
-        "max_iter": null,
-        "momentum": null,
+        "momentum": 0.9,
         "name": "CNN",
-        "power": null,
-        "weight_decay": null
+        "power": 0.75,
+        "weight_decay": 0.0005
       },
       "base": "0b7d2f24-dbd8-41fc-21c8-572ed3d98c87",
       "meta": {
         "attributes": {
-          "max_iter": {
-            "type": "integer",
-            "default": null
-          },
           "learning_rate": {
             "type": "float",
-            "default": null
+            "default": 0.01
           },
           "momentum": {
             "type": "float",
-            "default": null
+            "default": 0.9
           },
           "weight_decay": {
             "type": "float",
-            "default": null
+            "default": 0.0005
           },
           "learning_rate_policy": {
             "type": "string",
@@ -2948,11 +2943,11 @@
           },
           "gamma": {
             "type": "float",
-            "default": null
+            "default": 0.0001
           },
           "power": {
             "type": "float",
-            "default": null
+            "default": 0.75
           }
         },
         "children": {
@@ -3001,7 +2996,6 @@
     },
     "888ec631-b49f-4cd8-4681-a6929221fe01": {
       "attributes": {
-        "location": "./lmdb/AllData_lmdb",
         "name": "data"
       },
       "base": "379f6898-d91a-9603-e8ab-bf9eadbd750a",
@@ -4502,7 +4496,7 @@
     },
     "f5fbea99-978e-1037-9019-8cfe066b42db": {
       "attributes": {
-        "bias_filler_type": "\"constant\"",
+        "bias_filler_type": "constant",
         "bias_filler_value": 0,
         "group": 1,
         "kernel_size": "5",
@@ -4511,7 +4505,7 @@
         "pad": "0",
         "stride": 1,
         "weight_filler_std": 0,
-        "weight_filler_type": "\"constant\""
+        "weight_filler_type": "constant"
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -4534,7 +4528,12 @@
           },
           "bias_filler_type": {
             "type": "string",
-            "default": "\"constant\""
+            "default": "constant",
+            "enum": [
+              "constant",
+              "xavier",
+              "gaussian"
+            ]
           },
           "bias_filler_value": {
             "type": "float",
@@ -4542,7 +4541,12 @@
           },
           "weight_filler_type": {
             "type": "string",
-            "default": "\"constant\""
+            "default": "constant",
+            "enum": [
+              "xavier",
+              "constant",
+              "gaussian"
+            ]
           },
           "group": {
             "type": "float",
