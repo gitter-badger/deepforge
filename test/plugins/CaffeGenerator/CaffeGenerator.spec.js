@@ -62,7 +62,7 @@ describe.only('CaffeGenerator', function () {
                 project: project,
                 commitHash: commitHash,
                 branchName: 'test',
-                activeNode: '/1723890/2002951467'  // CXXNet
+                activeNode: '/858268398/2002951467'  // CXXNet
             };
 
         manager.executePlugin(pluginName, pluginConfig, context, function (err, pluginResult) {
@@ -87,7 +87,7 @@ describe.only('CaffeGenerator', function () {
                 project: project,
                 commitHash: commitHash,
                 branchName: 'test',
-                activeNode: '/1723890/445912655'  // AlexNet
+                activeNode: '/858268398/445912655'  // AlexNet
             };
 
         manager.executePlugin(pluginName, pluginConfig, context, function (err, pluginResult) {
