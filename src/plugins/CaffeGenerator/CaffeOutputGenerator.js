@@ -3,9 +3,11 @@
 define(['TemplateCreator/outputs/OutputGenerator',
         'TemplateCreator/templates/Constants',
         'underscore',
+        '../common/CaffeInPlaceLayers',
         './CaffeTemplate'], function(OutputGenerator,
                                      Constants,
                                      _,
+                                     InPlaceLayers,
                                      CaffeTemplate) {
     'use strict';
 
@@ -36,6 +38,9 @@ define(['TemplateCreator/outputs/OutputGenerator',
 
         // Remove the label layer
         this._removeLabelLayer(tree);
+
+        // Update for in-place computation
+        this._addInPlaceOperations(tree);
 
         // Create the architecture file
         template = _.template(this.template[Constants.ARCH]);
@@ -70,6 +75,33 @@ define(['TemplateCreator/outputs/OutputGenerator',
                 children[i].name = 'label';
                 children.splice(i, 1);
                 return tree;
+            }
+        }
+    };
+
+    CaffeGenerator.prototype._addInPlaceOperations = function(tree) {
+        // Convolution layers connect into themselves and subsequent ReLU layers
+        // will connect their top value back into the convolution layer
+        var children = tree[Constants.CHILDREN],
+            next,
+            prev,
+            conv,
+            base,
+            j;
+
+        for (var i = children.length; i--;) {
+            base = children[i][Constants.BASE].name.toLowerCase();
+            if (InPlaceLayers[base]) {
+                children[i][Constants.NEXT] = children[i][Constants.PREV];
+            } else {
+                // Keep 'label' if it exists
+                children[i][Constants.NEXT] = children[i][Constants.NEXT]
+                    .filter(function(node) {
+                        return node.name === 'label';
+                    });
+
+                // Add self
+                children[i][Constants.NEXT].push(children[i]);
             }
         }
     };
