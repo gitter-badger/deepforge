@@ -9,6 +9,16 @@ define([], function() {
     var layers = {
         /*** Vision Layers ***/
         Convolution: {
+            param: [
+                {  // weight learning/decay multiplier
+                    lr_mult: 'weight_lr_mult',
+                    decay_mult: 'weight_decay_mult'
+                },
+                {  // bias learning/decay multiplier
+                    lr_mult: 'bias_lr_mult',
+                    decay_mult: 'bias_decay_mult'
+                }
+            ],
             convolution_param: {
                 kernel_size: 'kernel_size',
                 stride: 'stride',
@@ -234,6 +244,16 @@ define([], function() {
 
         /*** Common Layers ***/
         InnerProduct: {
+            param: [
+                {  // weight learning/decay multiplier
+                    lr_mult: 'weight_lr_mult',
+                    decay_mult: 'weight_decay_mult'
+                },
+                {  // bias learning/decay multiplier
+                    lr_mult: 'bias_lr_mult',
+                    decay_mult: 'bias_decay_mult'
+                }
+            ],
             inner_product_param: {
                 num_output: 'num_output',
                 weight_filler: {

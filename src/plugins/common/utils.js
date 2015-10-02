@@ -84,7 +84,7 @@ define([], function() {
 
     var nestedSeparator = '_';
     var isPrimitive = function(obj) {
-        return typeof obj !== 'object' || obj instanceof Array;
+        return typeof obj !== 'object';
     };
 
     var extend = function(base) {

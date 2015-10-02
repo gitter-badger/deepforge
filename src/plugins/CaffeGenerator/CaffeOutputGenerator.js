@@ -35,7 +35,8 @@ define(['TemplateCreator/outputs/OutputGenerator',
             archName = name+'_network.prototxt',
             trainName = name+'_trainer.prototxt',
             testName = name+'_solver.prototxt',
-            template;
+            template,
+            node;
 
         // Remove the label layer
         this._removeLabelLayer(tree);
@@ -49,13 +50,13 @@ define(['TemplateCreator/outputs/OutputGenerator',
 
         // Add the data source and type to data nodes
         // As the children are topo sorted, data nodes should be first
-        var i = 0,
+        for (var i = tree[Constants.CHILDREN].length; i--;) {
             node = tree[Constants.CHILDREN][i];
-        while (node[Constants.BASE].name === 'Data') {
-            // Add the data attributes
-            node.location = '"'+this.runOptions.inputData+'"';
-            node.backend = this.runOptions.dataType;
-            node = tree[Constants.CHILDREN][++i];
+            if (node[Constants.BASE].name === 'Data') {
+                // Add the data attributes
+                node.location = '"'+this.runOptions.inputData+'"';
+                node.backend = this.runOptions.dataType;
+            }
         }
 
         // Create the architecture file

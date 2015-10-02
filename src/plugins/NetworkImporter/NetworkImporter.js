@@ -362,7 +362,11 @@ define([
         }
 
         // Flatten the layer
-        return Utils.flattenWithPrefix('', layer);
+        var flatLayer = Utils.omit(layer, ['top', 'bottom']);
+        flatLayer = Utils.flattenWithPrefix('', flatLayer);
+        flatLayer.top = layer.top;
+        flatLayer.bottom = layer.bottom;
+        return flatLayer;
     };
 
     /**
@@ -373,10 +377,7 @@ define([
      */
     NetworkImporter.handleRouteDuplicates = function(layer) {
         // For each key, check for duplicates and create an array
-        var keys = {
-                '"top":': /"top"\s*:\s*(["\w\d\/\-]+)/g,
-                '"bottom":': /"bottom"\s*:\s*(["\w\d\/\-]+)/g
-            },
+        var keys = NetworkImporter.getKeysFromLayer(layer),
             pairs;
 
         // toPairs
@@ -388,6 +389,14 @@ define([
             pair.unshift(prevLayer);
             return NetworkImporter.handleDuplicates.apply(null, pair);
         }, layer);
+    };
+
+    NetworkImporter.getKeysFromLayer = function(layer) {
+        return {
+            '"top":': /"top"\s*:\s*(["\w\d\/\-]+)/g,
+            '"bottom":': /"bottom"\s*:\s*(["\w\d\/\-]+)/g,
+            '"param":': /"param"\s*:\s*({[\s\S.]+?})/g
+        };
     };
 
     NetworkImporter.handleDuplicates = function(layer, key, regex) {
