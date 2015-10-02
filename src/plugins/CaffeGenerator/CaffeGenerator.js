@@ -47,8 +47,94 @@ define([
     };
 
     CaffeGenerator.prototype.getConfigStructure = function(){
-        // TODO: Add caffe specific training things here
-        return [];
+        // TODO: Should I add base learning rate, etc, here?
+        return [
+            /* Data info */
+            // FIXME: Add batch size?
+            {  // Data source
+                name: 'inputData',
+                displayName: 'Input Data',
+                description: 'URL of the input data',
+                value: 'examples/mnist/lenet',  // TODO: Create a better example here
+                valueType: 'string',
+                readOnly: false
+            },
+            {  // Data source type
+                name: 'dataType',
+                displayName: 'Input Data Type',
+                description: 'Format of the input data',
+                value: 'LMDB',
+                valueType: 'string',
+                valueItems: [
+                    'LMDB',
+                    'LEVELDB'
+                ],
+                readOnly: false
+            },
+
+            /* Training/Testing info */
+            {  // Forward pass count (test_iter)
+                name: 'testIter',
+                displayName: 'Test Iterations',
+                description: 'Number of forward passes',
+                value: 100,
+                valueType: 'number',
+                minValue: 0,
+                readOnly: false
+            },
+            {  // Test interval
+                name: 'testInterval',
+                displayName: 'Test Interval',
+                description: 'Test every X training iterations',
+                value: 500,
+                valueType: 'number',
+                minValue: 0,
+                readOnly: false
+            },
+            {  // Max iterations (maxIter)
+                name: 'maxIter',
+                displayName: 'Max Iterations',
+                description: 'Max number of iterations',
+                value: 10000,
+                valueType: 'number',
+                minValue: 0,
+                readOnly: false
+            },
+            {  // Display FIXME: this may not matter
+                name: 'display',
+                displayName: 'Display iterations',
+                description: 'Frequency of displaying current status',
+                value: 100,
+                valueType: 'number',
+                minValue: 0,
+                readOnly: false
+            },
+            {  // Snapshot iterations (snapshot)
+                name: 'snapshot',
+                displayName: 'Snapshot iterations',
+                description: 'Frequency of collecting snapshots',
+                value: 5000,
+                valueType: 'number',
+                minValue: 0,
+                readOnly: false
+            },
+            {  // Snapshot prefix (snapshotPrefix)
+                name: 'snapshotPrefix',
+                displayName: 'Snapshot directory',
+                description: 'Directory to store the snapshots',
+                value: 'examples/mnist/lenet',
+                valueType: 'string',
+                readOnly: false
+            },
+            {  // Solver mode (GPU/CPU)
+                name: 'usingGPU',
+                displayName: 'Use GPU',
+                description: 'Perform computation on the GPU or CPU',
+                value: true,
+                valueType: 'boolean',
+                readOnly: false
+            }
+        ];
     };
 
     /**
@@ -61,10 +147,13 @@ define([
      * @param {function(string, plugin.PluginResult)} callback - the result callback
      */
     CaffeGenerator.prototype.main = function (callback) {
-        var self = this;
+        var self = this,
+            config = this.getCurrentConfig();
 
-        // TODO: decorate the model with training info and update the
-        // templates/output stuff for Caffe
+        config.solverMode = config.usingGPU ? 'GPU' : 'CPU';
+        this.generator.runOptions = config;
+
+        // TODO: Check that the current node is a 'CNN' or 'NeuralNetwork'
         SimpleNodes.prototype.main.call(this, callback);
     };
 

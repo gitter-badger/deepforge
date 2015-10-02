@@ -16,6 +16,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
         TESTING = '_testing_';
     var CaffeGenerator = function() {
         this.template = CaffeTemplate;
+        this.runOptions = null;
     };
 
     // Inherit the 'createTemplateFromNodes' method
@@ -29,11 +30,11 @@ define(['TemplateCreator/outputs/OutputGenerator',
      * @return {Object}
      */
     CaffeGenerator.prototype.createOutputFiles = function(tree) {
-        //console.log('tree is', tree);
         var outputFiles = {},
             name = tree.name.replace(/ /g, '_'),
-            arch_name = name+'_network.prototxt',
-            train_name = name+'_trainer.prototxt',
+            archName = name+'_network.prototxt',
+            trainName = name+'_trainer.prototxt',
+            testName = name+'_solver.prototxt',
             template;
 
         // Remove the label layer
@@ -42,23 +43,37 @@ define(['TemplateCreator/outputs/OutputGenerator',
         // Update for in-place computation
         this._addInPlaceOperations(tree);
 
+        // Decorate the active node with the run settings
+        _.extend(tree, this.runOptions);
+        tree.archName = archName;
+
+        // Add the data source and type to data nodes
+        // As the children are topo sorted, data nodes should be first
+        var i = 0,
+            node = tree[Constants.CHILDREN][i];
+        while (node[Constants.BASE].name === 'Data') {
+            // Add the data attributes
+            node.location = '"'+this.runOptions.inputData+'"';
+            node.backend = this.runOptions.dataType;
+            node = tree[Constants.CHILDREN][++i];
+        }
+
         // Create the architecture file
         template = _.template(this.template[Constants.ARCH]);
-        outputFiles[arch_name] = template(tree);
-        outputFiles[arch_name] += this.createTemplateFromNodes(tree[Constants.CHILDREN]);
+        outputFiles[archName] = template(tree);
+        outputFiles[archName] += this.createTemplateFromNodes(tree[Constants.CHILDREN]);
 
         // Create the training file
         template = _.template(this.template[TRAINING]);
-        tree.arch_name = arch_name;
-        outputFiles[train_name] = template(tree);
+        outputFiles[trainName] = template(tree);
 
         // Create the testing file
-        //template = _.template(this.template[TESTING]);
-        // TODO
+        template = _.template(this.template[TESTING]);
+        outputFiles[testName] = template(tree);
 
         // Create the metadata file
         var metadata = {type: 'Caffe',
-                        trainCommand: 'caffe --train '+train_name,
+                        trainCommand: 'caffe --train '+trainName,
                         testCommand: ''};  // Add test cmd FIXME 
         outputFiles.metadata = JSON.stringify(metadata);
 
