@@ -625,13 +625,17 @@
     },
     "19d2230e-3181-92a7-f014-ac779d07a0bd": {
       "attributes": {
+        "bias_decay_mult": 1,
         "bias_filler_type": "constant",
         "bias_filler_value": 0,
+        "bias_lr_mult": 1,
         "bias_term": "true",
         "name": "InnerProduct",
         "num_output": "1",
+        "weight_decay_mult": 1,
         "weight_filler_std": 0,
-        "weight_filler_type": "constant"
+        "weight_filler_type": "constant",
+        "weight_lr_mult": 1
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -673,6 +677,22 @@
           "weight_filler_std": {
             "type": "float",
             "default": 0
+          },
+          "weight_lr_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "weight_decay_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "bias_lr_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "bias_decay_mult": {
+            "type": "integer",
+            "default": 1
           }
         }
       },
@@ -1761,8 +1781,8 @@
             "guid": "025ac97b-357f-ee00-52b7-d61cbec92b45",
             "registry": {
               "position": {
-                "x": 229,
-                "y": 690
+                "x": 225,
+                "y": 730
               }
             }
           },
@@ -1771,8 +1791,8 @@
             "guid": "0e7ec20c-ad24-72da-254e-7b1ddeb96b5c",
             "registry": {
               "position": {
-                "x": 234,
-                "y": 490
+                "x": 225,
+                "y": 530
               }
             }
           },
@@ -1781,8 +1801,8 @@
             "guid": "177b17f9-2ae5-ca74-ede9-fcbbe2304aa7",
             "registry": {
               "position": {
-                "x": 439,
-                "y": 250
+                "x": 485,
+                "y": 247
               }
             }
           },
@@ -1791,8 +1811,8 @@
             "guid": "17be2bf6-2e3c-51e0-7af8-bd16654868f5",
             "registry": {
               "position": {
-                "x": 871,
-                "y": 490
+                "x": 865,
+                "y": 530
               }
             }
           },
@@ -1801,8 +1821,8 @@
             "guid": "19d2230e-3181-92a7-f014-ac779d07a0bd",
             "registry": {
               "position": {
-                "x": 639,
-                "y": 250
+                "x": 685,
+                "y": 247
               }
             }
           },
@@ -1811,8 +1831,8 @@
             "guid": "1cde1e77-a913-e08b-ac3d-edfc59aa4485",
             "registry": {
               "position": {
-                "x": 0,
-                "y": 491
+                "x": 5,
+                "y": 530
               }
             }
           },
@@ -1821,8 +1841,8 @@
             "guid": "2539a9bb-1a97-e594-24e8-8ad90965cd99",
             "registry": {
               "position": {
-                "x": 480,
-                "y": 491
+                "x": 475,
+                "y": 530
               }
             }
           },
@@ -1831,7 +1851,7 @@
             "guid": "379f6898-d91a-9603-e8ab-bf9eadbd750a",
             "registry": {
               "position": {
-                "x": 858,
+                "x": 905,
                 "y": 247
               }
             }
@@ -1841,8 +1861,8 @@
             "guid": "37d6acdf-512e-a553-d1ff-230dd75cbb2c",
             "registry": {
               "position": {
-                "x": 363,
-                "y": 492
+                "x": 355,
+                "y": 530
               }
             }
           },
@@ -1851,8 +1871,8 @@
             "guid": "38334fcc-211e-84d8-2dec-67f46f7a5f05",
             "registry": {
               "position": {
-                "x": 11,
-                "y": 580
+                "x": 5,
+                "y": 620
               }
             }
           },
@@ -1861,8 +1881,8 @@
             "guid": "386cce91-77d3-677e-0d1b-2013fdc5f178",
             "registry": {
               "position": {
-                "x": 10,
-                "y": 942
+                "x": 5,
+                "y": 980
               }
             }
           },
@@ -1871,8 +1891,8 @@
             "guid": "474aeb24-f514-0748-145d-2ff72bbc3ffa",
             "registry": {
               "position": {
-                "x": 432,
-                "y": 692
+                "x": 425,
+                "y": 730
               }
             }
           },
@@ -1881,8 +1901,8 @@
             "guid": "5882c7d2-6095-74ff-1a24-33a829615be4",
             "registry": {
               "position": {
-                "x": 663,
-                "y": 702
+                "x": 655,
+                "y": 740
               }
             }
           },
@@ -1891,8 +1911,8 @@
             "guid": "6d3e0974-e5e6-af6d-6e15-3b498da79811",
             "registry": {
               "position": {
-                "x": 763,
-                "y": 701
+                "x": 755,
+                "y": 740
               }
             }
           },
@@ -1901,8 +1921,8 @@
             "guid": "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb",
             "registry": {
               "position": {
-                "x": 539,
-                "y": 250
+                "x": 585,
+                "y": 247
               }
             }
           },
@@ -1911,8 +1931,8 @@
             "guid": "7ce0237e-d67f-ee55-e188-5a01307a492f",
             "registry": {
               "position": {
-                "x": 110,
-                "y": 687
+                "x": 105,
+                "y": 730
               }
             }
           },
@@ -1931,8 +1951,8 @@
             "guid": "99c7b338-7c5e-55b2-a0b3-167d03ec3d98",
             "registry": {
               "position": {
-                "x": 220,
-                "y": 942
+                "x": 215,
+                "y": 980
               }
             }
           },
@@ -1941,8 +1961,8 @@
             "guid": "9a481093-7b9c-c997-0ae3-f70024fe9d18",
             "registry": {
               "position": {
-                "x": 107,
-                "y": 579
+                "x": 105,
+                "y": 620
               }
             }
           },
@@ -1951,8 +1971,8 @@
             "guid": "9f6d943c-45a4-ed40-84a8-317562c55c41",
             "registry": {
               "position": {
-                "x": 521,
-                "y": 940
+                "x": 515,
+                "y": 980
               }
             }
           },
@@ -1961,8 +1981,8 @@
             "guid": "ab75c244-4063-f1fc-f3fe-8db6eb543d14",
             "registry": {
               "position": {
-                "x": 562,
-                "y": 700
+                "x": 555,
+                "y": 740
               }
             }
           },
@@ -1971,8 +1991,8 @@
             "guid": "b83b6a03-91f9-ec28-9158-c4c865ec898b",
             "registry": {
               "position": {
-                "x": 120,
-                "y": 942
+                "x": 115,
+                "y": 980
               }
             }
           },
@@ -1981,8 +2001,8 @@
             "guid": "ba0f4941-731e-bf0b-3865-0df50ccabea3",
             "registry": {
               "position": {
-                "x": 757,
-                "y": 580
+                "x": 755,
+                "y": 620
               }
             }
           },
@@ -1991,8 +2011,8 @@
             "guid": "bbedaf50-6813-1a65-1208-f6b3f7dfbfb0",
             "registry": {
               "position": {
-                "x": 242,
-                "y": 581
+                "x": 235,
+                "y": 620
               }
             }
           },
@@ -2011,8 +2031,8 @@
             "guid": "bdb7cba1-b95f-d8d7-2961-895692568abc",
             "registry": {
               "position": {
-                "x": 359,
-                "y": 581
+                "x": 355,
+                "y": 620
               }
             }
           },
@@ -2021,8 +2041,8 @@
             "guid": "c32116c3-4f79-4241-53cb-957406e5bd84",
             "registry": {
               "position": {
-                "x": 334,
-                "y": 690
+                "x": 325,
+                "y": 730
               }
             }
           },
@@ -2031,8 +2051,8 @@
             "guid": "cc03b17b-1cfa-0040-a379-540f656bed1a",
             "registry": {
               "position": {
-                "x": 457,
-                "y": 580
+                "x": 455,
+                "y": 620
               }
             }
           },
@@ -2061,8 +2081,8 @@
             "guid": "d4a1825f-3951-eaac-edac-6877ae8577e3",
             "registry": {
               "position": {
-                "x": 7,
-                "y": 692
+                "x": 5,
+                "y": 730
               }
             }
           },
@@ -2071,8 +2091,8 @@
             "guid": "d7b67be7-a29a-1c42-5d18-98167710b2b7",
             "registry": {
               "position": {
-                "x": 764,
-                "y": 491
+                "x": 755,
+                "y": 530
               }
             }
           },
@@ -2081,8 +2101,8 @@
             "guid": "d84a3fc8-5371-d21a-7a20-738d562f01fc",
             "registry": {
               "position": {
-                "x": 859,
-                "y": 578
+                "x": 855,
+                "y": 620
               }
             }
           },
@@ -2091,8 +2111,8 @@
             "guid": "da2d435d-9bfc-00d0-644a-540593bd4053",
             "registry": {
               "position": {
-                "x": 659,
-                "y": 580
+                "x": 655,
+                "y": 620
               }
             }
           },
@@ -2101,8 +2121,8 @@
             "guid": "dc1c7d62-e8aa-978a-194e-5d3591bc206c",
             "registry": {
               "position": {
-                "x": 419,
-                "y": 941
+                "x": 415,
+                "y": 980
               }
             }
           },
@@ -2111,8 +2131,8 @@
             "guid": "e27c48d4-8167-d84b-95d3-4e2b81b27bfd",
             "registry": {
               "position": {
-                "x": 114,
-                "y": 493
+                "x": 105,
+                "y": 530
               }
             }
           },
@@ -2121,8 +2141,8 @@
             "guid": "e465db23-f9df-941b-4a58-2a8f77e67489",
             "registry": {
               "position": {
-                "x": 581,
-                "y": 490
+                "x": 575,
+                "y": 530
               }
             }
           },
@@ -2141,8 +2161,8 @@
             "guid": "ee81fbed-4f73-dab9-a759-7a6ac3963021",
             "registry": {
               "position": {
-                "x": 320,
-                "y": 942
+                "x": 315,
+                "y": 980
               }
             }
           },
@@ -2161,8 +2181,8 @@
             "guid": "f6369b99-f57a-013a-a675-849cd0d39125",
             "registry": {
               "position": {
-                "x": 857,
-                "y": 698
+                "x": 855,
+                "y": 740
               }
             }
           },
@@ -2171,8 +2191,8 @@
             "guid": "f6d009c9-6e45-4257-69b8-cf501175b74f",
             "registry": {
               "position": {
-                "x": 558,
-                "y": 581
+                "x": 555,
+                "y": 620
               }
             }
           },
@@ -2181,8 +2201,8 @@
             "guid": "fa0ed121-aa39-88e8-675e-62ca915cb367",
             "registry": {
               "position": {
-                "x": 341,
-                "y": 250
+                "x": 385,
+                "y": 247
               }
             }
           },
@@ -2191,8 +2211,8 @@
             "guid": "fe95eaff-0a9a-fbe0-92d4-b48ef4bea055",
             "registry": {
               "position": {
-                "x": 759,
-                "y": 250
+                "x": 805,
+                "y": 247
               }
             }
           }
@@ -4496,16 +4516,20 @@
     },
     "f5fbea99-978e-1037-9019-8cfe066b42db": {
       "attributes": {
+        "bias_decay_mult": 1,
         "bias_filler_type": "constant",
         "bias_filler_value": 0,
+        "bias_lr_mult": 1,
         "group": 1,
         "kernel_size": "5",
         "name": "Convolution",
         "num_output": "96",
         "pad": "0",
         "stride": 1,
+        "weight_decay_mult": 1,
         "weight_filler_std": 0,
-        "weight_filler_type": "constant"
+        "weight_filler_type": "constant",
+        "weight_lr_mult": 1
       },
       "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
       "meta": {
@@ -4555,6 +4579,22 @@
           "weight_filler_std": {
             "type": "float",
             "default": 0
+          },
+          "weight_lr_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "weight_decay_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "bias_lr_mult": {
+            "type": "integer",
+            "default": 1
+          },
+          "bias_decay_mult": {
+            "type": "integer",
+            "default": 1
           }
         }
       },

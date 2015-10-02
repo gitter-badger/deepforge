@@ -42,20 +42,34 @@ define(['../common/CaffeToWebGME'], function(Layers) {
         }
         return '\t'+key+': '+value+'\n';
     };
+
+    var addKeyValuePair = function(prefix, key, value) {
+        var snippet;
+        if (typeof value !== 'object') {
+            return prefix+createAttributeText(key, value);
+        } else {
+            snippet = createLayerTemplate(prefix+'\t', value);
+            return prefix+'\t'+key+' {\n'+ snippet +prefix+'\t}\n';
+        }
+    };
+
     var createLayerTemplate = function(prefix, layer) {
         // convert each non-object value to text. Recurse on object values
         var keys = Object.keys(layer),
             template = '',
-            snippet;
+            value;
 
         // Sort the keys for aesthetics in the output files
         keys.sort(attributeSorter);
         for (var i = keys.length; i--;) {
-            if (typeof layer[keys[i]] !== 'object') {
-                template += prefix+createAttributeText(keys[i], layer[keys[i]]);
+            value = layer[keys[i]];
+            if (value instanceof Array) {
+                // For each value, create keys[i], that value
+                for (var j = 0; j < value.length; j++) {
+                    template += addKeyValuePair(prefix, keys[i], value[j]);
+                }
             } else {
-                snippet = createLayerTemplate(prefix+'\t', layer[keys[i]]);
-                template += prefix+'\t'+keys[i]+' {\n'+ snippet +prefix+'\t}\n';
+                template += addKeyValuePair(prefix, keys[i], value);
             }
         }
         return template;
