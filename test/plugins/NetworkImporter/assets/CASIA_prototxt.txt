@@ -61,13 +61,9 @@ layer {
 }
 layer {
   name: "relu11"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv11"
   top: "conv11"
-  insanity_param{
-    lb: 3
-	ub: 5
-  }
 }
 layer {
   name: "conv12"
@@ -100,13 +96,9 @@ layer {
 }
 layer {
   name: "relu12"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv12"
   top: "conv12"
-  insanity_param{
-    lb: 3
-	ub: 5
-  }
 }
 layer {
   name: "pool1"
@@ -150,13 +142,9 @@ layer {
 }
 layer {
   name: "relu21"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv21"
   top: "conv21"
-  insanity_param{
-    lb: 3
-	ub: 8
-  }
 }
 layer {
   name: "conv22"
@@ -189,13 +177,9 @@ layer {
 }
 layer {
   name: "relu22"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv22"
   top: "conv22"
-  insanity_param{
-    lb: 3
-	ub: 8
-  }
 }
 layer {
   name: "pool2"
@@ -239,13 +223,9 @@ layer {
 }
 layer {
   name: "relu31"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv31"
   top: "conv31"
-  insanity_param{
-    lb: 3
-	ub: 8
-  }
 }
 layer {
   name: "conv32"
@@ -278,13 +258,9 @@ layer {
 }
 layer {
   name: "relu32"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv32"
   top: "conv32"
-  insanity_param{
-    lb: 3
-	ub: 8
-  }
 }
 layer {
   name: "pool3"
@@ -328,13 +304,9 @@ layer {
 }
 layer {
   name: "relu41"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv41"
   top: "conv41"
-  insanity_param{
-    lb: 5
-	ub: 10
-  }
 }
 layer {
   name: "conv42"
@@ -367,13 +339,9 @@ layer {
 }
 layer {
   name: "relu42"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv42"
   top: "conv42"
-  insanity_param{
-    lb: 5
-	ub: 10
-  }
 }
 layer {
   name: "pool4"
@@ -417,13 +385,9 @@ layer {
 }
 layer {
   name: "relu51"
-  type: "Insanity"
+  type: "ReLU"
   bottom: "conv51"
   top: "conv51"
-  insanity_param{
-    lb: 5
-	ub: 10
-  }
 }
 layer {
   name: "conv52"
