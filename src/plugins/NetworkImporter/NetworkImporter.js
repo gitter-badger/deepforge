@@ -132,12 +132,7 @@ define([
             cnn,
             nodeMap = {},
             nodeList = [],
-            labelLayer = {
-                type: 'label',
-                name: 'label',
-                top: [],
-                bottom: []
-            },
+            labelLayer = this.findLabelLayer(layers),
             createLayer;
 
         // Get a map of lowercase names to proper case
@@ -162,19 +157,21 @@ define([
             nodeList.push(node);
 
             // Check for edges to "label"
-            if (layer.top && layer.top.indexOf('label') !== -1) {
-                labelLayer.bottom.push(name);
-            }
+            if (labelLayer) {
+                if (layer.top && layer.top.indexOf(labelLayer.name) !== -1) {
+                    labelLayer.bottom.push(name);
+                }
 
-            if (layer.bottom && layer.bottom.indexOf('label') !== -1) {
-                labelLayer.top.push(name);
+                if (layer.bottom && layer.bottom.indexOf(labelLayer.name) !== -1) {
+                    labelLayer.top.push(name);
+                }
             }
         };
 
         layers.forEach(createLayer);
 
         // If 'label' layer exists in the prototxt, create it
-        if (labelLayer.top.length + labelLayer.bottom.length) {
+        if (labelLayer) {
             createLayer(labelLayer);
             layers.push(labelLayer);
         }
@@ -218,6 +215,24 @@ define([
             nodeDict[self.core.getGuid(nodeList[i])] = nodeList[i];
         }
         self.positionNodes(nodeDict, adjacencyList);
+    };
+
+    // Find the implied label layer, if it exists
+    NetworkImporter.prototype.findLabelLayer = function (layers) {
+        var name = null;
+        for (var i = layers.length; i--;) {
+            if (layers[i].top.length > 1 && layers[i].type.toLowerCase() === 'data') {
+                name = layers[i].top[1];
+            }
+        }
+
+        return !name ? null :
+            {
+                type: 'label',
+                name: name,
+                top: [],
+                bottom: []
+            };
     };
 
     NetworkImporter.prototype.resolveInPlaceComputation = function (layers) {
