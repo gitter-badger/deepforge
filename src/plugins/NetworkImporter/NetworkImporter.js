@@ -333,7 +333,7 @@ define([
                 return '"'+b+'":';
             })
             // ... and maybe the values
-            .replace(/:\s*(\w+)/g, function(a,b) {
+            .replace(/:\s*([-\w]+)/g, function(a,b) {
                 try {
                     JSON.parse(b); // Check if it is valid JS
                     return a;
