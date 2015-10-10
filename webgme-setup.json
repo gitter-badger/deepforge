@@ -19,7 +19,14 @@
         "src": "src/seeds/CNN-dev"
       }
     },
-    "visualizers": {}
+    "visualizers": {
+      "CNNViz": {
+        "src": "panels/CNNViz/CNNVizPanel",
+        "title": "CNNViz",
+        "panel": "src/visualizers/panels/CNNViz",
+        "widget": "src/visualizers/widgets/CNNViz"
+      }
+    }
   },
   "dependencies": {
     "plugins": {
