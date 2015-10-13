@@ -18,7 +18,7 @@ define([
     'use strict';
 
     var CNNVizWidget,
-        WIDGET_CLASS = 'c-n-n-viz';
+        WIDGET_CLASS = 'cnn-viz';
 
     CNNVizWidget = function (logger, container, options) {
         var selectionManager = new SelectionManager({widget: this}),
@@ -31,10 +31,24 @@ define([
         // Override the DiagramDesigner logger and selection manager
         this.logger = logger.fork('Widget');
 
+        this._dialog = null;
         this.logger.debug('ctor finished');
     };
 
     _.extend(CNNVizWidget.prototype, DiagramDesigner.prototype);
+
+    CNNVizWidget.prototype._onSelectionCommandClicked = function(command, selectedIds, event) {
+        switch (command) {
+            case 'inspect':
+                this.showInspector(selectedIds[0]);
+                break;
+
+            default:
+                DiagramDesigner.prototype._onSelectionCommandClicked
+                    .call(this, command, selectedIds, event);
+                break;
+        }
+    };
 
     // Remove all tab functionality... it's a little hacky...
     var nop = function(){},

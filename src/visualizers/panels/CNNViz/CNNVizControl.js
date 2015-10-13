@@ -5,9 +5,17 @@
  */
 
 define([
-    'js/Panels/ModelEditor/ModelEditorControl'
+    'js/Panels/ModelEditor/ModelEditorControl',
+    'js/Controls/PropertyGrid/PropertyGrid',
+    'js/Panels/PropertyEditor/PropertyEditorPanelController',
+    'js/Constants',
+    'text!./templates/InspectDialog.html'
 ], function (
-    ModelEditorControl
+    ModelEditorControl,
+    PropertyGrid,
+    PropertyEditorPanelController,
+    CONSTANTS,
+    InspectDialogHtml
 ) {
 
     'use strict';
@@ -20,6 +28,23 @@ define([
 
         this.logger = options.logger.fork('Control');
         this.logger.debug('ctor finished');
+
+        var self = this;
+        this.designerCanvas.showInspector = function(id) {
+            var propertyGrid = new PropertyGrid(),
+                // FIXME: Subclass PropertyEditorPanel and customize
+                p = new PropertyEditorPanelController(self._client, propertyGrid, CONSTANTS.PROPERTY_GROUP_ATTRIBUTES),
+                gmeId = self._ComponentID2GmeID[id];
+
+            // create the modal dialog box
+            p._selectObjectsUsingActiveObject(gmeId);
+            self._dialog = $(InspectDialogHtml);
+            self._dialog.find('#inspect-content').append(propertyGrid.$el);
+
+            // Show the dialog box
+            self._dialog.modal('show');
+        };
+
     };
 
     _.extend(CNNVizControl.prototype, ModelEditorControl.prototype);
