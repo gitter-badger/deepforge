@@ -14,10 +14,15 @@ config.seedProjects.basePaths.push('src/seeds/CNN');
 config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 
 
+// Visualizer descriptors
+config.visualization.visualizerDescriptors.push('./src/visualizers/Visualizers.json');
 // Add requirejs paths
 config.requirejsPaths = {
-  'TemplateCreator': 'node_modules/webgme-simple-nodes/src/plugins/TemplateCreator'
+  'TemplateCreator': 'node_modules/webgme-simple-nodes/src/plugins/TemplateCreator',
+  'panels': './src/visualizers/panels',
+  'widgets': './src/visualizers/widgets'
 };
 
+config.mongo.uri = 'mongodb://127.0.0.1:27017/cnn_creator'
 validateConfig(config);
 module.exports = config;

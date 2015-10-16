@@ -1,0 +1,8 @@
+[
+  {
+    "id": "CNNViz",
+    "title": "Network Editor",
+    "panel": "panels/CNNViz/CNNVizPanel",
+    "DEBUG_ONLY": false
+  }
+]
