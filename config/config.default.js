@@ -15,7 +15,6 @@ config.visualization.visualizerDescriptors = ['./Visualizers.json'];
 
 // Plugins
 config.plugin.allowServerExecution = true;
-config.seedProjects.basePaths.push("models");
 
 validateConfig(config);
 module.exports = config;
