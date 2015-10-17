@@ -1,6 +1,6 @@
 /* jshint node: true */
 'use strict';
-var config = require('./config.webgme.js'),
+var config = require('./config.webgme'),
     validateConfig = require('webgme/config/validator');
 
 // Overwrite options as needed
@@ -15,7 +15,6 @@ config.client.defaultConnectionRouter = 'basic';
 
 // Plugins
 config.plugin.allowServerExecution = true;
-config.seedProjects.basePaths.push("models");
 
 validateConfig(config);
 module.exports = config;
