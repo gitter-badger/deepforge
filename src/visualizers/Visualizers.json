@@ -10,11 +10,5 @@
     "title": "MinHeader",
     "panel": "panels/MinHeader/MinHeaderPanel",
     "DEBUG_ONLY": false
-  },
-  {
-    "id": "PluginButton",
-    "title": "PluginButton",
-    "panel": "panels/PluginButton/PluginButtonPanel",
-    "DEBUG_ONLY": false
   }
 ]
