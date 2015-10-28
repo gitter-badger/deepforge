@@ -10,6 +10,7 @@ define([
     'js/Widgets/UserProfile/UserProfileWidget',
     'js/Toolbar/Toolbar',
     'js/Panels/Header/ProjectNavigatorController',
+    './NodePathNavigator',
     'js/Panels/Header/DefaultToolbar',
     'js/Utils/WebGMEUrlManager'
 ], function (PanelBase,
@@ -17,6 +18,7 @@ define([
              UserProfileWidget,
              toolbar,
              ProjectNavigatorController,
+             NodePathNavigator,
              DefaultToolbar,
              WebGMEUrlManager) {
     'use strict';
@@ -74,7 +76,7 @@ define([
         //main container
         var navBar = $('<div/>', {class: 'navbar navbar-inverse navbar-fixed-top'}),
             navBarInner = $('<div/>', {class: 'navbar-inner'}),
-            app, projectTitleEl, userProfileEl, toolBarEl;
+            app, projectTitleEl, userProfileEl, nodePath;
 
         navBar.append(navBarInner);
         this.$el.append(navBar);
@@ -99,10 +101,13 @@ define([
         this.defaultUserProfileWidget = new UserProfileWidget(userProfileEl, this._client);
         navBarInner.append(userProfileEl);
 
-        //toolbar
-        toolBarEl = $('<div/>', {class: 'toolbar-container'});
-        //this.$el.append(toolBarEl);
-        WebGMEGlobal.Toolbar = toolbar.createToolbar(toolBarEl);
+        // Node nav bar
+        nodePath = new NodePathNavigator({
+            container: $('<div/>', {class: 'toolbar-container'}),
+            client: this._client
+        });
+        this.$el.append(nodePath.$el);
+        WebGMEGlobal.Toolbar = toolbar.createToolbar($('<div/>'));
         new DefaultToolbar(this._client);
     };
 
