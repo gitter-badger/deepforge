@@ -4,5 +4,11 @@
     "title": "Network Editor",
     "panel": "panels/CNNViz/CNNVizPanel",
     "DEBUG_ONLY": false
+  },
+  {
+    "id": "MinHeader",
+    "title": "MinHeader",
+    "panel": "panels/MinHeader/MinHeaderPanel",
+    "DEBUG_ONLY": false
   }
 ]

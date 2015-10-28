@@ -25,8 +25,26 @@
         "title": "CNNViz",
         "panel": "src/visualizers/panels/CNNViz",
         "widget": "src/visualizers/widgets/CNNViz"
+      },
+      "MinHeader": {
+        "src": "panels/MinHeader/MinHeaderPanel",
+        "title": "MinHeader",
+        "panel": "src/visualizers/panels/MinHeader",
+        "widget": "src/visualizers/widgets/MinHeader"
+      },
+      "PluginButton": {
+        "src": "panels/PluginButton/PluginButtonPanel",
+        "title": "PluginButton",
+        "panel": "src/visualizers/panels/PluginButton",
+        "widget": "src/visualizers/widgets/PluginButton"
       }
-    }
+    },
+    "layouts": {
+      "MinimalLayout": {
+        "src": "src/layouts/MinimalLayout"
+      }
+    },
+    "decorators": {}
   },
   "dependencies": {
     "plugins": {
@@ -37,6 +55,8 @@
     },
     "addOns": {},
     "seeds": {},
-    "visualizers": {}
+    "visualizers": {},
+    "layouts": {},
+    "decorators": {}
   }
 }
