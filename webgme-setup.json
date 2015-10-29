@@ -12,11 +12,11 @@
     },
     "addOns": {},
     "seeds": {
-      "CNN": {
-        "src": "src/seeds/CNN"
-      },
       "CNN-dev": {
         "src": "src/seeds/CNN-dev"
+      },
+      "Caffe": {
+        "src": "src/seeds/Caffe"
       }
     },
     "visualizers": {
