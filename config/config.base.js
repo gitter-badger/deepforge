@@ -15,6 +15,7 @@ config.client.defaultConnectionRouter = 'basic';
 
 // Plugins
 config.plugin.allowServerExecution = true;
+config.seedProjects.defaultProject = 'Caffe';
 
 validateConfig(config);
 module.exports = config;

@@ -6,10 +6,10 @@ CNN Creator provides a graphical interface to prototype/develop CNN's. It is cur
 After cloning the repo, run
 
 ```
-npm install
+npm install && npm start
 ```
 
-Now, navigate to `localhost:8888` in a browser and create a new project. Select `CNN` as the seed and start creating your neural nets!
+Now, navigate to `localhost:8888` in a browser and create a new project. Select `Caffe` as the seed and start creating your neural nets!
 
 There are examples in the `Examples` directory.
 
