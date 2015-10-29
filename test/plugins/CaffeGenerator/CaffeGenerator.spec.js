@@ -29,7 +29,7 @@ describe.only('CaffeGenerator', function () {
             })
             .then(function () {
                 var importParam = {
-                    projectSeed: testFixture.path.join(testFixture.SEED_DIR, 'CNN.json'),
+                    projectSeed: testFixture.path.join(testFixture.SEED_DIR, 'Caffe.json'),
                     projectName: projectName,
                     branchName: 'master',
                     logger: logger,

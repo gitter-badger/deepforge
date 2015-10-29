@@ -44,7 +44,8 @@
         "src": "src/layouts/MinimalLayout"
       }
     },
-    "decorators": {}
+    "decorators": {},
+    "addons": {}
   },
   "dependencies": {
     "plugins": {
@@ -57,6 +58,7 @@
     "seeds": {},
     "visualizers": {},
     "layouts": {},
-    "decorators": {}
+    "decorators": {},
+    "addons": {}
   }
 }
