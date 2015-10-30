@@ -10,6 +10,7 @@ var config = require('webgme/config/config.default'),
 // The paths can be loaded from the webgme-setup.json
 config.plugin.basePaths.push('src/plugins');
 config.plugin.basePaths.push('node_modules/webgme-simple-nodes/src/plugins');
+config.visualization.layout.basePaths.push('src/layouts');
 config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 config.seedProjects.basePaths.push('src/seeds/Caffe');
 

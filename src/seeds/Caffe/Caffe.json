@@ -2212,8 +2212,8 @@
             "guid": "fa0ed121-aa39-88e8-675e-62ca915cb367",
             "registry": {
               "position": {
-                "x": 385,
-                "y": 247
+                "x": 365,
+                "y": 250
               }
             }
           },
@@ -4743,10 +4743,10 @@
         "attributes": {
           "pool": {
             "type": "string",
-            "default": "MAX",
             "enum": [
               "MAX",
-              "AVE"
+              "AVE",
+              "STOCHASTIC"
             ]
           },
           "kernel_size": {
