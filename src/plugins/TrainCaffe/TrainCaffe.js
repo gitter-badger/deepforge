@@ -69,20 +69,55 @@ define([
             }),
             nodeObject;
 
+        // TODO: hash should be for the generated files from CaffeGenerator
         executor.createJob({hash: hash}, function(err, jobInfo) {
-            // TODO
+            var intervalId;
+            if (err) {
+                return callback('Creating job failed: ' + err.toString());
+            }
+            self.logger.info('job created');
+            self.logger.debug(jobInfo);
 
-            // TODO: Save the results in an object somewhere...
-            //self.save('TrainCaffe updated model.', function (err) {
-                //if (err) {
-                    //callback(err, self.result);
-                    //return;
-                //}
-                //self.result.setSuccess(true);
-                //callback(null, self.result);
-            //});
+            intervalId = setInterval(function () {
+                // Get the job-info at intervals and check for a non-CREATED/RUNNING status.
+                executorClient.getInfo(hash, function (err, jInfo) {
+                    var key;
+                    self.logger.info(JSON.stringify(jInfo, null, 4));
+                    if (jInfo.status === 'CREATED' || jInfo.status === 'RUNNING') {
+                        // The job is still running..
+                        return;
+                    }
+
+                    clearInterval(intervalId);
+                    if (jInfo.status === 'SUCCESS') {
+                        self.onJobSuccess(jInfo, callback);
+                    } else {
+                        //Add the resultHashes even though job failed (for user to debug).
+                        for (key in jInfo.resultHashes) {
+                            if (jInfo.resultHashes.hasOwnProperty(key)) {
+                                self.result.addArtifact(jInfo.resultHashes[key]);
+                            }
+                        }
+                        callback('Job execution failed', self.result);
+                    }
+                });
+            }, 400);
         });
+    };
 
+    TrainCaffe.prototype.onJobSuccess = function (jobInfo, callback) {
+        // TODO: Find a good way to present the results to the user
+        this.logger.debug('Executor job finished successfully');
+
+        // TODO: Save the results in an object somewhere...
+        //self.save('TrainCaffe updated model.', function (err) {
+            //if (err) {
+                //callback(err, self.result);
+                //return;
+            //}
+            //self.result.setSuccess(true);
+            //callback(null, self.result);
+        //});
     };
 
     return TrainCaffe;
