@@ -1,0 +1,7 @@
+/**
+ * @author brollb / https://github.com/brollb
+ */
+.part-browser .svg-template-decorator .name {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis; }

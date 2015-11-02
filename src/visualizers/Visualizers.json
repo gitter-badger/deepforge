@@ -4,5 +4,11 @@
     "title": "Network Editor",
     "panel": "panels/CNNViz/CNNVizPanel",
     "DEBUG_ONLY": false
+  },
+  {
+    "id": "METAAspect",
+    "title": "Meta",
+    "panel": "js/Panels/MetaEditor/MetaEditorPanel",
+    "DEBUG_ONLY": false
   }
 ]

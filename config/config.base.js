@@ -17,5 +17,8 @@ config.client.defaultConnectionRouter = 'basic';
 config.plugin.allowServerExecution = true;
 config.seedProjects.defaultProject = 'Caffe';
 
+config.visualization.svgDirs = ['src/svgs'];
+config.client.usedDecorators.push('SVGTemplateDecorator');
+
 validateConfig(config);
 module.exports = config;

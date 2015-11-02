@@ -114,6 +114,7 @@
     "d7b67be7-a29a-1c42-5d18-98167710b2b7": "2058454590",
     "d7f22c9a-d890-0aff-2001-6a72fc1ef70b": "2000384632",
     "d84a3fc8-5371-d21a-7a20-738d562f01fc": "1828683604",
+    "d868adb1-4397-84ab-d612-0c3b9e3f3c6f": "1050511974",
     "da2d435d-9bfc-00d0-644a-540593bd4053": "1059566835",
     "db3d02a8-5081-de29-c1c3-d0e868feca9d": "220997271",
     "dc1c7d62-e8aa-978a-194e-5d3591bc206c": "1329594813",
@@ -215,6 +216,7 @@
         "ccf73e3e-00a4-cb7f-544c-3d89676aa652": {},
         "d49fb161-5809-0bde-29aa-f2b952b614a3": {},
         "d7f22c9a-d890-0aff-2001-6a72fc1ef70b": {},
+        "d868adb1-4397-84ab-d612-0c3b9e3f3c6f": {},
         "dd210c89-fc91-ed6f-067a-8c6eb97cd323": {},
         "e4cdc631-ef5c-6d1e-ed1b-72a704633e7b": {},
         "eaaa4d9f-c3ad-3531-f520-cff4bbccf647": {},
@@ -298,6 +300,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 173,
@@ -426,6 +429,7 @@
         "base": "de92e114-12a2-3c24-cad6-45da2628a0a2"
       },
       "registry": {
+        "SVGIcon": "Network.svg",
         "isAbstract": false,
         "position": {
           "x": 41,
@@ -485,6 +489,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/softmaxwithloss.svg",
         "isAbstract": false,
         "position": {
           "x": -17,
@@ -566,6 +571,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/lrn.svg",
         "isAbstract": false,
         "position": {
           "x": 33,
@@ -586,6 +592,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/accuracy.svg",
         "isAbstract": false,
         "position": {
           "x": 287,
@@ -709,6 +716,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/fc.svg",
         "isAbstract": false,
         "position": {
           "x": 99,
@@ -780,6 +788,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/euclideanloss.svg",
         "isAbstract": false,
         "position": {
           "x": 243,
@@ -960,6 +969,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/input.svg",
         "isAbstract": false,
         "position": {
           "x": 284,
@@ -980,6 +990,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/euclideanloss.svg",
         "isAbstract": false,
         "position": {
           "x": 123,
@@ -1112,6 +1123,7 @@
         "base": "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045"
       },
       "registry": {
+        "SVGIcon": "Folder2.svg",
         "isAbstract": false,
         "position": {
           "x": 411,
@@ -1812,8 +1824,8 @@
             "guid": "177b17f9-2ae5-ca74-ede9-fcbbe2304aa7",
             "registry": {
               "position": {
-                "x": 485,
-                "y": 247
+                "x": 464,
+                "y": 250
               }
             }
           },
@@ -1832,8 +1844,8 @@
             "guid": "19d2230e-3181-92a7-f014-ac779d07a0bd",
             "registry": {
               "position": {
-                "x": 685,
-                "y": 247
+                "x": 672,
+                "y": 250
               }
             }
           },
@@ -1862,8 +1874,8 @@
             "guid": "379f6898-d91a-9603-e8ab-bf9eadbd750a",
             "registry": {
               "position": {
-                "x": 905,
-                "y": 247
+                "x": 912,
+                "y": 252
               }
             }
           },
@@ -1932,8 +1944,8 @@
             "guid": "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb",
             "registry": {
               "position": {
-                "x": 585,
-                "y": 247
+                "x": 565,
+                "y": 251
               }
             }
           },
@@ -1992,8 +2004,8 @@
             "guid": "ab75c244-4063-f1fc-f3fe-8db6eb543d14",
             "registry": {
               "position": {
-                "x": 555,
-                "y": 740
+                "x": 537,
+                "y": 734
               }
             }
           },
@@ -2222,8 +2234,8 @@
             "guid": "fe95eaff-0a9a-fbe0-92d4-b48ef4bea055",
             "registry": {
               "position": {
-                "x": 805,
-                "y": 247
+                "x": 812,
+                "y": 250
               }
             }
           }
@@ -2323,6 +2335,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 163,
@@ -2745,6 +2758,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/relu.svg",
         "isAbstract": false,
         "position": {
           "x": 253,
@@ -2848,6 +2862,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 53,
@@ -3176,8 +3191,8 @@
       },
       "registry": {
         "position": {
-          "x": 48,
-          "y": 106
+          "x": 51,
+          "y": 157
         }
       },
       "sets": {},
@@ -3222,6 +3237,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/euclideanloss.svg",
         "isAbstract": false,
         "position": {
           "x": 53,
@@ -3299,6 +3315,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/label.svg",
         "isAbstract": false,
         "position": {
           "x": 86,
@@ -3465,6 +3482,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 283,
@@ -3773,6 +3791,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 273,
@@ -3891,6 +3910,8 @@
         "base": "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045"
       },
       "registry": {
+        "SVGIcon": "svgs/default.svg",
+        "decorator": "SVGTemplateDecorator",
         "position": {
           "x": 43,
           "y": 67
@@ -3941,7 +3962,7 @@
         "DisplayFormat": "$name",
         "PortSVGIcon": "",
         "SVGIcon": "",
-        "decorator": "ModelDecorator",
+        "decorator": "SVGDecorator",
         "isAbstract": true,
         "isPort": false,
         "position": {
@@ -3977,6 +3998,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/dropout.svg",
         "isAbstract": false,
         "position": {
           "x": 145,
@@ -4128,6 +4150,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/euclideanloss.svg",
         "isAbstract": false,
         "position": {
           "x": 207,
@@ -4189,6 +4212,24 @@
         "position": {
           "x": 297,
           "y": 221
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "d868adb1-4397-84ab-d612-0c3b9e3f3c6f": {
+      "attributes": {},
+      "base": "e465db23-f9df-941b-4a58-2a8f77e67489",
+      "meta": {},
+      "parent": "98742191-1973-92ef-fca7-353ea4f01dc8",
+      "pointers": {
+        "base": "e465db23-f9df-941b-4a58-2a8f77e67489"
+      },
+      "registry": {
+        "SVGIcon": "svgs/sigmoidcrossentropyloss.svg",
+        "position": {
+          "x": 336,
+          "y": 118
         }
       },
       "sets": {},
@@ -4275,6 +4316,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/defaultLarge.svg",
         "isAbstract": false,
         "position": {
           "x": 381,
@@ -4350,6 +4392,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/deconv.svg",
         "isAbstract": false,
         "position": {
           "x": 83,
@@ -4370,6 +4413,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/sigmoidcrossentropyloss.svg",
         "isAbstract": false,
         "position": {
           "x": 313,
@@ -4390,6 +4434,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/flatten.svg",
         "isAbstract": false,
         "position": {
           "x": 181,
@@ -4623,6 +4668,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/conv.svg",
         "isAbstract": false,
         "position": {
           "x": 21,
@@ -4651,6 +4697,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/concat.svg",
         "isAbstract": false,
         "position": {
           "x": 277,
@@ -4768,6 +4815,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/pooling.svg",
         "isAbstract": false,
         "position": {
           "x": 191,
@@ -4807,6 +4855,7 @@
         "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
       },
       "registry": {
+        "SVGIcon": "svgs/softmax.svg",
         "isAbstract": false,
         "position": {
           "x": 107,

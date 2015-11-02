@@ -44,7 +44,11 @@
         "src": "src/layouts/MinimalLayout"
       }
     },
-    "decorators": {},
+    "decorators": {
+      "SVGTemplateDecorator": {
+        "src": "src/decorators/SVGTemplateDecorator"
+      }
+    },
     "addons": {}
   },
   "dependencies": {
