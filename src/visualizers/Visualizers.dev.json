@@ -1,6 +1,0 @@
-[
-    {"id": "METAAspect",
-        "title": "Meta",
-        "panel": "js/Panels/MetaEditor/MetaEditorPanel",
-        "DEBUG_ONLY": false}
-]

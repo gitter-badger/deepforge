@@ -11,6 +11,7 @@ var config = require('webgme/config/config.default'),
 config.plugin.basePaths.push('src/plugins');
 config.plugin.basePaths.push('node_modules/webgme-simple-nodes/src/plugins');
 config.visualization.layout.basePaths.push('src/layouts');
+config.visualization.decoratorPaths.push('src/decorators');
 config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 config.seedProjects.basePaths.push('src/seeds/Caffe');
 
