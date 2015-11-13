@@ -14,6 +14,7 @@ define([
         var breadcrumbContainer = document.createElement('ol');
 
         breadcrumbContainer.setAttribute('class', 'breadcrumb');
+        breadcrumbContainer.setAttribute('style', 'height:100%');
         this.pathContainer = $(breadcrumbContainer);
         this.$el.append(breadcrumbContainer);
 
@@ -69,8 +70,6 @@ define([
         }
 
         this.pathContainer.append(item);
-
-        //anchor.onclick = item.onclick;
     };
 
     ProjectNavWithActiveNode.prototype.updateNode = function() {
