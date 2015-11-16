@@ -8,6 +8,10 @@
       "CaffeGenerator": {
         "src": "src/plugins/CaffeGenerator",
         "test": "test/plugins/CaffeGenerator"
+      },
+      "CaffeExecutor": {
+        "src": "src/plugins/CaffeExecutor",
+        "test": "test/plugins/CaffeExecutor"
       }
     },
     "addOns": {},

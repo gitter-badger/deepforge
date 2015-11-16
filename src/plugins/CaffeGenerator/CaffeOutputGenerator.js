@@ -74,7 +74,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
 
         // Create the metadata file
         var metadata = {type: 'Caffe',
-                        trainCommand: 'caffe --train '+trainName,
+                        trainCommand: 'caffe train --solver='+trainName,
                         testCommand: ''};  // Add test cmd FIXME 
         outputFiles.metadata = JSON.stringify(metadata);
 
@@ -98,7 +98,8 @@ define(['TemplateCreator/outputs/OutputGenerator',
 
     CaffeGenerator.prototype._addInPlaceOperations = function(tree) {
         // Convolution layers connect into themselves and subsequent ReLU layers
-        // will connect their top value back into the convolution layer
+        // will connect their top value back into the convolution layer. The
+        // node immediately following the ReLU layer will connect to the conv layer
         var children = tree[Constants.CHILDREN],
             next,
             prev,
@@ -109,6 +110,11 @@ define(['TemplateCreator/outputs/OutputGenerator',
         for (var i = children.length; i--;) {
             base = children[i][Constants.BASE].name.toLowerCase();
             if (InPlaceLayers[base]) {
+                // Set the previous of the next to the previous of the current
+                children[i][Constants.NEXT].forEach(function(node) {
+                    node[Constants.PREV]= children[i][Constants.PREV];
+                });
+                // Set the bottom to the top value
                 children[i][Constants.NEXT] = children[i][Constants.PREV];
             } else {
                 // Keep 'label' if it exists

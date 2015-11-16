@@ -19,5 +19,8 @@ config.seedProjects.defaultProject = 'Caffe';
 
 config.visualization.svgDirs = ['src/svgs'];
 
+// Executors
+config.executor.enable = true;
+
 validateConfig(config);
 module.exports = config;
