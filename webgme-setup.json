@@ -12,9 +12,6 @@
     },
     "addOns": {},
     "seeds": {
-      "CNN-dev": {
-        "src": "src/seeds/CNN-dev"
-      },
       "Caffe": {
         "src": "src/seeds/Caffe"
       }

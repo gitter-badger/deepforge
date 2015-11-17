@@ -12,7 +12,6 @@ config.plugin.basePaths.push('src/plugins');
 config.plugin.basePaths.push('node_modules/webgme-simple-nodes/src/plugins');
 config.visualization.layout.basePaths.push('src/layouts');
 config.visualization.decoratorPaths.push('src/decorators');
-config.seedProjects.basePaths.push('src/seeds/CNN-dev');
 config.seedProjects.basePaths.push('src/seeds/Caffe');
 
 
@@ -25,6 +24,7 @@ config.requirejsPaths = {
   'widgets': './src/visualizers/widgets'
 };
 
-config.mongo.uri = 'mongodb://127.0.0.1:27017/cnn_creator'
+
+config.mongo.uri = 'mongodb://127.0.0.1:27017/cnn_creator';
 validateConfig(config);
 module.exports = config;
