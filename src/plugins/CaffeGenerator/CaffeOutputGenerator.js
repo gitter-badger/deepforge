@@ -88,6 +88,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
         var children = tree[Constants.CHILDREN];
         for (var i = children.length; i--;) {
             if (children[i][Constants.BASE].name.toLowerCase() === 'label') {
+                // FIXME: This could have problems if someone names a layer 'label'
                 children[i].name = 'label';
                 children.splice(i, 1);
                 return tree;
@@ -117,8 +118,10 @@ define(['TemplateCreator/outputs/OutputGenerator',
                     });
 
                 // Add self
-                children[i][Constants.NEXT].push(children[i]);
+                children[i][Constants.NEXT].unshift(children[i]);
             }
+            // Make sure 'label' is last if it exists
+            children[i][Constants.PREV].sort(node => node.name === 'label');
         }
     };
 
