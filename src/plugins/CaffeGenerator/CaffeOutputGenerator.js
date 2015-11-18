@@ -121,7 +121,9 @@ define(['TemplateCreator/outputs/OutputGenerator',
                 children[i][Constants.NEXT].unshift(children[i]);
             }
             // Make sure 'label' is last if it exists
-            children[i][Constants.PREV].sort(node => node.name === 'label');
+            children[i][Constants.PREV].sort(function(node) {
+                return node.name === 'label';
+            });
         }
     };
 
