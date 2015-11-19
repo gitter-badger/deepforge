@@ -166,7 +166,7 @@ define([], function() {
             },
             transform_param: {
                 scale: 'scale',
-                mean_file_size: 'mean_file_size',
+                //mean_file_size: 'mean_file_size',
                 mirror: 'mirror',
                 crop_size: 'crop_size'
             }
