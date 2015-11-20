@@ -11,6 +11,7 @@ define([
 ], function (SimpleNodes, CaffeTemplateCreator) {
     'use strict';
 
+    var CONN_PTRS = ['src', 'dst'];
     /**
      * Initializes a new instance of CaffeGenerator.
      * @class
@@ -100,6 +101,8 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
+            // Ideally, we can provide feedback to the user from cli output
             {  // Display FIXME: this may not matter
                 name: 'display',
                 displayName: 'Display iterations',
@@ -109,6 +112,7 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
             {  // Snapshot iterations (snapshot)
                 name: 'snapshot',
                 displayName: 'Snapshot iterations',
@@ -118,6 +122,7 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
             {  // Snapshot prefix (snapshotPrefix)
                 name: 'snapshotPrefix',
                 displayName: 'Snapshot directory',
@@ -234,7 +239,6 @@ define([
                 callback();
             });
         });
->>>>>>> 2905cf0... Removed unnecessary comment (SQUASH ME)
     };
 
     return CaffeGenerator;
