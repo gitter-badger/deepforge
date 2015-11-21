@@ -5,3 +5,4 @@ test-tmp/
 blob-local-storage/
 .DS_Store
 .sass-cache
+*.nedb

@@ -115,6 +115,7 @@ define([
             }
 
             // Create a model from the layers
+            self.convertDataToInputLayer(layers);
             self.createCnnModel(name, layers);
 
             // Save
@@ -124,6 +125,30 @@ define([
             });
         });
 
+    };
+
+    // Replace any data layer with an "input" layer
+    NetworkImporter.prototype.convertDataToInputLayer = function(layers) {
+        var dataTypes = this.getDataTypeNames();
+        layers.forEach(function(layer) {
+            if (dataTypes.indexOf(layer.type.toLowerCase()) !== -1) {
+                layer.type = 'Input';
+            }
+        });
+    };
+
+    NetworkImporter.prototype.getDataTypeNames = function() {
+        var self = this,
+            dataBase = this.META.DataBase;
+
+        return Object.keys(this.META)
+            .filter(function(name) {
+                var node = self.META[name];
+                return node !== dataBase && self.isMetaTypeOf(node, dataBase);
+            })
+            .map(function(name) {
+                return name.toLowerCase();
+            });
     };
 
     NetworkImporter.prototype.createCnnModel = function(name, layers) {

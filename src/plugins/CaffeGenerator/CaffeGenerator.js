@@ -11,6 +11,7 @@ define([
 ], function (SimpleNodes, CaffeTemplateCreator) {
     'use strict';
 
+    var CONN_PTRS = ['src', 'dst'];
     /**
      * Initializes a new instance of CaffeGenerator.
      * @class
@@ -100,6 +101,8 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
+            // Ideally, we can provide feedback to the user from cli output
             {  // Display FIXME: this may not matter
                 name: 'display',
                 displayName: 'Display iterations',
@@ -109,6 +112,7 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
             {  // Snapshot iterations (snapshot)
                 name: 'snapshot',
                 displayName: 'Snapshot iterations',
@@ -118,6 +122,7 @@ define([
                 minValue: 0,
                 readOnly: false
             },
+            // TODO: This can be ignored/auto set
             {  // Snapshot prefix (snapshotPrefix)
                 name: 'snapshotPrefix',
                 displayName: 'Snapshot directory',
@@ -154,7 +159,86 @@ define([
         this.generator.runOptions = config;
 
         // TODO: Check that the current node is a 'CNN' or 'NeuralNetwork'
-        SimpleNodes.prototype.main.call(this, callback);
+        // Add the data layer. I can change the model and simply not save it.
+        self.retrieveDataLayer(function(err) {
+            if (err) {
+                return callback(err, self.result);
+            }
+            self.beforePrototxtGeneration(function(err) {
+                if (err) {
+                    return callback(err, self.result);
+                }
+                SimpleNodes.prototype.main.call(self, callback);
+            });
+        });
+    };
+
+    // This is overridden in the CaffeExecutor
+    CaffeGenerator.prototype.beforePrototxtGeneration = function (callback) {
+        callback();
+    };
+
+    CaffeGenerator.prototype.retrieveDataLayer = function (callback) {
+        var self = this;
+
+        self.core.loadChildren(self.activeNode, function(err, children) {
+            if (err) {
+                return callback(err);
+            }
+            // Find the input node
+            var input = children.filter(function(child) {
+                return self.isMetaTypeOf(child, self.META.Input);
+            })[0];
+
+            if (!input) {
+                return callback('No input node found');
+            }
+            var dataPath = self.core.getPointerPath(input, 'data'),
+                inputPath = self.core.getPath(input);
+
+            if (!dataPath) {
+                return callback('Cannot create CNN without input data');
+            }
+
+            // Find the data node
+            self.core.loadByPath(self.rootNode, dataPath, function(e, dataNode) {
+                var conns;
+                if (e) {
+                    return callback(e);
+                }
+
+                // Find the input node's connections
+                conns = children
+                    .filter(function(node) {  // Get all connections
+                        var ptrs = self.core.getPointerNames(node);
+                        return ptrs.indexOf('src') > -1 && ptrs.indexOf('dst') > -1;
+                    })
+                    // Connections with at least one pointer to input
+                    .filter(function(conn) {
+                        return CONN_PTRS
+                            .reduce(function(match, ptr) {
+                                return match ||
+                                    self.core.getPointerPath(conn, ptr) === inputPath;
+                            }, false)
+                    });
+
+                // Remove the input node
+                self.core.deleteNode(input);
+
+                // Copy the data node to the activeNode
+                var dataCopy = self.core.copyNode(dataNode, self.activeNode)
+
+                // Set all the connections to the data node
+                conns.forEach(function(conn) {
+                    CONN_PTRS.forEach(function(ptr) {
+                        if (self.core.getPointerPath(conn, ptr) === null) { 
+                            self.core.setPointer(conn, ptr, dataCopy);
+                        }
+                    });
+                });
+                callback();
+            });
+        });
     };
 
     return CaffeGenerator;
