@@ -157,6 +157,7 @@ define([
 
         config.solverMode = config.usingGPU ? 'GPU' : 'CPU';
         this.generator.runOptions = config;
+        this.generator.lossLayers = this._getLossLayerNames();
 
         // TODO: Check that the current node is a 'CNN' or 'NeuralNetwork'
         // Add the data layer. I can change the model and simply not save it.
@@ -171,6 +172,20 @@ define([
                 SimpleNodes.prototype.main.call(self, callback);
             });
         });
+    };
+
+    CaffeGenerator.prototype._getLossLayerNames = function() {
+        var self = this,
+            nodeBase = this.META.LossBaseLayer;
+
+        return Object.keys(this.META)
+            .filter(function(name) {
+                var node = self.META[name];
+                return node !== nodeBase && self.isMetaTypeOf(node, nodeBase);
+            })
+            .map(function(name) {
+                return name.toLowerCase();
+            });
     };
 
     // This is overridden in the CaffeExecutor
