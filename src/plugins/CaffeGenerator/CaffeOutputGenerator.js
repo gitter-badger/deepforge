@@ -14,9 +14,11 @@ define(['TemplateCreator/outputs/OutputGenerator',
     // Caffe Constants
     var TRAINING = '_training_',
         TESTING = '_testing_';
+
     var CaffeGenerator = function() {
         this.template = CaffeTemplate;
         this.runOptions = null;
+        this.lossLayers = null;
     };
 
     // Inherit the 'createTemplateFromNodes' method
@@ -36,13 +38,14 @@ define(['TemplateCreator/outputs/OutputGenerator',
             trainName = name+'_trainer.prototxt',
             testName = name+'_solver.prototxt',
             template,
+            labelName,
             node;
 
-        // Remove the label layer
-        this._removeLabelLayer(tree);
+        // Add the label layer info
+        labelName = this._addLabelLayer(tree);
 
         // Update for in-place computation
-        this._addInPlaceOperations(tree);
+        this._addInPlaceOperations(labelName, tree);
 
         // Decorate the active node with the run settings
         _.extend(tree, this.runOptions);
@@ -52,6 +55,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
         // As the children are topo sorted, data nodes should be first
         for (var i = tree[Constants.CHILDREN].length; i--;) {
             node = tree[Constants.CHILDREN][i];
+            // FIXME: Add support for more data inputs?
             if (node[Constants.BASE].name === 'Data') {
                 // Add the data attributes
                 node.location = '"'+this.runOptions.inputData+'"';
@@ -81,22 +85,63 @@ define(['TemplateCreator/outputs/OutputGenerator',
         return outputFiles;
     };
 
-    CaffeGenerator.prototype._removeLabelLayer = function(tree) {
-        // Remove the label layer (don't splice any connections)
-        // Also set the name to 'label'
-        // Check children for the layer with base type(.toLowerCase()) of 'label'
-        var children = tree[Constants.CHILDREN];
-        for (var i = children.length; i--;) {
-            if (children[i][Constants.BASE].name.toLowerCase() === 'label') {
-                // FIXME: This could have problems if someone names a layer 'label'
-                children[i].name = 'label';
-                children.splice(i, 1);
-                return tree;
-            }
+    CaffeGenerator.prototype._addLabelLayer = function(tree) {
+        // Add the label layer to the network if needed (check for loss layers)
+        // Get a list of labels that require a label layer (loss layers)
+        var lossLayerTypes = this.lossLayers,
+            lossLayers,
+            labelName = this._getUniqueLabelName(tree),
+            dataLayers;
+
+        // Get all these types of layers
+        lossLayers = tree[Constants.CHILDREN].filter(function(layer) {
+            var base = layer[Constants.BASE].name.toLowerCase();
+            return lossLayerTypes.indexOf(base) !== -1;
+        });
+
+        if (lossLayers.length) {
+            // Create the label layer
+            var labelLayer = {name: labelName};
+            labelLayer[Constants.BASE] = {name: 'label'};
+
+            // Add the label layer to the "bottom" values of the loss layers
+            lossLayers.forEach(function(layer) {
+                layer[Constants.PREV].push(labelLayer);
+            });
+
+            // Update the data layers
+            tree[Constants.CHILDREN]
+                .filter(function(layer) {  // Get data layers
+                    return layer[Constants.BASE].name.toLowerCase() === 'data';
+                })
+                .forEach(function(layer) {  // add label to "next" values
+                    layer[Constants.NEXT].push(labelLayer);
+                });
         }
+        return labelName;
     };
 
-    CaffeGenerator.prototype._addInPlaceOperations = function(tree) {
+    CaffeGenerator.prototype._getUniqueLabelName = function(tree) {
+        // Create dictionary of existing names
+        var names = {},
+            children = tree[Constants.CHILDREN],
+            basename = 'label',
+            name = basename,
+            i;
+
+        for (i = children.length; i--;) {
+            names[children[i].name] = true;
+        }
+
+        // Find unique name
+        i = 2;
+        while (names[name]) {
+            name = basename + i++;
+        }
+        return name;
+    };
+
+    CaffeGenerator.prototype._addInPlaceOperations = function(labelName, tree) {
         // Convolution layers connect into themselves and subsequent ReLU layers
         // will connect their top value back into the convolution layer. The
         // node immediately following the ReLU layer will connect to the conv layer
@@ -120,7 +165,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
                 // Keep 'label' if it exists
                 children[i][Constants.NEXT] = children[i][Constants.NEXT]
                     .filter(function(node) {
-                        return node.name === 'label';
+                        return node.name === labelName;
                     });
 
                 // Add self
@@ -128,7 +173,7 @@ define(['TemplateCreator/outputs/OutputGenerator',
             }
             // Make sure 'label' is last if it exists
             children[i][Constants.PREV].sort(function(node) {
-                return node.name === 'label';
+                return node.name === labelName;
             });
         }
     };

@@ -157,7 +157,7 @@ define([
             cnn,
             nodeMap = {},
             nodeList = [],
-            labelLayer = this.findLabelLayer(layers),
+            labelName = this.findLabelName(layers),
             createLayer;
 
         // Get a map of lowercase names to proper case
@@ -178,28 +178,11 @@ define([
 
             // Add attributes
             self.addNodeAttributes(layer, node);
-            nodeMap[name] = node;
+            nodeMap[name] = node;  // FIXME: Change this to use the blob (top)
             nodeList.push(node);
-
-            // Check for edges to "label"
-            if (labelLayer) {
-                if (layer.top && layer.top.indexOf(labelLayer.name) !== -1) {
-                    labelLayer.bottom.push(name);
-                }
-
-                if (layer.bottom && layer.bottom.indexOf(labelLayer.name) !== -1) {
-                    labelLayer.top.push(name);
-                }
-            }
         };
 
         layers.forEach(createLayer);
-
-        // If 'label' layer exists in the prototxt, create it
-        if (labelLayer) {
-            createLayer(labelLayer);
-            layers.push(labelLayer);
-        }
 
         var adjacencyList = {},
             edge;
@@ -219,7 +202,9 @@ define([
             prevLayers
             // Ignore self connections as they represent inplace transformations
             // and are Caffe-specific
+            // TODO: There may be a better way to handle this...
             .filter(not(Utils.equals.bind(null, layer.name)))
+            .filter(not(Utils.equals.bind(null, labelName)))
             .forEach(function(neighbor) {
                 // Create an edge between layer and neighbor
                 edge = self.core.createNode({parent: cnn, 
@@ -243,21 +228,15 @@ define([
     };
 
     // Find the implied label layer, if it exists
-    NetworkImporter.prototype.findLabelLayer = function (layers) {
+    NetworkImporter.prototype.findLabelName = function (layers) {
         var name = null;
         for (var i = layers.length; i--;) {
-            if (layers[i].top.length > 1 && layers[i].type.toLowerCase() === 'data') {
+            if (layers[i].top.length > 1 && layers[i].type.toLowerCase() === 'input') {
                 name = layers[i].top[1];
             }
         }
 
-        return !name ? null :
-            {
-                type: 'label',
-                name: name,
-                top: [],
-                bottom: []
-            };
+        return name;
     };
 
     NetworkImporter.prototype.resolveInPlaceComputation = function (layers) {
