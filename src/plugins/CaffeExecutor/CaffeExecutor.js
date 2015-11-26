@@ -24,9 +24,10 @@ define([
     //  + snapshot prefix
     var CONFIG_CONSTANTS = 
     {
+        dataType: 'LMDB',
         inputData: 'NONE',
-        display: 1000,
-        snapshot: 100000,
+        display: 500,
+        snapshot: 10000000,  // No snapshots -> just the last result!
         snapshotPrefix: 'snapshot_'
     };
 
@@ -126,6 +127,14 @@ define([
                 {
                     name: 'all',
                     resultPatterns: []
+                },
+                {
+                    name: 'models',
+                    resultPatterns: ['**/*caffemodel']
+                },
+                {
+                    name: 'solverstates',
+                    resultPatterns: ['**/*solverstate']
                 }
             ]
         };
@@ -153,7 +162,14 @@ define([
                     }
                     self.logger.info('artifact saved');
                     self.result.addArtifact(hash);
-                    self.executeJob(hash, callback);
+                    self.revert();  // Remove modified model from CaffeGenerator
+                    self.createTrainedNode(function(err) {
+                        if (err) {
+                            return callback(err);
+                        }
+
+                        self.executeJob(hash, callback);
+                    });
                 });
             });
         });
@@ -261,9 +277,51 @@ define([
     };
 
     CaffeExecutor.prototype.atSucceedJob = function(jInfo, callback) {
+        var self = this,
+            modelHash;
+
         // resultHashes
         this.result.addArtifact(jInfo.resultHashes.all);
-        callback(null, this.result);
+        
+        modelHash = jInfo.resultHashes.models;
+        this.core.setAttribute(this.modelNode, 'model', modelHash);
+
+        this.save('Created model at: '+name, function (err) {
+            callback(null, self.result);
+        });
+    };
+
+    CaffeExecutor.prototype.createTrainedNode = function(callback) {
+        var self = this;
+
+        self.getModelsDir(function(e, modelsDir) {
+            // Create the trained model node and attach the trained model to it
+            if (e || !modelsDir) {
+                return callback(e || 'Models directory not found');
+            }
+            self.modelNode = self.core.createNode({
+                parent: modelsDir,
+                base: self.META.Model
+            });
+            // Set an intelligent model name FIXME
+            self.core.setAttribute(self.modelNode, 'name', 'TrainedModel');
+            callback(null);
+        });
+    };
+
+    CaffeExecutor.prototype.getModelsDir = function(callback) {
+        var self = this,
+            modelsDir;
+
+        this.core.loadChildren(this.rootNode, function(e, children) {
+            if (e) {
+                return callback(e);
+            }
+            modelsDir = children.filter(function(child) {
+                return self.core.getAttribute(child, 'name') === 'Models';
+            })[0];
+            callback(null, modelsDir);
+        });
     };
 
     return CaffeExecutor;

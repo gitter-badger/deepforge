@@ -23,6 +23,7 @@ define([
         // Call base class' constructor.
         SimpleNodes.call(this);
         this.generator = new CaffeTemplateCreator();
+        this.originalNode = null;
     };
 
     // Prototypal inheritance from PluginBase.
@@ -161,6 +162,12 @@ define([
 
         // TODO: Check that the current node is a 'CNN' or 'NeuralNetwork'
         // Add the data layer. I can change the model and simply not save it.
+
+        // Change the activeNode to originalNode and store the copy in
+        // activeNode
+        self.originalNode = self.activeNode;
+        self.activeNode = self.core.copyNode(self.originalNode, self.rootNode);
+
         self.retrieveDataLayer(function(err) {
             if (err) {
                 return callback(err, self.result);
@@ -254,6 +261,16 @@ define([
                 callback();
             });
         });
+    };
+
+    CaffeGenerator.prototype.revert = function () {
+        if (this.originalNode) {  // Delete the activeNode
+            this.core.deleteNode(this.activeNode);
+            this.activeNode = this.originalNode;
+            this.originalNode = null;
+        } else {
+            console.error('Trying to revert without an original node');
+        }
     };
 
     return CaffeGenerator;
