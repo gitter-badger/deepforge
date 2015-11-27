@@ -1,6 +1,6 @@
 {
-  "name": "cnn-creator",
-  "version": "0.2.0",
+  "name": "deepforge",
+  "version": "0.3.0",
   "description": "A graphical interface for rapid prototyping of neural networks",
   "main": "app.js",
   "scripts": {
@@ -10,7 +10,6 @@
   },
   "keywords": [
     "webgme",
-    "cnn",
     "machine",
     "learning"
   ],

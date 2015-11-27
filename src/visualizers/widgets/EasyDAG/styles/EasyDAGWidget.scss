@@ -1,0 +1,29 @@
+/**
+ * This file is for any scss that you may want for this visualizer.
+ */
+
+.easy-dag {
+  outline: none;
+}
+
+path {
+    fill: none;
+}
+
+.selection {
+    .outline {
+      opacity: 1;
+      stroke-dasharray: "10,10";
+      stroke-width: 1;
+    }
+
+    .buttons {
+      .action {
+        fill: "#aeaeae";
+        width: 30;
+        height: 30;
+        rx: 10;
+        ry: 10;
+      }
+    }
+}
