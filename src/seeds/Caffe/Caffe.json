@@ -16,6 +16,7 @@
     "19d2230e-3181-92a7-f014-ac779d07a0bd": "1060289121",
     "1cde1e77-a913-e08b-ac3d-edfc59aa4485": "1944649304",
     "2539a9bb-1a97-e594-24e8-8ad90965cd99": "405396722",
+    "2be32d86-3fa7-1048-c073-27e4b0ea0b85": "1089042447",
     "2fbbcab3-180b-8e7e-b4c1-982195e8038a": "893729791",
     "310317e4-a974-8e6a-5c2a-3d3a4447d15a": "1371166375",
     "353dcb92-7361-51af-12f0-d9995af3c247": "2126769574",
@@ -23,6 +24,7 @@
     "37d6acdf-512e-a553-d1ff-230dd75cbb2c": "1477689856",
     "38334fcc-211e-84d8-2dec-67f46f7a5f05": "677968497",
     "386cce91-77d3-677e-0d1b-2013fdc5f178": "1806706908",
+    "3b590ee4-ce4c-70c0-2b41-7af352506033": "793242139",
     "3c4f8717-6679-4328-e761-0427b26aa6b0": "2019211612",
     "41908e4b-b843-a5ef-d963-a830a06e3189": "1971372237",
     "431f7741-1665-5e35-feef-fe9c552a5a18": "786377943",
@@ -33,10 +35,14 @@
     "52b0d335-5585-5741-5b75-6247bdab5c83": "1664900812",
     "582cfe65-05a7-5dbf-83a0-688acb821a9e": "1844492288",
     "5882c7d2-6095-74ff-1a24-33a829615be4": "1873620546",
+    "589a72ea-74ec-e505-e650-1561f50b529b": "302131555",
+    "68e6ff28-b00b-ecec-85d6-4722016ec4d6": "204241181",
     "6d3e0974-e5e6-af6d-6e15-3b498da79811": "304296719",
     "6ff4f8cd-14e2-098f-3b31-d7af977aadc2": "1870953370",
+    "7252ad30-aa13-75cf-67bc-1b313198e6cb": "1567574167",
     "749798ef-30c5-fcb9-3ae8-053757d789d1": "989595059",
     "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb": "1864339212",
+    "77f46233-44ea-b390-9ad5-f6eccc00ebee": "1446097307",
     "78594f9a-00e8-c61a-461a-fd1612e1d4d2": "1936359991",
     "7ce0237e-d67f-ee55-e188-5a01307a492f": "751074888",
     "8445d0f5-eba9-b21a-e401-6f6ded909287": "279874336",
@@ -54,6 +60,7 @@
     "bbedaf50-6813-1a65-1208-f6b3f7dfbfb0": "1625866296",
     "bc0f9101-6cd0-133e-9ad5-c31212fd9341": "1811306995",
     "bdb7cba1-b95f-d8d7-2961-895692568abc": "377828097",
+    "c1a14d07-3847-adb3-a465-712fa96c738b": "1797987336",
     "c32116c3-4f79-4241-53cb-957406e5bd84": "1146023388",
     "c820de7e-4532-a4b2-8385-0e7558750440": "904618781",
     "cc03b17b-1cfa-0040-a379-540f656bed1a": "210308790",
@@ -87,6 +94,10 @@
   },
   "containment": {
     "41908e4b-b843-a5ef-d963-a830a06e3189": {},
+    "589a72ea-74ec-e505-e650-1561f50b529b": {},
+    "68e6ff28-b00b-ecec-85d6-4722016ec4d6": {},
+    "7252ad30-aa13-75cf-67bc-1b313198e6cb": {},
+    "c1a14d07-3847-adb3-a465-712fa96c738b": {},
     "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045": {},
     "e9b4c47d-dc01-047c-11cf-422e08aa4741": {
       "431f7741-1665-5e35-feef-fe9c552a5a18": {
@@ -119,16 +130,19 @@
       "19d2230e-3181-92a7-f014-ac779d07a0bd": {},
       "1cde1e77-a913-e08b-ac3d-edfc59aa4485": {},
       "2539a9bb-1a97-e594-24e8-8ad90965cd99": {},
+      "2be32d86-3fa7-1048-c073-27e4b0ea0b85": {},
       "379f6898-d91a-9603-e8ab-bf9eadbd750a": {},
       "37d6acdf-512e-a553-d1ff-230dd75cbb2c": {},
       "38334fcc-211e-84d8-2dec-67f46f7a5f05": {},
       "386cce91-77d3-677e-0d1b-2013fdc5f178": {},
+      "3b590ee4-ce4c-70c0-2b41-7af352506033": {},
       "43463929-d820-ad79-db73-ed23b3690e5b": {},
       "45e1bfd5-bebf-64d8-994a-358ae778544a": {},
       "474aeb24-f514-0748-145d-2ff72bbc3ffa": {},
       "5882c7d2-6095-74ff-1a24-33a829615be4": {},
       "6d3e0974-e5e6-af6d-6e15-3b498da79811": {},
       "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb": {},
+      "77f46233-44ea-b390-9ad5-f6eccc00ebee": {},
       "78594f9a-00e8-c61a-461a-fd1612e1d4d2": {},
       "7ce0237e-d67f-ee55-e188-5a01307a492f": {},
       "8546f13d-7845-f868-18f0-483387470708": {},
@@ -207,11 +221,11 @@
       "attributes": {
         "name": "CommonBaseLayer"
       },
-      "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
+      "base": "589a72ea-74ec-e505-e650-1561f50b529b",
       "meta": {},
       "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
       "pointers": {
-        "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+        "base": "589a72ea-74ec-e505-e650-1561f50b529b"
       },
       "registry": {
         "position": {
@@ -471,6 +485,7 @@
       },
       "registry": {
         "SVGIcon": "svgs/fc.svg",
+        "decorator": "InnerProductDecorator",
         "isAbstract": false,
         "position": {
           "x": 99,
@@ -528,6 +543,50 @@
         "position": {
           "x": 243,
           "y": 242
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "2be32d86-3fa7-1048-c073-27e4b0ea0b85": {
+      "attributes": {
+        "name": "IntermediateConnector"
+      },
+      "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341",
+      "meta": {
+        "pointers": {
+          "src": {
+            "items": [
+              "589a72ea-74ec-e505-e650-1561f50b529b"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          },
+          "dst": {
+            "items": [
+              "589a72ea-74ec-e505-e650-1561f50b529b"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          }
+        }
+      },
+      "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
+      "pointers": {
+        "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341"
+      },
+      "registry": {
+        "position": {
+          "x": 341,
+          "y": 424
         }
       },
       "sets": {},
@@ -730,6 +789,50 @@
       "sets": {},
       "constraints": {}
     },
+    "3b590ee4-ce4c-70c0-2b41-7af352506033": {
+      "attributes": {
+        "name": "InputConnector"
+      },
+      "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341",
+      "meta": {
+        "pointers": {
+          "src": {
+            "items": [
+              "ce9b4b8c-f6ff-f05a-269f-54727f9c9443"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          },
+          "dst": {
+            "items": [
+              "589a72ea-74ec-e505-e650-1561f50b529b"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          }
+        }
+      },
+      "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
+      "pointers": {
+        "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341"
+      },
+      "registry": {
+        "position": {
+          "x": 155,
+          "y": 401
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
     "3c4f8717-6679-4328-e761-0427b26aa6b0": {
       "attributes": {},
       "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341",
@@ -811,7 +914,8 @@
         "base": "cd891e7b-e2ea-e929-f6cd-9faf4f1fc045"
       },
       "registry": {
-        "SVGIcon": "Folder2.svg",
+        "SVGIcon": "Folder.svg",
+        "decorator": "DefaultDecorator",
         "isAbstract": false,
         "position": {
           "x": 411,
@@ -894,6 +998,11 @@
             "SetID": "MetaAspectSet_10371314-af0e-1143-ecf3-47290ace0c18",
             "order": 8,
             "title": "Vision Layers"
+          },
+          {
+            "SetID": "MetaAspectSet_cd9664da-2a3b-6319-765c-1ecbddca9144",
+            "order": 9,
+            "title": "Connectors"
           }
         ],
         "ProjectRegistry": {
@@ -996,6 +1105,16 @@
           },
           {
             "attributes": {},
+            "guid": "2be32d86-3fa7-1048-c073-27e4b0ea0b85",
+            "registry": {
+              "position": {
+                "x": 356,
+                "y": 505
+              }
+            }
+          },
+          {
+            "attributes": {},
             "guid": "379f6898-d91a-9603-e8ab-bf9eadbd750a",
             "registry": {
               "position": {
@@ -1031,6 +1150,16 @@
               "position": {
                 "x": 20,
                 "y": 906
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "3b590ee4-ce4c-70c0-2b41-7af352506033",
+            "registry": {
+              "position": {
+                "x": 61,
+                "y": 498
               }
             }
           },
@@ -1076,6 +1205,16 @@
           },
           {
             "attributes": {},
+            "guid": "589a72ea-74ec-e505-e650-1561f50b529b",
+            "registry": {
+              "position": {
+                "x": 320,
+                "y": 234
+              }
+            }
+          },
+          {
+            "attributes": {},
             "guid": "6d3e0974-e5e6-af6d-6e15-3b498da79811",
             "registry": {
               "position": {
@@ -1091,6 +1230,16 @@
               "position": {
                 "x": 487,
                 "y": 260
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "77f46233-44ea-b390-9ad5-f6eccc00ebee",
+            "registry": {
+              "position": {
+                "x": 255,
+                "y": 508
               }
             }
           },
@@ -1627,8 +1776,8 @@
             "guid": "762c356b-0b7e-5ba3-f0f7-e823ed72d6eb",
             "registry": {
               "position": {
-                "x": 278,
-                "y": 190
+                "x": 282,
+                "y": 192
               }
             }
           },
@@ -1999,14 +2148,76 @@
             }
           }
         ],
+        "MetaAspectSet_cd9664da-2a3b-6319-765c-1ecbddca9144": [
+          {
+            "attributes": {},
+            "guid": "2be32d86-3fa7-1048-c073-27e4b0ea0b85",
+            "registry": {
+              "position": {
+                "x": 371,
+                "y": 115
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "3b590ee4-ce4c-70c0-2b41-7af352506033",
+            "registry": {
+              "position": {
+                "x": 152,
+                "y": 113
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "589a72ea-74ec-e505-e650-1561f50b529b",
+            "registry": {
+              "position": {
+                "x": 393,
+                "y": 270
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "77f46233-44ea-b390-9ad5-f6eccc00ebee",
+            "registry": {
+              "position": {
+                "x": 650,
+                "y": 115
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "ce9b4b8c-f6ff-f05a-269f-54727f9c9443",
+            "registry": {
+              "position": {
+                "x": 166,
+                "y": 271
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "e6d010ee-99c4-aee0-8e8d-feb243b34efc",
+            "registry": {
+              "position": {
+                "x": 662,
+                "y": 269
+              }
+            }
+          }
+        ],
         "MetaAspectSet_dc6b42ac-34a1-aa98-da44-bf5407afa7a8": [
           {
             "attributes": {},
             "guid": "02c81c5b-11de-6931-9df8-cd807875f8cf",
             "registry": {
               "position": {
-                "x": 173,
-                "y": 240
+                "x": 65,
+                "y": 381
               }
             }
           },
@@ -2015,8 +2226,18 @@
             "guid": "45e1bfd5-bebf-64d8-994a-358ae778544a",
             "registry": {
               "position": {
-                "x": 323,
-                "y": 240
+                "x": 215,
+                "y": 381
+              }
+            }
+          },
+          {
+            "attributes": {},
+            "guid": "589a72ea-74ec-e505-e650-1561f50b529b",
+            "registry": {
+              "position": {
+                "x": 216,
+                "y": 241
               }
             }
           },
@@ -2045,18 +2266,8 @@
             "guid": "a872a8ae-3d1b-d202-d9ab-834021624838",
             "registry": {
               "position": {
-                "x": 473,
-                "y": 239
-              }
-            }
-          },
-          {
-            "attributes": {},
-            "guid": "bc0f9101-6cd0-133e-9ad5-c31212fd9341",
-            "registry": {
-              "position": {
-                "x": 215,
-                "y": 41
+                "x": 375,
+                "y": 379
               }
             }
           },
@@ -2065,8 +2276,8 @@
             "guid": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
             "registry": {
               "position": {
-                "x": 232,
-                "y": 133
+                "x": 230,
+                "y": 93
               }
             }
           },
@@ -2075,8 +2286,8 @@
             "guid": "ce9b4b8c-f6ff-f05a-269f-54727f9c9443",
             "registry": {
               "position": {
-                "x": 726,
-                "y": 240
+                "x": 89,
+                "y": 241
               }
             }
           },
@@ -2085,8 +2296,8 @@
             "guid": "e6d010ee-99c4-aee0-8e8d-feb243b34efc",
             "registry": {
               "position": {
-                "x": 43,
-                "y": 240
+                "x": 405,
+                "y": 239
               }
             }
           }
@@ -2180,11 +2391,11 @@
       "attributes": {
         "name": "ActivationBaseLayer"
       },
-      "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
+      "base": "589a72ea-74ec-e505-e650-1561f50b529b",
       "meta": {},
       "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
       "pointers": {
-        "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+        "base": "589a72ea-74ec-e505-e650-1561f50b529b"
       },
       "registry": {
         "isAbstract": true,
@@ -2342,6 +2553,44 @@
       "sets": {},
       "constraints": {}
     },
+    "589a72ea-74ec-e505-e650-1561f50b529b": {
+      "attributes": {
+        "name": "IntermediateLayer"
+      },
+      "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
+      "meta": {},
+      "parent": "4444f980-1c88-cd19-ad6d-2a7cad57dacf",
+      "pointers": {
+        "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+      },
+      "registry": {
+        "position": {
+          "x": 126,
+          "y": 587
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "68e6ff28-b00b-ecec-85d6-4722016ec4d6": {
+      "attributes": {
+        "name": "data"
+      },
+      "base": "43463929-d820-ad79-db73-ed23b3690e5b",
+      "meta": {},
+      "parent": "4444f980-1c88-cd19-ad6d-2a7cad57dacf",
+      "pointers": {
+        "base": "43463929-d820-ad79-db73-ed23b3690e5b"
+      },
+      "registry": {
+        "position": {
+          "x": 428,
+          "y": 60
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
     "6d3e0974-e5e6-af6d-6e15-3b498da79811": {
       "attributes": {
         "dim1": 0,
@@ -2389,9 +2638,9 @@
       "attributes": {
         "bias_filler_type": "constant",
         "bias_lr_mult": 2,
-        "kernel_size": 5,
+        "kernel_size": "2",
         "name": "conv1",
-        "num_output": 20,
+        "num_output": "20",
         "stride": 1,
         "weight_filler_type": "xavier",
         "weight_lr_mult": 1
@@ -2406,6 +2655,25 @@
         "position": {
           "x": 50,
           "y": 130
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "7252ad30-aa13-75cf-67bc-1b313198e6cb": {
+      "attributes": {
+        "name": "architectures"
+      },
+      "base": "43463929-d820-ad79-db73-ed23b3690e5b",
+      "meta": {},
+      "parent": "4444f980-1c88-cd19-ad6d-2a7cad57dacf",
+      "pointers": {
+        "base": "43463929-d820-ad79-db73-ed23b3690e5b"
+      },
+      "registry": {
+        "position": {
+          "x": 272,
+          "y": 60
         }
       },
       "sets": {},
@@ -2445,10 +2713,55 @@
       },
       "registry": {
         "SVGIcon": "svgs/relu.svg",
+        "decorator": "ReLUDecorator",
         "isAbstract": false,
         "position": {
           "x": 253,
           "y": 267
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "77f46233-44ea-b390-9ad5-f6eccc00ebee": {
+      "attributes": {
+        "name": "LossConnector"
+      },
+      "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341",
+      "meta": {
+        "pointers": {
+          "src": {
+            "items": [
+              "589a72ea-74ec-e505-e650-1561f50b529b"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          },
+          "dst": {
+            "items": [
+              "e6d010ee-99c4-aee0-8e8d-feb243b34efc"
+            ],
+            "minItems": [
+              -1
+            ],
+            "maxItems": [
+              1
+            ]
+          }
+        }
+      },
+      "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
+      "pointers": {
+        "base": "bc0f9101-6cd0-133e-9ad5-c31212fd9341"
+      },
+      "registry": {
+        "position": {
+          "x": 231,
+          "y": 434
         }
       },
       "sets": {},
@@ -2778,11 +3091,11 @@
       "attributes": {
         "name": "VisionBaseLayer"
       },
-      "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680",
+      "base": "589a72ea-74ec-e505-e650-1561f50b529b",
       "meta": {},
       "parent": "fa0c1f28-2be0-c890-facb-8bd69c031920",
       "pointers": {
-        "base": "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+        "base": "589a72ea-74ec-e505-e650-1561f50b529b"
       },
       "registry": {
         "isAbstract": true,
@@ -2906,6 +3219,7 @@
         "base": "45e1bfd5-bebf-64d8-994a-358ae778544a"
       },
       "registry": {
+        "decorator": "ReLUDecorator",
         "isAbstract": false,
         "position": {
           "x": 183,
@@ -2924,33 +3238,27 @@
         "pointers": {
           "src": {
             "items": [
-              "97110e03-4e42-f8ea-4c7b-5d02e11535e3",
-              "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+              "97110e03-4e42-f8ea-4c7b-5d02e11535e3"
             ],
             "min": 1,
             "max": 1,
             "minItems": [
-              -1,
               -1
             ],
             "maxItems": [
-              1,
               1
             ]
           },
           "dst": {
             "items": [
-              "97110e03-4e42-f8ea-4c7b-5d02e11535e3",
-              "ccc0db24-3dba-3694-cb4a-9c41744f2680"
+              "97110e03-4e42-f8ea-4c7b-5d02e11535e3"
             ],
             "min": 1,
             "max": 1,
             "minItems": [
-              -1,
               -1
             ],
             "maxItems": [
-              1,
               1
             ]
           }
@@ -2989,6 +3297,25 @@
         "position": {
           "x": 93,
           "y": 322
+        }
+      },
+      "sets": {},
+      "constraints": {}
+    },
+    "c1a14d07-3847-adb3-a465-712fa96c738b": {
+      "attributes": {
+        "name": "models"
+      },
+      "base": "43463929-d820-ad79-db73-ed23b3690e5b",
+      "meta": {},
+      "parent": "4444f980-1c88-cd19-ad6d-2a7cad57dacf",
+      "pointers": {
+        "base": "43463929-d820-ad79-db73-ed23b3690e5b"
+      },
+      "registry": {
+        "position": {
+          "x": 362,
+          "y": 59
         }
       },
       "sets": {},
@@ -3079,7 +3406,7 @@
       },
       "registry": {
         "SVGIcon": "svgs/default.svg",
-        "decorator": "SVGTemplateDecorator",
+        "decorator": "LayerDecorator",
         "position": {
           "x": 43,
           "y": 67
@@ -3323,6 +3650,7 @@
         "base": "45e1bfd5-bebf-64d8-994a-358ae778544a"
       },
       "registry": {
+        "decorator": "ReLUDecorator",
         "isAbstract": false,
         "position": {
           "x": 393,
@@ -3522,8 +3850,8 @@
       "registry": {
         "isAbstract": false,
         "position": {
-          "x": 33,
-          "y": 59
+          "x": 31,
+          "y": 61
         }
       },
       "sets": {},
@@ -3680,6 +4008,7 @@
       },
       "registry": {
         "SVGIcon": "svgs/conv.svg",
+        "decorator": "ConvDecorator",
         "isAbstract": false,
         "position": {
           "x": 21,
@@ -3790,7 +4119,7 @@
       "registry": {
         "position": {
           "x": 19,
-          "y": 595
+          "y": 590
         }
       },
       "sets": {},
@@ -3835,6 +4164,7 @@
       },
       "registry": {
         "SVGIcon": "svgs/pooling.svg",
+        "decorator": "PoolDecorator",
         "isAbstract": false,
         "position": {
           "x": 191,
