@@ -74,6 +74,15 @@
       },
       "ConvDecorator": {
         "src": "src/decorators/ConvDecorator"
+      },
+      "PoolDecorator": {
+        "src": "src/decorators/PoolDecorator"
+      },
+      "InnerProductDecorator": {
+        "src": "src/decorators/InnerProductDecorator"
+      },
+      "ReLUDecorator": {
+        "src": "src/decorators/ReLUDecorator"
       }
     },
     "addons": {}
