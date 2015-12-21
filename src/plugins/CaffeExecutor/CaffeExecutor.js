@@ -233,7 +233,7 @@ define([
             executorClient;
 
         executorClient = new ExecutorClient({
-            httpsecure: self.gmeConfig.server.https.enable,
+            //httpsecure: self.gmeConfig.server.https.enable,
             serverPort: self.gmeConfig.server.port
         });
         self.logger.info('created new ExecutorClient instance');
@@ -318,7 +318,7 @@ define([
                 return callback(e);
             }
             modelsDir = children.filter(function(child) {
-                return self.core.getAttribute(child, 'name') === 'Models';
+                return self.core.getAttribute(child, 'name').toLowerCase() === 'models';
             })[0];
             callback(null, modelsDir);
         });
