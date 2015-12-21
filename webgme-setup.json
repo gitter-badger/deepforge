@@ -38,6 +38,20 @@
         "title": "PluginButton",
         "panel": "src/visualizers/panels/PluginButton",
         "widget": "src/visualizers/widgets/PluginButton"
+      },
+      "EasyDAG": {
+        "src": "panels/EasyDAG/EasyDAGPanel",
+        "title": "EasyDAG",
+        "panel": "src/visualizers/panels/EasyDAG",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/EasyDAG"
+      },
+      "ForgeFlow": {
+        "src": "panels/ForgeFlow/ForgeFlowPanel",
+        "title": "ForgeFlow",
+        "panel": "src/visualizers/panels/ForgeFlow",
+        "secondary": false,
+        "widget": "src/visualizers/widgets/ForgeFlow"
       }
     },
     "layouts": {
@@ -48,6 +62,18 @@
     "decorators": {
       "SVGTemplateDecorator": {
         "src": "src/decorators/SVGTemplateDecorator"
+      },
+      "EllipseDecorator": {
+        "src": "src/decorators/EllipseDecorator"
+      },
+      "LayerDecorator": {
+        "src": "src/decorators/LayerDecorator"
+      },
+      "LargeLayerDecorator": {
+        "src": "src/decorators/LargeLayerDecorator"
+      },
+      "ConvDecorator": {
+        "src": "src/decorators/ConvDecorator"
       }
     },
     "addons": {}
