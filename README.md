@@ -3,6 +3,8 @@
 [![Release State](https://img.shields.io/badge/state-pre--alpha-red.svg)](https://img.shields.io/badge/state-pre--alpha-red.svg)
 
 # DeepForge
+
+[![Join the chat at https://gitter.im/brollb/deepforge](https://badges.gitter.im/brollb/deepforge.svg)](https://gitter.im/brollb/deepforge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 DeepForge is an open-source visual development environment for deep learning. Currently, it supports Convolutional Neural Networks but we are planning on supporting additional deep learning classifiers such as RNNs and LSTMs. Additional features include real-time collaborative editing and version control.
 
 ## Quick Setup
